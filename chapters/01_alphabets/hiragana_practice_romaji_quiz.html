@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hiragana — Romaji → Hiragana · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/01_alphabets/hiragana_practice_romaji_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Hiragana — Romaji → Hiragana · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="hiragana_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+    <form id="quizForm"></form>
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#7a5486">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+<script>
+const QUESTION_POOL = [{"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "a", "options": ["あ", "い", "う", "え"], "answer": 0, "explanation": "a si scrive あ."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "i", "options": ["い", "う", "え", "お"], "answer": 0, "explanation": "i si scrive い."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "u", "options": ["う", "え", "お", "か"], "answer": 0, "explanation": "u si scrive う."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "e", "options": ["え", "お", "か", "き"], "answer": 0, "explanation": "e si scrive え."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "o", "options": ["お", "か", "き", "く"], "answer": 0, "explanation": "o si scrive お."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "ka", "options": ["か", "き", "く", "け"], "answer": 0, "explanation": "ka si scrive か."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "ki", "options": ["き", "く", "け", "こ"], "answer": 0, "explanation": "ki si scrive き."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "ku", "options": ["く", "あ", "い", "う"], "answer": 0, "explanation": "ku si scrive く."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "ke", "options": ["け", "い", "う", "え"], "answer": 0, "explanation": "ke si scrive け."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "ko", "options": ["こ", "う", "え", "お"], "answer": 0, "explanation": "ko si scrive こ."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "sa", "options": ["さ", "え", "お", "か"], "answer": 0, "explanation": "sa si scrive さ."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "shi", "options": ["し", "お", "か", "き"], "answer": 0, "explanation": "shi si scrive し."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "su", "options": ["す", "か", "き", "く"], "answer": 0, "explanation": "su si scrive す."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "se", "options": ["せ", "き", "く", "け"], "answer": 0, "explanation": "se si scrive せ."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "so", "options": ["そ", "あ", "い", "う"], "answer": 0, "explanation": "so si scrive そ."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "ta", "options": ["た", "い", "う", "え"], "answer": 0, "explanation": "ta si scrive た."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "chi", "options": ["ち", "う", "え", "お"], "answer": 0, "explanation": "chi si scrive ち."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "tsu", "options": ["つ", "え", "お", "か"], "answer": 0, "explanation": "tsu si scrive つ."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "te", "options": ["て", "お", "か", "き"], "answer": 0, "explanation": "te si scrive て."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "to", "options": ["と", "か", "き", "く"], "answer": 0, "explanation": "to si scrive と."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "na", "options": ["な", "き", "く", "け"], "answer": 0, "explanation": "na si scrive な."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "ni", "options": ["に", "あ", "い", "う"], "answer": 0, "explanation": "ni si scrive に."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "nu", "options": ["ぬ", "い", "う", "え"], "answer": 0, "explanation": "nu si scrive ぬ."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "ne", "options": ["ね", "う", "え", "お"], "answer": 0, "explanation": "ne si scrive ね."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "no", "options": ["の", "え", "お", "か"], "answer": 0, "explanation": "no si scrive の."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "ha", "options": ["は", "お", "か", "き"], "answer": 0, "explanation": "ha si scrive は."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "hi", "options": ["ひ", "か", "き", "く"], "answer": 0, "explanation": "hi si scrive ひ."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "fu", "options": ["ふ", "き", "く", "け"], "answer": 0, "explanation": "fu si scrive ふ."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "he", "options": ["へ", "あ", "い", "う"], "answer": 0, "explanation": "he si scrive へ."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "ho", "options": ["ほ", "い", "う", "え"], "answer": 0, "explanation": "ho si scrive ほ."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "ma", "options": ["ま", "う", "え", "お"], "answer": 0, "explanation": "ma si scrive ま."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "mi", "options": ["み", "え", "お", "か"], "answer": 0, "explanation": "mi si scrive み."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "mu", "options": ["む", "お", "か", "き"], "answer": 0, "explanation": "mu si scrive む."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "me", "options": ["め", "か", "き", "く"], "answer": 0, "explanation": "me si scrive め."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "mo", "options": ["も", "き", "く", "け"], "answer": 0, "explanation": "mo si scrive も."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "ya", "options": ["や", "あ", "い", "う"], "answer": 0, "explanation": "ya si scrive や."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "yu", "options": ["ゆ", "い", "う", "え"], "answer": 0, "explanation": "yu si scrive ゆ."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "yo", "options": ["よ", "う", "え", "お"], "answer": 0, "explanation": "yo si scrive よ."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "ra", "options": ["ら", "え", "お", "か"], "answer": 0, "explanation": "ra si scrive ら."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "ri", "options": ["り", "お", "か", "き"], "answer": 0, "explanation": "ri si scrive り."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "ru", "options": ["る", "か", "き", "く"], "answer": 0, "explanation": "ru si scrive る."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "re", "options": ["れ", "き", "く", "け"], "answer": 0, "explanation": "re si scrive れ."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "ro", "options": ["ろ", "あ", "い", "う"], "answer": 0, "explanation": "ro si scrive ろ."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "wa", "options": ["わ", "い", "う", "え"], "answer": 0, "explanation": "wa si scrive わ."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "wo / o", "options": ["を", "う", "え", "お"], "answer": 0, "explanation": "wo / o si scrive を."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "n", "options": ["ん", "え", "お", "か"], "answer": 0, "explanation": "n si scrive ん."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "ga", "options": ["が", "お", "か", "き"], "answer": 0, "explanation": "ga si scrive が."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "gi", "options": ["ぎ", "か", "き", "く"], "answer": 0, "explanation": "gi si scrive ぎ."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "gu", "options": ["ぐ", "き", "く", "け"], "answer": 0, "explanation": "gu si scrive ぐ."}, {"prompt": "Quale hiragana corrisponde a questo romaji?", "focus": "ge", "options": ["げ", "あ", "い", "う"], "answer": 0, "explanation": "ge si scrive げ."}];
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {...item, shuffledOptions: options, correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)};
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>`).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus kana-quiz-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>`;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

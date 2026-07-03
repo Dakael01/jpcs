@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Volume 03 — Verbs · Forma TE · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/05_verbs/verbs_practice_te_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="practice-page-body verbs-practice-body">
+  <main class="practice-page">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Volume 03 — Verbs · Forma TE · Quiz</h1>
+        <p>50 domande totali · 10 pescate random a ogni test</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="verbs_practice.html">← Practice</a>
+        <a href="verbs.html">Indice Verbs</a>
+      </nav>
+    </header>
+
+    <section class="quiz-control-card quiz-intro-card">
+      <p>Scegli una risposta per ogni domanda. In fondo alla pagina trovi <strong>Verifica</strong>. Con <strong>Rifai test</strong> vengono pescate altre 10 domande.</p>
+      <div id="quizResult" class="quiz-result" aria-live="polite"></div>
+    </section>
+
+    <section id="quizContainer" class="quiz-container"></section>
+
+    <section class="quiz-control-card quiz-bottom-actions">
+      <div class="quiz-buttons">
+        <button id="checkQuiz">Verifica</button>
+        <button id="resetQuiz" class="secondary">Rifai test</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const QUESTION_BANK = [{"prompt": "Qual è la forma TE di 食べる（たべる）?", "options": ["食べて（たべて）", "食べます（たべます）", "食べました（たべました）", "食べる（たべる）"], "answer": 0, "explanation": "食べる（たべる） → 食べて（たべて）."}, {"prompt": "Qual è la forma TE di 見る（みる）?", "options": ["見て（みて）", "見ます（みます）", "見ました（みました）", "見る（みる）"], "answer": 0, "explanation": "見る（みる） → 見て（みて）."}, {"prompt": "Qual è la forma TE di 起きる（おきる）?", "options": ["起きて（おきて）", "起きます（おきます）", "起きました（おきました）", "起きる（おきる）"], "answer": 0, "explanation": "起きる（おきる） → 起きて（おきて）."}, {"prompt": "Qual è la forma TE di 寝る（ねる）?", "options": ["寝て（ねて）", "寝ます（ねます）", "寝ました（ねました）", "寝る（ねる）"], "answer": 0, "explanation": "寝る（ねる） → 寝て（ねて）."}, {"prompt": "Qual è la forma TE di 開ける（あける）?", "options": ["開けて（あけて）", "開けます（あけます）", "開けました（あけました）", "開ける（あける）"], "answer": 0, "explanation": "開ける（あける） → 開けて（あけて）."}, {"prompt": "Qual è la forma TE di 閉める（しめる）?", "options": ["閉めて（しめて）", "閉めます（しめます）", "閉めました（しめました）", "閉める（しめる）"], "answer": 0, "explanation": "閉める（しめる） → 閉めて（しめて）."}, {"prompt": "Qual è la forma TE di 教える（おしえる）?", "options": ["教えて（おしえて）", "教えます（おしえます）", "教えました（おしえました）", "教える（おしえる）"], "answer": 0, "explanation": "教える（おしえる） → 教えて（おしえて）."}, {"prompt": "Qual è la forma TE di 忘れる（わすれる）?", "options": ["忘れて（わすれて）", "忘れます（わすれます）", "忘れました（わすれました）", "忘れる（わすれる）"], "answer": 0, "explanation": "忘れる（わすれる） → 忘れて（わすれて）."}, {"prompt": "Qual è la forma TE di 借りる（かりる）?", "options": ["借りて（かりて）", "借ります（かります）", "借りました（かりました）", "借りる（かりる）"], "answer": 0, "explanation": "借りる（かりる） → 借りて（かりて）."}, {"prompt": "Qual è la forma TE di 浴びる（あびる）?", "options": ["浴びて（あびて）", "浴びます（あびます）", "浴びました（あびました）", "浴びる（あびる）"], "answer": 0, "explanation": "浴びる（あびる） → 浴びて（あびて）."}, {"prompt": "Qual è la forma TE di 出る（でる）?", "options": ["出て（でて）", "出ます（でます）", "出ました（でました）", "出る（でる）"], "answer": 0, "explanation": "出る（でる） → 出て（でて）."}, {"prompt": "Qual è la forma TE di 入れる（いれる）?", "options": ["入れて（いれて）", "入れます（いれます）", "入れました（いれました）", "入れる（いれる）"], "answer": 0, "explanation": "入れる（いれる） → 入れて（いれて）."}, {"prompt": "Qual è la forma TE di 着る（きる）?", "options": ["着て（きて）", "着ます（きます）", "着ました（きました）", "着る（きる）"], "answer": 0, "explanation": "着る（きる） → 着て（きて）."}, {"prompt": "Qual è la forma TE di いる?", "options": ["いて", "います", "いました", "いる"], "answer": 0, "explanation": "いる → いて."}, {"prompt": "Qual è la forma TE di できる?", "options": ["できて", "できます", "できました", "できる"], "answer": 0, "explanation": "できる → できて."}, {"prompt": "Qual è la forma TE di 降りる（おりる）?", "options": ["降りて（おりて）", "降ります（おります）", "降りました（おりました）", "降りる（おりる）"], "answer": 0, "explanation": "降りる（おりる） → 降りて（おりて）."}, {"prompt": "Qual è la forma TE di 飲む（のむ）?", "options": ["飲んで（のんで）", "飲みます（のみます）", "飲みました（のみました）", "飲む（のむ）"], "answer": 0, "explanation": "飲む（のむ） → 飲んで（のんで）."}, {"prompt": "Qual è la forma TE di 読む（よむ）?", "options": ["読んで（よんで）", "読みます（よみます）", "読みました（よみました）", "読む（よむ）"], "answer": 0, "explanation": "読む（よむ） → 読んで（よんで）."}, {"prompt": "Qual è la forma TE di 休む（やすむ）?", "options": ["休んで（やすんで）", "休みます（やすみます）", "休みました（やすみました）", "休む（やすむ）"], "answer": 0, "explanation": "休む（やすむ） → 休んで（やすんで）."}, {"prompt": "Qual è la forma TE di 死ぬ（しぬ）?", "options": ["死んで（しんで）", "死にます（しにます）", "死にました（しにました）", "死ぬ（しぬ）"], "answer": 0, "explanation": "死ぬ（しぬ） → 死んで（しんで）."}, {"prompt": "Qual è la forma TE di 遊ぶ（あそぶ）?", "options": ["遊んで（あそんで）", "遊びます（あそびます）", "遊びました（あそびました）", "遊ぶ（あそぶ）"], "answer": 0, "explanation": "遊ぶ（あそぶ） → 遊んで（あそんで）."}, {"prompt": "Qual è la forma TE di 呼ぶ（よぶ）?", "options": ["呼んで（よんで）", "呼びます（よびます）", "呼びました（よびました）", "呼ぶ（よぶ）"], "answer": 0, "explanation": "呼ぶ（よぶ） → 呼んで（よんで）."}, {"prompt": "Qual è la forma TE di 泳ぐ（およぐ）?", "options": ["泳いで（およいで）", "泳ぎます（およぎます）", "泳ぎました（およぎました）", "泳ぐ（およぐ）"], "answer": 0, "explanation": "泳ぐ（およぐ） → 泳いで（およいで）."}, {"prompt": "Qual è la forma TE di 書く（かく）?", "options": ["書いて（かいて）", "書きます（かきます）", "書きました（かきました）", "書く（かく）"], "answer": 0, "explanation": "書く（かく） → 書いて（かいて）."}, {"prompt": "Qual è la forma TE di 聞く（きく）?", "options": ["聞いて（きいて）", "聞きます（ききます）", "聞きました（ききました）", "聞く（きく）"], "answer": 0, "explanation": "聞く（きく） → 聞いて（きいて）."}, {"prompt": "Qual è la forma TE di 働く（はたらく）?", "options": ["働いて（はたらいて）", "働きます（はたらきます）", "働きました（はたらきました）", "働く（はたらく）"], "answer": 0, "explanation": "働く（はたらく） → 働いて（はたらいて）."}, {"prompt": "Qual è la forma TE di 行く（いく）?", "options": ["行って（いって）", "行いて（いいて）", "行きて（いきて）", "行きます（いきます）"], "answer": 0, "explanation": "行く（いく） → 行って（いって）."}, {"prompt": "Qual è la forma TE di 話す（はなす）?", "options": ["話して（はなして）", "話します（はなします）", "話しました（はなしました）", "話す（はなす）"], "answer": 0, "explanation": "話す（はなす） → 話して（はなして）."}, {"prompt": "Qual è la forma TE di 買う（かう）?", "options": ["買って（かって）", "買います（かいます）", "買いました（かいました）", "買う（かう）"], "answer": 0, "explanation": "買う（かう） → 買って（かって）."}, {"prompt": "Qual è la forma TE di 会う（あう）?", "options": ["会って（あって）", "会います（あいます）", "会いました（あいました）", "会う（あう）"], "answer": 0, "explanation": "会う（あう） → 会って（あって）."}, {"prompt": "Qual è la forma TE di 待つ（まつ）?", "options": ["待って（まって）", "待ちます（まちます）", "待ちました（まちました）", "待つ（まつ）"], "answer": 0, "explanation": "待つ（まつ） → 待って（まって）."}, {"prompt": "Qual è la forma TE di 持つ（もつ）?", "options": ["持って（もって）", "持ちます（もちます）", "持ちました（もちました）", "持つ（もつ）"], "answer": 0, "explanation": "持つ（もつ） → 持って（もって）."}, {"prompt": "Qual è la forma TE di 帰る（かえる）?", "options": ["帰って（かえって）", "帰ります（かえります）", "帰りました（かえりました）", "帰る（かえる）"], "answer": 0, "explanation": "帰る（かえる） → 帰って（かえって）."}, {"prompt": "Qual è la forma TE di 入る（はいる）?", "options": ["入って（はいって）", "入ります（はいります）", "入りました（はいりました）", "入る（はいる）"], "answer": 0, "explanation": "入る（はいる） → 入って（はいって）."}, {"prompt": "Qual è la forma TE di 作る（つくる）?", "options": ["作って（つくって）", "作ります（つくります）", "作りました（つくりました）", "作る（つくる）"], "answer": 0, "explanation": "作る（つくる） → 作って（つくって）."}, {"prompt": "Qual è la forma TE di 乗る（のる）?", "options": ["乗って（のって）", "乗ります（のります）", "乗りました（のりました）", "乗る（のる）"], "answer": 0, "explanation": "乗る（のる） → 乗って（のって）."}, {"prompt": "Qual è la forma TE di 売る（うる）?", "options": ["売って（うって）", "売ります（うります）", "売りました（うりました）", "売る（うる）"], "answer": 0, "explanation": "売る（うる） → 売って（うって）."}, {"prompt": "Qual è la forma TE di 切る（きる）?", "options": ["切って（きって）", "切ります（きります）", "切りました（きりました）", "切る（きる）"], "answer": 0, "explanation": "切る（きる） → 切って（きって）."}, {"prompt": "Qual è la forma TE di 分かる（わかる）?", "options": ["分かって（わかって）", "分かります（わかります）", "分かりました（わかりました）", "分かる（わかる）"], "answer": 0, "explanation": "分かる（わかる） → 分かって（わかって）."}, {"prompt": "Qual è la forma TE di 座る（すわる）?", "options": ["座って（すわって）", "座ります（すわります）", "座りました（すわりました）", "座る（すわる）"], "answer": 0, "explanation": "座る（すわる） → 座って（すわって）."}, {"prompt": "Qual è la forma TE di 立つ（たつ）?", "options": ["立って（たって）", "立ちます（たちます）", "立ちました（たちました）", "立つ（たつ）"], "answer": 0, "explanation": "立つ（たつ） → 立って（たって）."}, {"prompt": "Qual è la forma TE di 使う（つかう）?", "options": ["使って（つかって）", "使います（つかいます）", "使いました（つかいました）", "使う（つかう）"], "answer": 0, "explanation": "使う（つかう） → 使って（つかって）."}, {"prompt": "Qual è la forma TE di 洗う（あらう）?", "options": ["洗って（あらって）", "洗います（あらいます）", "洗いました（あらいました）", "洗う（あらう）"], "answer": 0, "explanation": "洗う（あらう） → 洗って（あらって）."}, {"prompt": "Qual è la forma TE di 取る（とる）?", "options": ["取って（とって）", "取ります（とります）", "取りました（とりました）", "取る（とる）"], "answer": 0, "explanation": "取る（とる） → 取って（とって）."}, {"prompt": "Qual è la forma TE di 住む（すむ）?", "options": ["住んで（すんで）", "住みます（すみます）", "住みました（すみました）", "住む（すむ）"], "answer": 0, "explanation": "住む（すむ） → 住んで（すんで）."}, {"prompt": "Qual è la forma TE di する?", "options": ["して", "します", "しました", "する"], "answer": 0, "explanation": "する → して."}, {"prompt": "Qual è la forma TE di 勉強する（べんきょうする）?", "options": ["勉強して（べんきょうして）", "勉強します（べんきょうします）", "勉強しました（べんきょうしました）", "勉強する（べんきょうする）"], "answer": 0, "explanation": "勉強する（べんきょうする） → 勉強して（べんきょうして）."}, {"prompt": "Qual è la forma TE di 来る（くる）?", "options": ["来て（きて）", "来ます（きます）", "来ました（きました）", "来る（くる）"], "answer": 0, "explanation": "来る（くる） → 来て（きて）."}, {"prompt": "Qual è la forma TE di 掃除する（そうじする）?", "options": ["掃除して（そうじして）", "掃除します（そうじします）", "掃除しました（そうじしました）", "掃除する（そうじする）"], "answer": 0, "explanation": "掃除する（そうじする） → 掃除して（そうじして）."}, {"prompt": "Qual è la forma TE di 料理する（りょうりする）?", "options": ["料理して（りょうりして）", "料理します（りょうりします）", "料理しました（りょうりしました）", "料理する（りょうりする）"], "answer": 0, "explanation": "料理する（りょうりする） → 料理して（りょうりして）."}];
+    const TEST_SIZE = 10;
+    let currentQuestions = [];
+
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+    function startQuiz() {
+      currentQuestions = shuffle(uniqueQuestions(QUESTION_BANK)).slice(0, TEST_SIZE).map(q => {
+        const opts = q.options.map((text, index) => ({ text, originalIndex: index }));
+        const shuffledOptions = shuffle(opts);
+        return {
+          ...q,
+          shuffledOptions,
+          correctShuffledIndex: shuffledOptions.findIndex(o => o.originalIndex === q.answer)
+        };
+      });
+      document.getElementById('quizResult').innerHTML = '';
+      renderQuiz();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderQuiz() {
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = currentQuestions.map((q, qi) => `
+        <article class="quiz-question" data-question="${qi}">
+          <h2>${qi + 1}. ${q.prompt}</h2>
+          <div class="quiz-options">
+            ${q.shuffledOptions.map((opt, oi) => `
+              <label>
+                <input type="radio" name="q${qi}" value="${oi}">
+                <span>${opt.text}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div class="quiz-feedback"></div>
+        </article>
+      `).join('');
+    }
+
+    function checkQuiz() {
+      let correct = 0;
+      currentQuestions.forEach((q, qi) => {
+        const article = document.querySelector(`.quiz-question[data-question="${qi}"]`);
+        const selected = article.querySelector(`input[name="q${qi}"]:checked`);
+        const feedback = article.querySelector('.quiz-feedback');
+        article.classList.remove('correct','wrong','missing');
+
+        if (!selected) {
+          article.classList.add('missing');
+          feedback.innerHTML = `<strong>Non risposta.</strong> Soluzione: ${q.shuffledOptions[q.correctShuffledIndex].text}<br><span>${q.explanation}</span>`;
+          return;
+        }
+
+        const isCorrect = Number(selected.value) === q.correctShuffledIndex;
+        if (isCorrect) {
+          correct++;
+          article.classList.add('correct');
+          feedback.innerHTML = `<strong>Corretto.</strong><br><span>${q.explanation}</span>`;
+        } else {
+          article.classList.add('wrong');
+          feedback.innerHTML = `<strong>Errato.</strong> Soluzione: ${q.shuffledOptions[q.correctShuffledIndex].text}<br><span>${q.explanation}</span>`;
+        }
+      });
+
+      const result = document.getElementById('quizResult');
+      result.innerHTML = `<strong>Punteggio: ${correct} / ${TEST_SIZE}</strong><span>${correct >= 8 ? 'Ottimo lavoro.' : correct >= 6 ? 'Buono, ma rivedi gli errori.' : 'Conviene ripassare le regole e rifare il test.'}</span>`;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('checkQuiz').addEventListener('click', checkQuiz);
+    document.getElementById('resetQuiz').addEventListener('click', startQuiz);
+    startQuiz();
+  </script>
+</body>
+</html>

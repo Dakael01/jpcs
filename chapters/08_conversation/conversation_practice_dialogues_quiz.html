@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Conversation — Mini dialoghi · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/08_conversation/conversation_practice_dialogues_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Conversation — Mini dialoghi · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="conversation_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+    <form id="quizForm"></form>
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#8b4d6b">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+<script>
+const QUESTION_POOL = [{"prompt": "Traduci questa battuta.", "focus": "すみません、この電車は東京に行きますか。", "options": ["Mi scusi, questo treno va a Tokyo?", "Sì, ci va.", "Quale binario?", "Binario 3."], "answer": 0, "explanation": "すみません、この電車は東京に行きますか。 = Mi scusi, questo treno va a Tokyo?"}, {"prompt": "Quale battuta giapponese corrisponde?", "focus": "Mi scusi, questo treno va a Tokyo?", "options": ["すみません、この電車は東京に行きますか。", "はい、行きます。", "何番線ですか。", "三番線です。"], "answer": 0, "explanation": "Mi scusi, questo treno va a Tokyo? = すみません、この電車は東京に行きますか。"}, {"prompt": "In quale mini dialogo appare questa battuta?", "focus": "すみません、この電車は東京に行きますか。", "options": ["Alla stazione", "Al ristorante", "In hotel", "In negozio"], "answer": 0, "explanation": "Dialogo: Alla stazione"}, {"prompt": "Traduci questa battuta.", "focus": "はい、行きます。", "options": ["Sì, ci va.", "Quale binario?", "Binario 3.", "Il menu, per favore."], "answer": 0, "explanation": "はい、行きます。 = Sì, ci va."}, {"prompt": "Quale battuta giapponese corrisponde?", "focus": "Sì, ci va.", "options": ["はい、行きます。", "何番線ですか。", "三番線です。", "メニューをください。"], "answer": 0, "explanation": "Sì, ci va. = はい、行きます。"}, {"prompt": "In quale mini dialogo appare questa battuta?", "focus": "はい、行きます。", "options": ["Alla stazione", "Al ristorante", "In hotel", "In negozio"], "answer": 0, "explanation": "Dialogo: Alla stazione"}, {"prompt": "Traduci questa battuta.", "focus": "何番線ですか。", "options": ["Quale binario?", "Binario 3.", "Il menu, per favore.", "Sì, prego."], "answer": 0, "explanation": "何番線ですか。 = Quale binario?"}, {"prompt": "Quale battuta giapponese corrisponde?", "focus": "Quale binario?", "options": ["何番線ですか。", "三番線です。", "メニューをください。", "はい、どうぞ。"], "answer": 0, "explanation": "Quale binario? = 何番線ですか。"}, {"prompt": "In quale mini dialogo appare questa battuta?", "focus": "何番線ですか。", "options": ["Alla stazione", "Al ristorante", "In hotel", "In negozio"], "answer": 0, "explanation": "Dialogo: Alla stazione"}, {"prompt": "Traduci questa battuta.", "focus": "三番線です。", "options": ["Binario 3.", "Il menu, per favore.", "Sì, prego.", "Cosa consiglia?"], "answer": 0, "explanation": "三番線です。 = Binario 3."}, {"prompt": "Quale battuta giapponese corrisponde?", "focus": "Binario 3.", "options": ["三番線です。", "メニューをください。", "はい、どうぞ。", "おすすめは何ですか。"], "answer": 0, "explanation": "Binario 3. = 三番線です。"}, {"prompt": "In quale mini dialogo appare questa battuta?", "focus": "三番線です。", "options": ["Alla stazione", "Al ristorante", "In hotel", "In negozio"], "answer": 0, "explanation": "Dialogo: Alla stazione"}, {"prompt": "Traduci questa battuta.", "focus": "メニューをください。", "options": ["Il menu, per favore.", "Sì, prego.", "Cosa consiglia?", "Consiglio questo pesce."], "answer": 0, "explanation": "メニューをください。 = Il menu, per favore."}, {"prompt": "Quale battuta giapponese corrisponde?", "focus": "Il menu, per favore.", "options": ["メニューをください。", "はい、どうぞ。", "おすすめは何ですか。", "この魚がおすすめです。"], "answer": 0, "explanation": "Il menu, per favore. = メニューをください。"}, {"prompt": "In quale mini dialogo appare questa battuta?", "focus": "メニューをください。", "options": ["Al ristorante", "Alla stazione", "In hotel", "In negozio"], "answer": 0, "explanation": "Dialogo: Al ristorante"}, {"prompt": "Traduci questa battuta.", "focus": "はい、どうぞ。", "options": ["Sì, prego.", "Cosa consiglia?", "Consiglio questo pesce.", "Ho una prenotazione."], "answer": 0, "explanation": "はい、どうぞ。 = Sì, prego."}, {"prompt": "Quale battuta giapponese corrisponde?", "focus": "Sì, prego.", "options": ["はい、どうぞ。", "おすすめは何ですか。", "この魚がおすすめです。", "予約があります。"], "answer": 0, "explanation": "Sì, prego. = はい、どうぞ。"}, {"prompt": "In quale mini dialogo appare questa battuta?", "focus": "はい、どうぞ。", "options": ["Al ristorante", "Alla stazione", "In hotel", "In negozio"], "answer": 0, "explanation": "Dialogo: Al ristorante"}, {"prompt": "Traduci questa battuta.", "focus": "おすすめは何ですか。", "options": ["Cosa consiglia?", "Consiglio questo pesce.", "Ho una prenotazione.", "Qual è il nome?"], "answer": 0, "explanation": "おすすめは何ですか。 = Cosa consiglia?"}, {"prompt": "Quale battuta giapponese corrisponde?", "focus": "Cosa consiglia?", "options": ["おすすめは何ですか。", "この魚がおすすめです。", "予約があります。", "お名前は何ですか。"], "answer": 0, "explanation": "Cosa consiglia? = おすすめは何ですか。"}, {"prompt": "In quale mini dialogo appare questa battuta?", "focus": "おすすめは何ですか。", "options": ["Al ristorante", "Alla stazione", "In hotel", "In negozio"], "answer": 0, "explanation": "Dialogo: Al ristorante"}, {"prompt": "Traduci questa battuta.", "focus": "この魚がおすすめです。", "options": ["Consiglio questo pesce.", "Ho una prenotazione.", "Qual è il nome?", "Daniele."], "answer": 0, "explanation": "この魚がおすすめです。 = Consiglio questo pesce."}, {"prompt": "Quale battuta giapponese corrisponde?", "focus": "Consiglio questo pesce.", "options": ["この魚がおすすめです。", "予約があります。", "お名前は何ですか。", "ダニエレです。"], "answer": 0, "explanation": "Consiglio questo pesce. = この魚がおすすめです。"}, {"prompt": "In quale mini dialogo appare questa battuta?", "focus": "この魚がおすすめです。", "options": ["Al ristorante", "Alla stazione", "In hotel", "In negozio"], "answer": 0, "explanation": "Dialogo: Al ristorante"}, {"prompt": "Traduci questa battuta.", "focus": "予約があります。", "options": ["Ho una prenotazione.", "Qual è il nome?", "Daniele.", "Il passaporto, per favore."], "answer": 0, "explanation": "予約があります。 = Ho una prenotazione."}, {"prompt": "Quale battuta giapponese corrisponde?", "focus": "Ho una prenotazione.", "options": ["予約があります。", "お名前は何ですか。", "ダニエレです。", "パスポートをお願いします。"], "answer": 0, "explanation": "Ho una prenotazione. = 予約があります。"}, {"prompt": "In quale mini dialogo appare questa battuta?", "focus": "予約があります。", "options": ["In hotel", "Alla stazione", "Al ristorante", "In negozio"], "answer": 0, "explanation": "Dialogo: In hotel"}, {"prompt": "Traduci questa battuta.", "focus": "お名前は何ですか。", "options": ["Qual è il nome?", "Daniele.", "Il passaporto, per favore.", "Quanto costa questo?"], "answer": 0, "explanation": "お名前は何ですか。 = Qual è il nome?"}, {"prompt": "Quale battuta giapponese corrisponde?", "focus": "Qual è il nome?", "options": ["お名前は何ですか。", "ダニエレです。", "パスポートをお願いします。", "これはいくらですか。"], "answer": 0, "explanation": "Qual è il nome? = お名前は何ですか。"}, {"prompt": "In quale mini dialogo appare questa battuta?", "focus": "お名前は何ですか。", "options": ["In hotel", "Alla stazione", "Al ristorante", "In negozio"], "answer": 0, "explanation": "Dialogo: In hotel"}, {"prompt": "Traduci questa battuta.", "focus": "ダニエレです。", "options": ["Daniele.", "Il passaporto, per favore.", "Quanto costa questo?", "Sono 1.000 yen."], "answer": 0, "explanation": "ダニエレです。 = Daniele."}, {"prompt": "Quale battuta giapponese corrisponde?", "focus": "Daniele.", "options": ["ダニエレです。", "パスポートをお願いします。", "これはいくらですか。", "千円です。"], "answer": 0, "explanation": "Daniele. = ダニエレです。"}, {"prompt": "In quale mini dialogo appare questa battuta?", "focus": "ダニエレです。", "options": ["In hotel", "Alla stazione", "Al ristorante", "In negozio"], "answer": 0, "explanation": "Dialogo: In hotel"}, {"prompt": "Traduci questa battuta.", "focus": "パスポートをお願いします。", "options": ["Il passaporto, per favore.", "Quanto costa questo?", "Sono 1.000 yen.", "Questo, per favore."], "answer": 0, "explanation": "パスポートをお願いします。 = Il passaporto, per favore."}, {"prompt": "Quale battuta giapponese corrisponde?", "focus": "Il passaporto, per favore.", "options": ["パスポートをお願いします。", "これはいくらですか。", "千円です。", "これをください。"], "answer": 0, "explanation": "Il passaporto, per favore. = パスポートをお願いします。"}, {"prompt": "In quale mini dialogo appare questa battuta?", "focus": "パスポートをお願いします。", "options": ["In hotel", "Alla stazione", "Al ristorante", "In negozio"], "answer": 0, "explanation": "Dialogo: In hotel"}, {"prompt": "Traduci questa battuta.", "focus": "これはいくらですか。", "options": ["Quanto costa questo?", "Sono 1.000 yen.", "Questo, per favore.", "Grazie."], "answer": 0, "explanation": "これはいくらですか。 = Quanto costa questo?"}, {"prompt": "Quale battuta giapponese corrisponde?", "focus": "Quanto costa questo?", "options": ["これはいくらですか。", "千円です。", "これをください。", "ありがとうございます。"], "answer": 0, "explanation": "Quanto costa questo? = これはいくらですか。"}, {"prompt": "In quale mini dialogo appare questa battuta?", "focus": "これはいくらですか。", "options": ["In negozio", "Alla stazione", "Al ristorante", "In hotel"], "answer": 0, "explanation": "Dialogo: In negozio"}, {"prompt": "Traduci questa battuta.", "focus": "千円です。", "options": ["Sono 1.000 yen.", "Questo, per favore.", "Grazie.", "すみません。"], "answer": 0, "explanation": "千円です。 = Sono 1.000 yen."}, {"prompt": "Quale battuta giapponese corrisponde?", "focus": "Sono 1.000 yen.", "options": ["千円です。", "これをください。", "ありがとうございます。", "すみません。"], "answer": 0, "explanation": "Sono 1.000 yen. = 千円です。"}, {"prompt": "In quale mini dialogo appare questa battuta?", "focus": "千円です。", "options": ["In negozio", "Alla stazione", "Al ristorante", "In hotel"], "answer": 0, "explanation": "Dialogo: In negozio"}, {"prompt": "Traduci questa battuta.", "focus": "これをください。", "options": ["Questo, per favore.", "Grazie.", "すみません。", "ありがとうございます。"], "answer": 0, "explanation": "これをください。 = Questo, per favore."}, {"prompt": "Quale battuta giapponese corrisponde?", "focus": "Questo, per favore.", "options": ["これをください。", "ありがとうございます。", "すみません。", "お願いします。"], "answer": 0, "explanation": "Questo, per favore. = これをください。"}, {"prompt": "In quale mini dialogo appare questa battuta?", "focus": "これをください。", "options": ["In negozio", "Alla stazione", "Al ristorante", "In hotel"], "answer": 0, "explanation": "Dialogo: In negozio"}, {"prompt": "Traduci questa battuta.", "focus": "ありがとうございます。", "options": ["Grazie.", "すみません。", "ありがとうございます。", "お願いします。"], "answer": 0, "explanation": "ありがとうございます。 = Grazie."}, {"prompt": "Quale battuta giapponese corrisponde?", "focus": "Grazie.", "options": ["ありがとうございます。", "すみません。", "お願いします。", "わかりません。"], "answer": 0, "explanation": "Grazie. = ありがとうございます。"}, {"prompt": "In quale mini dialogo appare questa battuta?", "focus": "ありがとうございます。", "options": ["In negozio", "Alla stazione", "Al ristorante", "In hotel"], "answer": 0, "explanation": "Dialogo: In negozio"}, {"prompt": "Traduci questa battuta.", "focus": "すみません、この電車は東京に行きますか。", "options": ["Mi scusi, questo treno va a Tokyo?", "Sì, ci va.", "Quale binario?", "Binario 3."], "answer": 0, "explanation": "すみません、この電車は東京に行きますか。 = Mi scusi, questo treno va a Tokyo?"}, {"prompt": "Quale battuta giapponese corrisponde?", "focus": "Mi scusi, questo treno va a Tokyo?", "options": ["すみません、この電車は東京に行きますか。", "はい、行きます。", "何番線ですか。", "三番線です。"], "answer": 0, "explanation": "Mi scusi, questo treno va a Tokyo? = すみません、この電車は東京に行きますか。"}];
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {...item, shuffledOptions: options, correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)};
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>`).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus conversation-quiz-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>`;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

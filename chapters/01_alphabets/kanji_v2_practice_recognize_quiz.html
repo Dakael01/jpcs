@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kanji v2 — Riconosci il kanji · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/01_alphabets/kanji_v2_practice_recognize_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Kanji v2 — Riconosci il kanji · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="kanji_v2_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+    <section class="print-section"><h2>Istruzioni</h2><p>Scegli la risposta corretta e premi <strong>Verifica</strong>.</p></section>
+    <form id="quizForm"></form>
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#7a5486">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+<script>
+const QUESTION_POOL = [{"prompt": "Quale kanji corrisponde a questo significato?", "focus": "sole / giorno", "options": ["日", "月", "火", "水"], "answer": 0, "explanation": "日 = sole / giorno."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "luna / mese", "options": ["月", "火", "水", "木"], "answer": 0, "explanation": "月 = luna / mese."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "fuoco", "options": ["火", "水", "木", "山"], "answer": 0, "explanation": "火 = fuoco."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "acqua", "options": ["水", "木", "山", "川"], "answer": 0, "explanation": "水 = acqua."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "albero / legno", "options": ["木", "山", "川", "田"], "answer": 0, "explanation": "木 = albero / legno."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "montagna", "options": ["山", "川", "田", "空"], "answer": 0, "explanation": "山 = montagna."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "fiume", "options": ["川", "田", "空", "雨"], "answer": 0, "explanation": "川 = fiume."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "risaia / campo", "options": ["田", "空", "雨", "人"], "answer": 0, "explanation": "田 = risaia / campo."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "cielo / vuoto", "options": ["空", "雨", "人", "女"], "answer": 0, "explanation": "空 = cielo / vuoto."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "pioggia", "options": ["雨", "人", "女", "男"], "answer": 0, "explanation": "雨 = pioggia."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "persona", "options": ["人", "女", "男", "子"], "answer": 0, "explanation": "人 = persona."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "donna", "options": ["女", "男", "子", "目"], "answer": 0, "explanation": "女 = donna."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "uomo", "options": ["男", "子", "目", "口"], "answer": 0, "explanation": "男 = uomo."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "bambino", "options": ["子", "目", "口", "耳"], "answer": 0, "explanation": "子 = bambino."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "occhio", "options": ["目", "口", "耳", "手"], "answer": 0, "explanation": "目 = occhio."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "bocca", "options": ["口", "耳", "手", "足"], "answer": 0, "explanation": "口 = bocca."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "orecchio", "options": ["耳", "手", "足", "心"], "answer": 0, "explanation": "耳 = orecchio."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "mano", "options": ["手", "日", "月", "火"], "answer": 0, "explanation": "手 = mano."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "piede / gamba", "options": ["足", "月", "火", "水"], "answer": 0, "explanation": "足 = piede / gamba."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "cuore / mente", "options": ["心", "火", "水", "木"], "answer": 0, "explanation": "心 = cuore / mente."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "uno", "options": ["一", "水", "木", "山"], "answer": 0, "explanation": "一 = uno."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "due", "options": ["二", "木", "山", "川"], "answer": 0, "explanation": "二 = due."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "tre", "options": ["三", "山", "川", "田"], "answer": 0, "explanation": "三 = tre."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "quattro", "options": ["四", "川", "田", "空"], "answer": 0, "explanation": "四 = quattro."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "cinque", "options": ["五", "田", "空", "雨"], "answer": 0, "explanation": "五 = cinque."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "sei", "options": ["六", "空", "雨", "人"], "answer": 0, "explanation": "六 = sei."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "sette", "options": ["七", "雨", "人", "女"], "answer": 0, "explanation": "七 = sette."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "otto", "options": ["八", "人", "女", "男"], "answer": 0, "explanation": "八 = otto."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "nove", "options": ["九", "女", "男", "子"], "answer": 0, "explanation": "九 = nove."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "dieci", "options": ["十", "男", "子", "目"], "answer": 0, "explanation": "十 = dieci."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "anno", "options": ["年", "子", "目", "口"], "answer": 0, "explanation": "年 = anno."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "ora / tempo", "options": ["時", "目", "口", "耳"], "answer": 0, "explanation": "時 = ora / tempo."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "minuto / parte / capire", "options": ["分", "口", "耳", "手"], "answer": 0, "explanation": "分 = minuto / parte / capire."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "adesso", "options": ["今", "耳", "手", "足"], "answer": 0, "explanation": "今 = adesso."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "prima / davanti", "options": ["前", "日", "月", "火"], "answer": 0, "explanation": "前 = prima / davanti."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "dopo / dietro", "options": ["後", "月", "火", "水"], "answer": 0, "explanation": "後 = dopo / dietro."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "mezzogiorno", "options": ["午", "火", "水", "木"], "answer": 0, "explanation": "午 = mezzogiorno."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "intervallo / spazio", "options": ["間", "水", "木", "山"], "answer": 0, "explanation": "間 = intervallo / spazio."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "settimana", "options": ["週", "木", "山", "川"], "answer": 0, "explanation": "週 = settimana."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "ogni", "options": ["毎", "山", "川", "田"], "answer": 0, "explanation": "毎 = ogni."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "studio / imparare", "options": ["学", "川", "田", "空"], "answer": 0, "explanation": "学 = studio / imparare."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "scuola", "options": ["校", "田", "空", "雨"], "answer": 0, "explanation": "校 = scuola."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "prima / precedente", "options": ["先", "空", "雨", "人"], "answer": 0, "explanation": "先 = prima / precedente."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "vita / nascere", "options": ["生", "雨", "人", "女"], "answer": 0, "explanation": "生 = vita / nascere."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "libro / origine", "options": ["本", "人", "女", "男"], "answer": 0, "explanation": "本 = libro / origine."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "paese / nazione", "options": ["国", "女", "男", "子"], "answer": 0, "explanation": "国 = paese / nazione."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "stazione", "options": ["駅", "男", "子", "目"], "answer": 0, "explanation": "駅 = stazione."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "negozio", "options": ["店", "子", "目", "口"], "answer": 0, "explanation": "店 = negozio."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "casa / famiglia", "options": ["家", "目", "口", "耳"], "answer": 0, "explanation": "家 = casa / famiglia."}, {"prompt": "Quale kanji corrisponde a questo significato?", "focus": "fuori / esterno", "options": ["外", "口", "耳", "手"], "answer": 0, "explanation": "外 = fuori / esterno."}];
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {...item, shuffledOptions: options, correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)};
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option"><input type="radio" name="${name}" value="${cidx}"><span>${choice.text}</span></label>`).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus kanji-v2-quiz-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>`;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

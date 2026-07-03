@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hiragana — Mini parole · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/01_alphabets/hiragana_practice_words_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Hiragana — Mini parole · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="hiragana_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+    <form id="quizForm"></form>
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#7a5486">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+<script>
+const QUESTION_POOL = [{"prompt": "Leggi questa mini parola in hiragana.", "focus": "あめ", "options": ["ame — pioggia", "ie — casa", "ue — sopra", "neko — gatto"], "answer": 0, "explanation": "あめ = ame — pioggia."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "ame — pioggia", "options": ["あめ", "いえ", "うえ", "ねこ"], "answer": 0, "explanation": "ame — pioggia = あめ."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "いえ", "options": ["ie — casa", "ue — sopra", "neko — gatto", "inu — cane"], "answer": 0, "explanation": "いえ = ie — casa."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "ie — casa", "options": ["いえ", "うえ", "ねこ", "いぬ"], "answer": 0, "explanation": "ie — casa = いえ."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "うえ", "options": ["ue — sopra", "neko — gatto", "inu — cane", "mizu — acqua"], "answer": 0, "explanation": "うえ = ue — sopra."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "ue — sopra", "options": ["うえ", "ねこ", "いぬ", "みず"], "answer": 0, "explanation": "ue — sopra = うえ."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "ねこ", "options": ["neko — gatto", "inu — cane", "mizu — acqua", "yama — montagna"], "answer": 0, "explanation": "ねこ = neko — gatto."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "neko — gatto", "options": ["ねこ", "いぬ", "みず", "やま"], "answer": 0, "explanation": "neko — gatto = ねこ."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "いぬ", "options": ["inu — cane", "mizu — acqua", "yama — montagna", "kawa — fiume"], "answer": 0, "explanation": "いぬ = inu — cane."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "inu — cane", "options": ["いぬ", "みず", "やま", "かわ"], "answer": 0, "explanation": "inu — cane = いぬ."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "みず", "options": ["mizu — acqua", "yama — montagna", "kawa — fiume", "sora — cielo"], "answer": 0, "explanation": "みず = mizu — acqua."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "mizu — acqua", "options": ["みず", "やま", "かわ", "そら"], "answer": 0, "explanation": "mizu — acqua = みず."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "やま", "options": ["yama — montagna", "kawa — fiume", "sora — cielo", "hana — fiore / naso"], "answer": 0, "explanation": "やま = yama — montagna."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "yama — montagna", "options": ["やま", "かわ", "そら", "はな"], "answer": 0, "explanation": "yama — montagna = やま."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "かわ", "options": ["kawa — fiume", "ame — pioggia", "ie — casa", "ue — sopra"], "answer": 0, "explanation": "かわ = kawa — fiume."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "kawa — fiume", "options": ["かわ", "あめ", "いえ", "うえ"], "answer": 0, "explanation": "kawa — fiume = かわ."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "そら", "options": ["sora — cielo", "ie — casa", "ue — sopra", "neko — gatto"], "answer": 0, "explanation": "そら = sora — cielo."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "sora — cielo", "options": ["そら", "いえ", "うえ", "ねこ"], "answer": 0, "explanation": "sora — cielo = そら."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "はな", "options": ["hana — fiore / naso", "ue — sopra", "neko — gatto", "inu — cane"], "answer": 0, "explanation": "はな = hana — fiore / naso."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "hana — fiore / naso", "options": ["はな", "うえ", "ねこ", "いぬ"], "answer": 0, "explanation": "hana — fiore / naso = はな."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "くつ", "options": ["kutsu — scarpe", "neko — gatto", "inu — cane", "mizu — acqua"], "answer": 0, "explanation": "くつ = kutsu — scarpe."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "kutsu — scarpe", "options": ["くつ", "ねこ", "いぬ", "みず"], "answer": 0, "explanation": "kutsu — scarpe = くつ."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "かさ", "options": ["kasa — ombrello", "inu — cane", "mizu — acqua", "yama — montagna"], "answer": 0, "explanation": "かさ = kasa — ombrello."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "kasa — ombrello", "options": ["かさ", "いぬ", "みず", "やま"], "answer": 0, "explanation": "kasa — ombrello = かさ."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "かぎ", "options": ["kagi — chiave", "mizu — acqua", "yama — montagna", "kawa — fiume"], "answer": 0, "explanation": "かぎ = kagi — chiave."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "kagi — chiave", "options": ["かぎ", "みず", "やま", "かわ"], "answer": 0, "explanation": "kagi — chiave = かぎ."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "て", "options": ["te — mano", "yama — montagna", "kawa — fiume", "sora — cielo"], "answer": 0, "explanation": "て = te — mano."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "te — mano", "options": ["て", "やま", "かわ", "そら"], "answer": 0, "explanation": "te — mano = て."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "あし", "options": ["ashi — piede / gamba", "ame — pioggia", "ie — casa", "ue — sopra"], "answer": 0, "explanation": "あし = ashi — piede / gamba."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "ashi — piede / gamba", "options": ["あし", "あめ", "いえ", "うえ"], "answer": 0, "explanation": "ashi — piede / gamba = あし."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "くち", "options": ["kuchi — bocca", "ie — casa", "ue — sopra", "neko — gatto"], "answer": 0, "explanation": "くち = kuchi — bocca."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "kuchi — bocca", "options": ["くち", "いえ", "うえ", "ねこ"], "answer": 0, "explanation": "kuchi — bocca = くち."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "みみ", "options": ["mimi — orecchio", "ue — sopra", "neko — gatto", "inu — cane"], "answer": 0, "explanation": "みみ = mimi — orecchio."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "mimi — orecchio", "options": ["みみ", "うえ", "ねこ", "いぬ"], "answer": 0, "explanation": "mimi — orecchio = みみ."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "め", "options": ["me — occhio", "neko — gatto", "inu — cane", "mizu — acqua"], "answer": 0, "explanation": "め = me — occhio."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "me — occhio", "options": ["め", "ねこ", "いぬ", "みず"], "answer": 0, "explanation": "me — occhio = め."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "ひと", "options": ["hito — persona", "inu — cane", "mizu — acqua", "yama — montagna"], "answer": 0, "explanation": "ひと = hito — persona."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "hito — persona", "options": ["ひと", "いぬ", "みず", "やま"], "answer": 0, "explanation": "hito — persona = ひと."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "こども", "options": ["kodomo — bambino", "mizu — acqua", "yama — montagna", "kawa — fiume"], "answer": 0, "explanation": "こども = kodomo — bambino."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "kodomo — bambino", "options": ["こども", "みず", "やま", "かわ"], "answer": 0, "explanation": "kodomo — bambino = こども."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "ともだち", "options": ["tomodachi — amico", "yama — montagna", "kawa — fiume", "sora — cielo"], "answer": 0, "explanation": "ともだち = tomodachi — amico."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "tomodachi — amico", "options": ["ともだち", "やま", "かわ", "そら"], "answer": 0, "explanation": "tomodachi — amico = ともだち."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "せんせい", "options": ["sensei — insegnante", "ame — pioggia", "ie — casa", "ue — sopra"], "answer": 0, "explanation": "せんせい = sensei — insegnante."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "sensei — insegnante", "options": ["せんせい", "あめ", "いえ", "うえ"], "answer": 0, "explanation": "sensei — insegnante = せんせい."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "がくせい", "options": ["gakusei — studente", "ie — casa", "ue — sopra", "neko — gatto"], "answer": 0, "explanation": "がくせい = gakusei — studente."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "gakusei — studente", "options": ["がくせい", "いえ", "うえ", "ねこ"], "answer": 0, "explanation": "gakusei — studente = がくせい."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "ほん", "options": ["hon — libro", "ue — sopra", "neko — gatto", "inu — cane"], "answer": 0, "explanation": "ほん = hon — libro."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "hon — libro", "options": ["ほん", "うえ", "ねこ", "いぬ"], "answer": 0, "explanation": "hon — libro = ほん."}, {"prompt": "Leggi questa mini parola in hiragana.", "focus": "えき", "options": ["eki — stazione", "neko — gatto", "inu — cane", "mizu — acqua"], "answer": 0, "explanation": "えき = eki — stazione."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "eki — stazione", "options": ["えき", "ねこ", "いぬ", "みず"], "answer": 0, "explanation": "eki — stazione = えき."}];
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {...item, shuffledOptions: options, correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)};
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>`).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus kana-quiz-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>`;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

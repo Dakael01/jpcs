@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vocabulary — Frasi utili · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/06_vocabulary/vocabulary_practice_phrases_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Vocabulary — Frasi utili · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="vocabulary_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+    <form id="quizForm"></form>
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#5f6872">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+<script>
+const QUESTION_POOL = [{"prompt": "Traduci in italiano.", "focus": "お願いします", "options": ["per favore / le chiedo", "io", "tu", "amico / amica"], "answer": 0, "explanation": "お願いします（おねがいします）= per favore / le chiedo."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "per favore / le chiedo", "options": ["お願いします", "私", "あなた", "友達"], "answer": 0, "explanation": "per favore / le chiedo = お願いします（おねがいします）."}, {"prompt": "Qual è la lettura corretta?", "focus": "お願いします", "options": ["おねがいします", "わたし", "あなた", "ともだち"], "answer": 0, "explanation": "お願いします si legge おねがいします."}, {"prompt": "Qual è il romaji corretto?", "focus": "お願いします", "options": ["onegaishimasu", "watashi", "anata", "tomodachi"], "answer": 0, "explanation": "お願いします = onegaishimasu."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "お願いします", "options": ["Frasi utili", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "お願いします è nella scheda: Frasi utili."}, {"prompt": "Traduci in italiano.", "focus": "ありがとうございます", "options": ["grazie", "tu", "amico / amica", "persona"], "answer": 0, "explanation": "ありがとうございます（ありがとうございます）= grazie."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "grazie", "options": ["ありがとうございます", "あなた", "友達", "人"], "answer": 0, "explanation": "grazie = ありがとうございます（ありがとうございます）."}, {"prompt": "Qual è la lettura corretta?", "focus": "ありがとうございます", "options": ["ありがとうございます", "あなた", "ともだち", "ひと"], "answer": 0, "explanation": "ありがとうございます si legge ありがとうございます."}, {"prompt": "Qual è il romaji corretto?", "focus": "ありがとうございます", "options": ["arigatou gozaimasu", "anata", "tomodachi", "hito"], "answer": 0, "explanation": "ありがとうございます = arigatou gozaimasu."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "ありがとうございます", "options": ["Frasi utili", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "ありがとうございます è nella scheda: Frasi utili."}, {"prompt": "Traduci in italiano.", "focus": "すみません", "options": ["mi scusi / scusa", "amico / amica", "persona", "bambino"], "answer": 0, "explanation": "すみません（すみません）= mi scusi / scusa."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "mi scusi / scusa", "options": ["すみません", "友達", "人", "子供"], "answer": 0, "explanation": "mi scusi / scusa = すみません（すみません）."}, {"prompt": "Qual è la lettura corretta?", "focus": "すみません", "options": ["すみません", "ともだち", "ひと", "こども"], "answer": 0, "explanation": "すみません si legge すみません."}, {"prompt": "Qual è il romaji corretto?", "focus": "すみません", "options": ["sumimasen", "tomodachi", "hito", "kodomo"], "answer": 0, "explanation": "すみません = sumimasen."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "すみません", "options": ["Frasi utili", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "すみません è nella scheda: Frasi utili."}, {"prompt": "Traduci in italiano.", "focus": "大丈夫です", "options": ["va bene / tutto ok", "persona", "bambino", "insegnante"], "answer": 0, "explanation": "大丈夫です（だいじょうぶです）= va bene / tutto ok."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "va bene / tutto ok", "options": ["大丈夫です", "人", "子供", "先生"], "answer": 0, "explanation": "va bene / tutto ok = 大丈夫です（だいじょうぶです）."}, {"prompt": "Qual è la lettura corretta?", "focus": "大丈夫です", "options": ["だいじょうぶです", "ひと", "こども", "せんせい"], "answer": 0, "explanation": "大丈夫です si legge だいじょうぶです."}, {"prompt": "Qual è il romaji corretto?", "focus": "大丈夫です", "options": ["daijoubu desu", "hito", "kodomo", "sensei"], "answer": 0, "explanation": "大丈夫です = daijoubu desu."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "大丈夫です", "options": ["Frasi utili", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "大丈夫です è nella scheda: Frasi utili."}, {"prompt": "Traduci in italiano.", "focus": "わかりません", "options": ["non capisco / non lo so", "bambino", "insegnante", "studente"], "answer": 0, "explanation": "わかりません（わかりません）= non capisco / non lo so."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "non capisco / non lo so", "options": ["わかりません", "子供", "先生", "学生"], "answer": 0, "explanation": "non capisco / non lo so = わかりません（わかりません）."}, {"prompt": "Qual è la lettura corretta?", "focus": "わかりません", "options": ["わかりません", "こども", "せんせい", "がくせい"], "answer": 0, "explanation": "わかりません si legge わかりません."}, {"prompt": "Qual è il romaji corretto?", "focus": "わかりません", "options": ["wakarimasen", "kodomo", "sensei", "gakusei"], "answer": 0, "explanation": "わかりません = wakarimasen."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "わかりません", "options": ["Frasi utili", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "わかりません è nella scheda: Frasi utili."}, {"prompt": "Traduci in italiano.", "focus": "もう一度お願いします", "options": ["ancora una volta, per favore", "insegnante", "studente", "mia madre"], "answer": 0, "explanation": "もう一度お願いします（もういちど おねがいします）= ancora una volta, per favore."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "ancora una volta, per favore", "options": ["もう一度お願いします", "先生", "学生", "母"], "answer": 0, "explanation": "ancora una volta, per favore = もう一度お願いします（もういちど おねがいします）."}, {"prompt": "Qual è la lettura corretta?", "focus": "もう一度お願いします", "options": ["もういちど おねがいします", "せんせい", "がくせい", "はは"], "answer": 0, "explanation": "もう一度お願いします si legge もういちど おねがいします."}, {"prompt": "Qual è il romaji corretto?", "focus": "もう一度お願いします", "options": ["mou ichido onegaishimasu", "sensei", "gakusei", "haha"], "answer": 0, "explanation": "もう一度お願いします = mou ichido onegaishimasu."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "もう一度お願いします", "options": ["Frasi utili", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "もう一度お願いします è nella scheda: Frasi utili."}, {"prompt": "Traduci in italiano.", "focus": "いくらですか", "options": ["quanto costa?", "studente", "mia madre", "mio padre"], "answer": 0, "explanation": "いくらですか（いくらですか）= quanto costa?."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "quanto costa?", "options": ["いくらですか", "学生", "母", "父"], "answer": 0, "explanation": "quanto costa? = いくらですか（いくらですか）."}, {"prompt": "Qual è la lettura corretta?", "focus": "いくらですか", "options": ["いくらですか", "がくせい", "はは", "ちち"], "answer": 0, "explanation": "いくらですか si legge いくらですか."}, {"prompt": "Qual è il romaji corretto?", "focus": "いくらですか", "options": ["ikura desu ka", "gakusei", "haha", "chichi"], "answer": 0, "explanation": "いくらですか = ikura desu ka."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "いくらですか", "options": ["Frasi utili", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "いくらですか è nella scheda: Frasi utili."}, {"prompt": "Traduci in italiano.", "focus": "どこですか", "options": ["dov’è?", "mia madre", "mio padre", "famiglia"], "answer": 0, "explanation": "どこですか（どこですか）= dov’è?."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "dov’è?", "options": ["どこですか", "母", "父", "家族"], "answer": 0, "explanation": "dov’è? = どこですか（どこですか）."}, {"prompt": "Qual è la lettura corretta?", "focus": "どこですか", "options": ["どこですか", "はは", "ちち", "かぞく"], "answer": 0, "explanation": "どこですか si legge どこですか."}, {"prompt": "Qual è il romaji corretto?", "focus": "どこですか", "options": ["doko desu ka", "haha", "chichi", "kazoku"], "answer": 0, "explanation": "どこですか = doko desu ka."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "どこですか", "options": ["Frasi utili", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "どこですか è nella scheda: Frasi utili."}, {"prompt": "Traduci in italiano.", "focus": "これは何ですか", "options": ["che cos’è questo?", "mio padre", "famiglia", "casa"], "answer": 0, "explanation": "これは何ですか（これは なんですか）= che cos’è questo?."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "che cos’è questo?", "options": ["これは何ですか", "父", "家族", "家"], "answer": 0, "explanation": "che cos’è questo? = これは何ですか（これは なんですか）."}, {"prompt": "Qual è la lettura corretta?", "focus": "これは何ですか", "options": ["これは なんですか", "ちち", "かぞく", "いえ"], "answer": 0, "explanation": "これは何ですか si legge これは なんですか."}, {"prompt": "Qual è il romaji corretto?", "focus": "これは何ですか", "options": ["kore wa nan desu ka", "chichi", "kazoku", "ie"], "answer": 0, "explanation": "これは何ですか = kore wa nan desu ka."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "これは何ですか", "options": ["Frasi utili", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "これは何ですか è nella scheda: Frasi utili."}, {"prompt": "Traduci in italiano.", "focus": "助けてください", "options": ["mi aiuti, per favore", "famiglia", "casa", "stanza"], "answer": 0, "explanation": "助けてください（たすけてください）= mi aiuti, per favore."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "mi aiuti, per favore", "options": ["助けてください", "家族", "家", "部屋"], "answer": 0, "explanation": "mi aiuti, per favore = 助けてください（たすけてください）."}, {"prompt": "Qual è la lettura corretta?", "focus": "助けてください", "options": ["たすけてください", "かぞく", "いえ", "へや"], "answer": 0, "explanation": "助けてください si legge たすけてください."}, {"prompt": "Qual è il romaji corretto?", "focus": "助けてください", "options": ["tasukete kudasai", "kazoku", "ie", "heya"], "answer": 0, "explanation": "助けてください = tasukete kudasai."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "助けてください", "options": ["Frasi utili", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "助けてください è nella scheda: Frasi utili."}];
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {...item, shuffledOptions: options, correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)};
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>`).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>`;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

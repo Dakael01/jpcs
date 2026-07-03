@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Grammar — この / その / あの · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/02_grammar/grammar_practice_kono_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Grammar — この / その / あの · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="grammar_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+
+    <form id="quizForm"></form>
+
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#3e763d">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+
+<script>
+const QUESTION_POOL = [{"prompt": "Come si usa この?", "focus": "この", "options": ["questo + nome", "quel + nome", "quel ... laggiù + nome", "sta sempre da solo"], "answer": 0, "explanation": "この deve stare davanti a un nome."}, {"prompt": "Traduci l’espressione.", "focus": "この本", "options": ["questo libro", "libro questo", "qui libro", "quale libro"], "answer": 0, "explanation": "この + nome = questo libro."}, {"prompt": "Traduci l’espressione.", "focus": "このペン", "options": ["questo penna", "penna questo", "qui penna", "quale penna"], "answer": 0, "explanation": "この + nome = questo penna."}, {"prompt": "Traduci l’espressione.", "focus": "この水", "options": ["questo acqua", "acqua questo", "qui acqua", "quale acqua"], "answer": 0, "explanation": "この + nome = questo acqua."}, {"prompt": "Traduci l’espressione.", "focus": "この学校", "options": ["questo scuola", "scuola questo", "qui scuola", "quale scuola"], "answer": 0, "explanation": "この + nome = questo scuola."}, {"prompt": "Traduci l’espressione.", "focus": "この駅", "options": ["questo stazione", "stazione questo", "qui stazione", "quale stazione"], "answer": 0, "explanation": "この + nome = questo stazione."}, {"prompt": "Traduci l’espressione.", "focus": "この店", "options": ["questo negozio", "negozio questo", "qui negozio", "quale negozio"], "answer": 0, "explanation": "この + nome = questo negozio."}, {"prompt": "Traduci l’espressione.", "focus": "この日本", "options": ["questo Giappone", "Giappone questo", "qui Giappone", "quale Giappone"], "answer": 0, "explanation": "この + nome = questo Giappone."}, {"prompt": "Traduci l’espressione.", "focus": "この友達", "options": ["questo amico", "amico questo", "qui amico", "quale amico"], "answer": 0, "explanation": "この + nome = questo amico."}, {"prompt": "Traduci l’espressione.", "focus": "この猫", "options": ["questo gatto", "gatto questo", "qui gatto", "quale gatto"], "answer": 0, "explanation": "この + nome = questo gatto."}, {"prompt": "Traduci l’espressione.", "focus": "この犬", "options": ["questo cane", "cane questo", "qui cane", "quale cane"], "answer": 0, "explanation": "この + nome = questo cane."}, {"prompt": "Traduci l’espressione.", "focus": "この車", "options": ["questo auto", "auto questo", "qui auto", "quale auto"], "answer": 0, "explanation": "この + nome = questo auto."}, {"prompt": "Traduci l’espressione.", "focus": "この家", "options": ["questo casa", "casa questo", "qui casa", "quale casa"], "answer": 0, "explanation": "この + nome = questo casa."}, {"prompt": "Traduci l’espressione.", "focus": "この図書館", "options": ["questo biblioteca", "biblioteca questo", "qui biblioteca", "quale biblioteca"], "answer": 0, "explanation": "この + nome = questo biblioteca."}, {"prompt": "Traduci l’espressione.", "focus": "この月曜日", "options": ["questo lunedì", "lunedì questo", "qui lunedì", "quale lunedì"], "answer": 0, "explanation": "この + nome = questo lunedì."}, {"prompt": "Traduci l’espressione.", "focus": "この日曜日", "options": ["questo domenica", "domenica questo", "qui domenica", "quale domenica"], "answer": 0, "explanation": "この + nome = questo domenica."}, {"prompt": "Come si usa その?", "focus": "その", "options": ["quel + nome", "questo + nome", "quel ... laggiù + nome", "sta sempre da solo"], "answer": 0, "explanation": "その deve stare davanti a un nome."}, {"prompt": "Traduci l’espressione.", "focus": "その本", "options": ["quel libro", "libro questo", "qui libro", "quale libro"], "answer": 0, "explanation": "その + nome = quel libro."}, {"prompt": "Traduci l’espressione.", "focus": "そのペン", "options": ["quel penna", "penna questo", "qui penna", "quale penna"], "answer": 0, "explanation": "その + nome = quel penna."}, {"prompt": "Traduci l’espressione.", "focus": "その水", "options": ["quel acqua", "acqua questo", "qui acqua", "quale acqua"], "answer": 0, "explanation": "その + nome = quel acqua."}, {"prompt": "Traduci l’espressione.", "focus": "その学校", "options": ["quel scuola", "scuola questo", "qui scuola", "quale scuola"], "answer": 0, "explanation": "その + nome = quel scuola."}, {"prompt": "Traduci l’espressione.", "focus": "その駅", "options": ["quel stazione", "stazione questo", "qui stazione", "quale stazione"], "answer": 0, "explanation": "その + nome = quel stazione."}, {"prompt": "Traduci l’espressione.", "focus": "その店", "options": ["quel negozio", "negozio questo", "qui negozio", "quale negozio"], "answer": 0, "explanation": "その + nome = quel negozio."}, {"prompt": "Traduci l’espressione.", "focus": "その日本", "options": ["quel Giappone", "Giappone questo", "qui Giappone", "quale Giappone"], "answer": 0, "explanation": "その + nome = quel Giappone."}, {"prompt": "Traduci l’espressione.", "focus": "その友達", "options": ["quel amico", "amico questo", "qui amico", "quale amico"], "answer": 0, "explanation": "その + nome = quel amico."}, {"prompt": "Traduci l’espressione.", "focus": "その猫", "options": ["quel gatto", "gatto questo", "qui gatto", "quale gatto"], "answer": 0, "explanation": "その + nome = quel gatto."}, {"prompt": "Traduci l’espressione.", "focus": "その犬", "options": ["quel cane", "cane questo", "qui cane", "quale cane"], "answer": 0, "explanation": "その + nome = quel cane."}, {"prompt": "Traduci l’espressione.", "focus": "その車", "options": ["quel auto", "auto questo", "qui auto", "quale auto"], "answer": 0, "explanation": "その + nome = quel auto."}, {"prompt": "Traduci l’espressione.", "focus": "その家", "options": ["quel casa", "casa questo", "qui casa", "quale casa"], "answer": 0, "explanation": "その + nome = quel casa."}, {"prompt": "Traduci l’espressione.", "focus": "その図書館", "options": ["quel biblioteca", "biblioteca questo", "qui biblioteca", "quale biblioteca"], "answer": 0, "explanation": "その + nome = quel biblioteca."}, {"prompt": "Traduci l’espressione.", "focus": "その月曜日", "options": ["quel lunedì", "lunedì questo", "qui lunedì", "quale lunedì"], "answer": 0, "explanation": "その + nome = quel lunedì."}, {"prompt": "Traduci l’espressione.", "focus": "その日曜日", "options": ["quel domenica", "domenica questo", "qui domenica", "quale domenica"], "answer": 0, "explanation": "その + nome = quel domenica."}, {"prompt": "Come si usa あの?", "focus": "あの", "options": ["quel ... laggiù + nome", "questo + nome", "quel + nome", "sta sempre da solo"], "answer": 0, "explanation": "あの deve stare davanti a un nome."}, {"prompt": "Traduci l’espressione.", "focus": "あの本", "options": ["quel ... laggiù libro", "libro questo", "qui libro", "quale libro"], "answer": 0, "explanation": "あの + nome = quel ... laggiù libro."}, {"prompt": "Traduci l’espressione.", "focus": "あのペン", "options": ["quel ... laggiù penna", "penna questo", "qui penna", "quale penna"], "answer": 0, "explanation": "あの + nome = quel ... laggiù penna."}, {"prompt": "Traduci l’espressione.", "focus": "あの水", "options": ["quel ... laggiù acqua", "acqua questo", "qui acqua", "quale acqua"], "answer": 0, "explanation": "あの + nome = quel ... laggiù acqua."}, {"prompt": "Traduci l’espressione.", "focus": "あの学校", "options": ["quel ... laggiù scuola", "scuola questo", "qui scuola", "quale scuola"], "answer": 0, "explanation": "あの + nome = quel ... laggiù scuola."}, {"prompt": "Traduci l’espressione.", "focus": "あの駅", "options": ["quel ... laggiù stazione", "stazione questo", "qui stazione", "quale stazione"], "answer": 0, "explanation": "あの + nome = quel ... laggiù stazione."}, {"prompt": "Traduci l’espressione.", "focus": "あの店", "options": ["quel ... laggiù negozio", "negozio questo", "qui negozio", "quale negozio"], "answer": 0, "explanation": "あの + nome = quel ... laggiù negozio."}, {"prompt": "Traduci l’espressione.", "focus": "あの日本", "options": ["quel ... laggiù Giappone", "Giappone questo", "qui Giappone", "quale Giappone"], "answer": 0, "explanation": "あの + nome = quel ... laggiù Giappone."}, {"prompt": "Traduci l’espressione.", "focus": "あの友達", "options": ["quel ... laggiù amico", "amico questo", "qui amico", "quale amico"], "answer": 0, "explanation": "あの + nome = quel ... laggiù amico."}, {"prompt": "Traduci l’espressione.", "focus": "あの猫", "options": ["quel ... laggiù gatto", "gatto questo", "qui gatto", "quale gatto"], "answer": 0, "explanation": "あの + nome = quel ... laggiù gatto."}, {"prompt": "Traduci l’espressione.", "focus": "あの犬", "options": ["quel ... laggiù cane", "cane questo", "qui cane", "quale cane"], "answer": 0, "explanation": "あの + nome = quel ... laggiù cane."}, {"prompt": "Traduci l’espressione.", "focus": "あの車", "options": ["quel ... laggiù auto", "auto questo", "qui auto", "quale auto"], "answer": 0, "explanation": "あの + nome = quel ... laggiù auto."}, {"prompt": "Traduci l’espressione.", "focus": "あの家", "options": ["quel ... laggiù casa", "casa questo", "qui casa", "quale casa"], "answer": 0, "explanation": "あの + nome = quel ... laggiù casa."}, {"prompt": "Traduci l’espressione.", "focus": "あの図書館", "options": ["quel ... laggiù biblioteca", "biblioteca questo", "qui biblioteca", "quale biblioteca"], "answer": 0, "explanation": "あの + nome = quel ... laggiù biblioteca."}, {"prompt": "Traduci l’espressione.", "focus": "あの月曜日", "options": ["quel ... laggiù lunedì", "lunedì questo", "qui lunedì", "quale lunedì"], "answer": 0, "explanation": "あの + nome = quel ... laggiù lunedì."}, {"prompt": "Traduci l’espressione.", "focus": "あの日曜日", "options": ["quel ... laggiù domenica", "domenica questo", "qui domenica", "quale domenica"], "answer": 0, "explanation": "あの + nome = quel ... laggiù domenica."}, {"prompt": "Quale forma va davanti a un nome?", "focus": "___ 本", "options": ["この", "これ", "ここ", "どこ"], "answer": 0, "explanation": "Davanti a un nome si usa この / その / あの, non これ / それ / あれ."}, {"prompt": "Quale forma va davanti a un nome?", "focus": "___ 本", "options": ["この", "これ", "ここ", "どこ"], "answer": 0, "explanation": "Davanti a un nome si usa この / その / あの, non これ / それ / あれ."}];
+
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {
+      ...item,
+      shuffledOptions: options,
+      correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)
+    };
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>
+    `).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>
+    `;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

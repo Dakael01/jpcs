@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Numbers &amp; Counters — Contatori · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/07_numbers_time_date/counters_practice_counters_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Numbers &amp; Counters — Contatori · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="counters_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+
+    <form id="quizForm"></form>
+
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#158176">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+
+<script>
+const QUESTION_POOL = [{"prompt": "Qual è la lettura di 一人?", "focus": "一人", "options": ["ひとり", "ふたり", "さんにん", "ひとつ"], "answer": 0, "explanation": "一人 = ひとり. Significa: una persona."}, {"prompt": "Qual è la lettura di 二人?", "focus": "二人", "options": ["ふたり", "ひとり", "さんにん", "ひとつ"], "answer": 0, "explanation": "二人 = ふたり. Significa: due persone."}, {"prompt": "Qual è la lettura di 三人?", "focus": "三人", "options": ["さんにん", "ひとり", "ふたり", "ひとつ"], "answer": 0, "explanation": "三人 = さんにん. Significa: tre persone."}, {"prompt": "Qual è la lettura di 一つ?", "focus": "一つ", "options": ["ひとつ", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "一つ = ひとつ. Significa: un oggetto generico."}, {"prompt": "Qual è la lettura di 二つ?", "focus": "二つ", "options": ["ふたつ", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "二つ = ふたつ. Significa: due oggetti generici."}, {"prompt": "Qual è la lettura di 三つ?", "focus": "三つ", "options": ["みっつ", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "三つ = みっつ. Significa: tre oggetti generici."}, {"prompt": "Qual è la lettura di 四つ?", "focus": "四つ", "options": ["よっつ", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "四つ = よっつ. Significa: quattro oggetti generici."}, {"prompt": "Qual è la lettura di 一枚?", "focus": "一枚", "options": ["いちまい", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "一枚 = いちまい. Significa: un oggetto piatto."}, {"prompt": "Qual è la lettura di 二枚?", "focus": "二枚", "options": ["にまい", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "二枚 = にまい. Significa: due oggetti piatti."}, {"prompt": "Qual è la lettura di 三枚?", "focus": "三枚", "options": ["さんまい", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "三枚 = さんまい. Significa: tre oggetti piatti."}, {"prompt": "Qual è la lettura di 一本?", "focus": "一本", "options": ["いっぽん", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "一本 = いっぽん. Significa: un oggetto lungo."}, {"prompt": "Qual è la lettura di 二本?", "focus": "二本", "options": ["にほん", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "二本 = にほん. Significa: due oggetti lunghi."}, {"prompt": "Qual è la lettura di 三本?", "focus": "三本", "options": ["さんぼん", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "三本 = さんぼん. Significa: tre oggetti lunghi."}, {"prompt": "Qual è la lettura di 一冊?", "focus": "一冊", "options": ["いっさつ", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "一冊 = いっさつ. Significa: un libro/quaderno."}, {"prompt": "Qual è la lettura di 二冊?", "focus": "二冊", "options": ["にさつ", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "二冊 = にさつ. Significa: due libri/quaderni."}, {"prompt": "Qual è la lettura di 三冊?", "focus": "三冊", "options": ["さんさつ", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "三冊 = さんさつ. Significa: tre libri/quaderni."}, {"prompt": "Qual è la lettura di 一台?", "focus": "一台", "options": ["いちだい", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "一台 = いちだい. Significa: un dispositivo/mezzo."}, {"prompt": "Qual è la lettura di 二台?", "focus": "二台", "options": ["にだい", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "二台 = にだい. Significa: due dispositivi/mezzi."}, {"prompt": "Qual è la lettura di 三台?", "focus": "三台", "options": ["さんだい", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "三台 = さんだい. Significa: tre dispositivi/mezzi."}, {"prompt": "Qual è la lettura di 一匹?", "focus": "一匹", "options": ["いっぴき", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "一匹 = いっぴき. Significa: un animale piccolo."}, {"prompt": "Qual è la lettura di 二匹?", "focus": "二匹", "options": ["にひき", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "二匹 = にひき. Significa: due animali piccoli."}, {"prompt": "Qual è la lettura di 三匹?", "focus": "三匹", "options": ["さんびき", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "三匹 = さんびき. Significa: tre animali piccoli."}, {"prompt": "Qual è la lettura di 一回?", "focus": "一回", "options": ["いっかい", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "一回 = いっかい. Significa: una volta."}, {"prompt": "Qual è la lettura di 二回?", "focus": "二回", "options": ["にかい", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "二回 = にかい. Significa: due volte."}, {"prompt": "Qual è la lettura di 三回?", "focus": "三回", "options": ["さんかい", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "三回 = さんかい. Significa: tre volte."}, {"prompt": "Qual è la lettura di 一階?", "focus": "一階", "options": ["いっかい", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "一階 = いっかい. Significa: primo piano."}, {"prompt": "Qual è la lettura di 二階?", "focus": "二階", "options": ["にかい", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "二階 = にかい. Significa: secondo piano."}, {"prompt": "Qual è la lettura di 三階?", "focus": "三階", "options": ["さんがい", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "三階 = さんがい. Significa: terzo piano."}, {"prompt": "Qual è la lettura di 一歳?", "focus": "一歳", "options": ["いっさい", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "一歳 = いっさい. Significa: un anno di età."}, {"prompt": "Qual è la lettura di 二歳?", "focus": "二歳", "options": ["にさい", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "二歳 = にさい. Significa: due anni di età."}, {"prompt": "Qual è la lettura di 三歳?", "focus": "三歳", "options": ["さんさい", "ひとり", "ふたり", "さんにん"], "answer": 0, "explanation": "三歳 = さんさい. Significa: tre anni di età."}, {"prompt": "A cosa serve il contatore 人?", "focus": "人", "options": ["persone", "oggetti piatti", "oggetti piccoli / generico", "oggetti lunghi/cilindrici"], "answer": 0, "explanation": "人 si usa per: persone."}, {"prompt": "A cosa serve il contatore 枚?", "focus": "枚", "options": ["oggetti piatti", "persone", "oggetti piccoli / generico", "oggetti lunghi/cilindrici"], "answer": 0, "explanation": "枚 si usa per: oggetti piatti."}, {"prompt": "A cosa serve il contatore 個?", "focus": "個", "options": ["oggetti piccoli / generico", "persone", "oggetti piatti", "oggetti lunghi/cilindrici"], "answer": 0, "explanation": "個 si usa per: oggetti piccoli / generico."}, {"prompt": "A cosa serve il contatore 本?", "focus": "本", "options": ["oggetti lunghi/cilindrici", "persone", "oggetti piatti", "oggetti piccoli / generico"], "answer": 0, "explanation": "本 si usa per: oggetti lunghi/cilindrici."}, {"prompt": "A cosa serve il contatore 冊?", "focus": "冊", "options": ["libri / quaderni", "persone", "oggetti piatti", "oggetti piccoli / generico"], "answer": 0, "explanation": "冊 si usa per: libri / quaderni."}, {"prompt": "A cosa serve il contatore 台?", "focus": "台", "options": ["macchine / dispositivi", "persone", "oggetti piatti", "oggetti piccoli / generico"], "answer": 0, "explanation": "台 si usa per: macchine / dispositivi."}, {"prompt": "A cosa serve il contatore 匹?", "focus": "匹", "options": ["animali piccoli", "persone", "oggetti piatti", "oggetti piccoli / generico"], "answer": 0, "explanation": "匹 si usa per: animali piccoli."}, {"prompt": "A cosa serve il contatore 回?", "focus": "回", "options": ["volte", "persone", "oggetti piatti", "oggetti piccoli / generico"], "answer": 0, "explanation": "回 si usa per: volte."}, {"prompt": "A cosa serve il contatore 階?", "focus": "階", "options": ["piani di edificio", "persone", "oggetti piatti", "oggetti piccoli / generico"], "answer": 0, "explanation": "階 si usa per: piani di edificio."}, {"prompt": "A cosa serve il contatore 歳?", "focus": "歳", "options": ["età", "persone", "oggetti piatti", "oggetti piccoli / generico"], "answer": 0, "explanation": "歳 si usa per: età."}, {"prompt": "Che cosa significa 一人?", "focus": "一人", "options": ["una persona", "due persone", "tre persone", "un oggetto generico"], "answer": 0, "explanation": "一人 = ひとり, una persona."}, {"prompt": "Che cosa significa 二人?", "focus": "二人", "options": ["due persone", "una persona", "tre persone", "un oggetto generico"], "answer": 0, "explanation": "二人 = ふたり, due persone."}, {"prompt": "Che cosa significa 三人?", "focus": "三人", "options": ["tre persone", "una persona", "due persone", "un oggetto generico"], "answer": 0, "explanation": "三人 = さんにん, tre persone."}, {"prompt": "Che cosa significa 一つ?", "focus": "一つ", "options": ["un oggetto generico", "una persona", "due persone", "tre persone"], "answer": 0, "explanation": "一つ = ひとつ, un oggetto generico."}, {"prompt": "Che cosa significa 二つ?", "focus": "二つ", "options": ["due oggetti generici", "una persona", "due persone", "tre persone"], "answer": 0, "explanation": "二つ = ふたつ, due oggetti generici."}, {"prompt": "Che cosa significa 三つ?", "focus": "三つ", "options": ["tre oggetti generici", "una persona", "due persone", "tre persone"], "answer": 0, "explanation": "三つ = みっつ, tre oggetti generici."}, {"prompt": "Che cosa significa 四つ?", "focus": "四つ", "options": ["quattro oggetti generici", "una persona", "due persone", "tre persone"], "answer": 0, "explanation": "四つ = よっつ, quattro oggetti generici."}, {"prompt": "Che cosa significa 一枚?", "focus": "一枚", "options": ["un oggetto piatto", "una persona", "due persone", "tre persone"], "answer": 0, "explanation": "一枚 = いちまい, un oggetto piatto."}, {"prompt": "Che cosa significa 二枚?", "focus": "二枚", "options": ["due oggetti piatti", "una persona", "due persone", "tre persone"], "answer": 0, "explanation": "二枚 = にまい, due oggetti piatti."}];
+
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {
+      ...item,
+      shuffledOptions: options,
+      correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)
+    };
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>
+    `).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>
+    `;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

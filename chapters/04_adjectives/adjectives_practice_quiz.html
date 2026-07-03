@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Volume 01 — Adjectives · Quiz a punti</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/04_adjectives/adjectives_practice_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="practice-page-body">
+  <main class="practice-page">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Volume 01 — Adjectives · Quiz a punti</h1>
+        <p>50 domande totali · 10 pescate random a ogni test</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="adjectives_practice.html">← Practice</a>
+        <a href="adjectives.html">Indice capitolo</a>
+      </nav>
+    </header>
+
+    <section class="quiz-control-card quiz-intro-card">
+      <p>Scegli una risposta per ogni domanda. In fondo alla pagina trovi il pulsante <strong>Verifica</strong>. Con <strong>Rifai test</strong> vengono pescate altre 10 domande.</p>
+      <div id="quizResult" class="quiz-result" aria-live="polite"></div>
+    </section>
+
+    <section id="quizContainer" class="quiz-container"></section>
+
+    <section class="quiz-control-card quiz-bottom-actions">
+      <div class="quiz-buttons">
+        <button id="checkQuiz">Verifica</button>
+        <button id="resetQuiz" class="secondary">Rifai test</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const QUESTION_BANK = [{"prompt": "Che tipo di aggettivo è 綺麗（きれい）?", "options": ["I-aggettivo", "Na-aggettivo", "Irregolare", "Verbo"], "answer": 1, "explanation": "綺麗（きれい） è un na-aggettivo, anche se finisce in い."}, {"prompt": "Che tipo di aggettivo è 高い（たかい）?", "options": ["Na-aggettivo", "I-aggettivo", "Irregolare", "Sostantivo"], "answer": 1, "explanation": "高い（たかい） termina in い e segue le regole degli i-aggettivi."}, {"prompt": "Qual è la forma negativa di 高い（たかい）です?", "options": ["高い（たかい）じゃありません", "高くない（たかくない）です", "高かった（たかかった）です", "高くて（たかくて）"], "answer": 1, "explanation": "I-aggettivo: togli い e aggiungi くないです."}, {"prompt": "Qual è la forma negativa di 静か（しずか）です?", "options": ["静かくない（しずかくない）です", "静か（しずか）じゃありません", "静かかった（しずかかった）です", "静かで（しずかで）"], "answer": 1, "explanation": "Na-aggettivo: base + じゃありません."}, {"prompt": "Qual è il passato positivo di 高い（たかい）です?", "options": ["高くない（たかくない）です", "高かった（たかかった）です", "高くて（たかくて）", "高い（たかい）でした"], "answer": 1, "explanation": "I-aggettivo: togli い e aggiungi かったです."}, {"prompt": "Qual è il passato negativo di 高い（たかい）です?", "options": ["高くなかった（たかくなかった）です", "高い（たかい）じゃありませんでした", "高かった（たかかった）です", "高くなくて（たかくなくて）"], "answer": 0, "explanation": "I-aggettivo: togli い e aggiungi くなかったです."}, {"prompt": "Qual è il passato positivo di 静か（しずか）です?", "options": ["静かかった（しずかかった）です", "静か（しずか）でした", "静かくて（しずかくて）", "静か（しずか）じゃありません"], "answer": 1, "explanation": "Na-aggettivo: base + でした."}, {"prompt": "Qual è il passato negativo di 静か（しずか）です?", "options": ["静かくなかった（しずかくなかった）です", "静か（しずか）じゃありませんでした", "静か（しずか）でありません", "静か（しずか）でした"], "answer": 1, "explanation": "Na-aggettivo: base + じゃありませんでした."}, {"prompt": "Qual è la forma TE positiva di 高い（たかい）?", "options": ["高くて（たかくて）", "高って（たかって）", "高いで（たかいで）", "高くない（たかくない）"], "answer": 0, "explanation": "I-aggettivo: togli い e aggiungi くて."}, {"prompt": "Qual è la forma TE positiva di 静か（しずか）?", "options": ["静かくて（しずかくて）", "静かで（しずかで）", "静かって（しずかって）", "静かな（しずかな）"], "answer": 1, "explanation": "Na-aggettivo: base + で."}, {"prompt": "Qual è la forma TE negativa di 高い（たかい）?", "options": ["高くなくて（たかくなくて）", "高くないで（たかくないで）", "高い（たかい）じゃなくて", "高くてない（たかくてない）"], "answer": 0, "explanation": "I-aggettivo negativo in TE: くなくて."}, {"prompt": "Qual è la forma TE negativa di 静か（しずか）?", "options": ["静かくなくて（しずかくなくて）", "静か（しずか）じゃなくて", "静かでないて（しずかでないて）", "静かなくて（しずかなくて）"], "answer": 1, "explanation": "Na-aggettivo negativo in TE: じゃなくて."}, {"prompt": "Qual è la negativa di 良い（いい）です?", "options": ["いくないです", "いいじゃありません", "よくないです", "よかったです"], "answer": 2, "explanation": "いい è irregolare: la base diventa よ."}, {"prompt": "Qual è il passato positivo di 良い（いい）です?", "options": ["いかったです", "よかったです", "いいでした", "よくてです"], "answer": 1, "explanation": "いい → よかったです."}, {"prompt": "Qual è la forma TE di 良い（いい）?", "options": ["いくて", "いいで", "よくて", "よかった"], "answer": 2, "explanation": "いい → よくて."}, {"prompt": "Qual è la negativa di かっこいいです?", "options": ["かっこいくないです", "かっこいいじゃありません", "かっこよくないです", "かっこよかったです"], "answer": 2, "explanation": "かっこいい segue la logica di いい: かっこよくないです."}, {"prompt": "Qual è il passato positivo di かっこいいです?", "options": ["かっこいかったです", "かっこよかったです", "かっこいいでした", "かっこよくてです"], "answer": 1, "explanation": "かっこいい → かっこよかったです."}, {"prompt": "Che tipo di aggettivo è 簡単（かんたん）?", "options": ["I-aggettivo", "Na-aggettivo", "Irregolare", "Particella"], "answer": 1, "explanation": "簡単（かんたん） è un na-aggettivo."}, {"prompt": "Che tipo di aggettivo è 便利（べんり）?", "options": ["I-aggettivo", "Na-aggettivo", "Irregolare", "Avverbio"], "answer": 1, "explanation": "便利（べんり） è un na-aggettivo."}, {"prompt": "Che tipo di aggettivo è 面白い（おもしろい）?", "options": ["Na-aggettivo", "I-aggettivo", "Irregolare", "Nome"], "answer": 1, "explanation": "面白い（おもしろい） è un i-aggettivo."}, {"prompt": "Come dici “questa stanza è tranquilla”?", "options": ["この部屋（へや）は静か（しずか）です。", "この部屋（へや）を静か（しずか）です。", "この部屋（へや）は静かくない（しずかくない）です。", "この部屋（へや）が静かで（しずかで）。"], "answer": 0, "explanation": "静か（しずか） è na-aggettivo: 静かです."}, {"prompt": "Come dici “questo libro non è interessante”?", "options": ["この本（ほん）は面白い（おもしろい）です。", "この本（ほん）は面白くない（おもしろくない）です。", "この本（ほん）は面白かった（おもしろかった）です。", "この本（ほん）は面白くて（おもしろくて）です。"], "answer": 1, "explanation": "面白い（おもしろい） → 面白くないです."}, {"prompt": "Come dici “ieri faceva freddo”?", "options": ["昨日（きのう）は寒い（さむい）です。", "昨日（きのう）は寒くない（さむくない）です。", "昨日（きのう）は寒かった（さむかった）です。", "昨日（きのう）は寒くて（さむくて）です。"], "answer": 2, "explanation": "寒い（さむい） al passato positivo: 寒かったです."}, {"prompt": "Come dici “non era difficile”?", "options": ["難しい（むずかしい）です", "難しくない（むずかしくない）です", "難しかった（むずかしかった）です", "難しくなかった（むずかしくなかった）です"], "answer": 3, "explanation": "難しい（むずかしい） al passato negativo: 難しくなかったです."}, {"prompt": "Quale frase usa correttamente un na-aggettivo davanti a un nome?", "options": ["静かな町（しずかなまち）", "静か町（しずかまち）", "静かい町（しずかいまち）", "静かく町（しずかくまち）"], "answer": 0, "explanation": "Na-aggettivo davanti al nome: 静かな + nome."}, {"prompt": "Quale frase usa correttamente un i-aggettivo davanti a un nome?", "options": ["高なビル（たかなビル）", "高いビル（たかいビル）", "高くビル（たかくビル）", "高でビル（たかでビル）"], "answer": 1, "explanation": "I-aggettivo davanti al nome: forma base + nome."}, {"prompt": "Quale aggettivo significa “economico”?", "options": ["高い（たかい）", "安い（やすい）", "寒い（さむい）", "重い（おもい）"], "answer": 1, "explanation": "安い（やすい） = economico; 高い（たかい） può significare alto o caro."}, {"prompt": "Quale aggettivo significa “pesante”?", "options": ["重い（おもい）", "軽い（かるい）", "広い（ひろい）", "浅い（あさい）"], "answer": 0, "explanation": "重い（おもい） = pesante."}, {"prompt": "Quale aggettivo significa “leggero”?", "options": ["薄い（うすい）", "軽い（かるい）", "狭い（せまい）", "深い（ふかい）"], "answer": 1, "explanation": "軽い（かるい） = leggero."}, {"prompt": "Quale aggettivo significa “pericoloso”?", "options": ["安全（あんぜん）", "危険（きけん）", "必要（ひつよう）", "便利（べんり）"], "answer": 1, "explanation": "危険（きけん） = pericoloso; 安全（あんぜん） = sicuro."}, {"prompt": "Quale aggettivo significa “sicuro”?", "options": ["安全（あんぜん）", "危険（きけん）", "不便（ふべん）", "変（へん）"], "answer": 0, "explanation": "安全（あんぜん） = sicuro."}, {"prompt": "Qual è la forma negativa di 安い（やすい）です?", "options": ["安くない（やすくない）です", "安い（やすい）じゃありません", "安かった（やすかった）です", "安くて（やすくて）"], "answer": 0, "explanation": "安い（やすい） è i-aggettivo: 安くないです."}, {"prompt": "Qual è il passato positivo di 新しい（あたらしい）です?", "options": ["新しくない（あたらしくない）です", "新しかった（あたらしかった）です", "新しい（あたらしい）でした", "新しくて（あたらしくて）"], "answer": 1, "explanation": "新しい（あたらしい） → 新しかったです."}, {"prompt": "Qual è la forma TE di 新しい（あたらしい）?", "options": ["新しくて（あたらしくて）", "新しいで（あたらしいで）", "新しかって（あたらしかって）", "新しく（あたらしく）"], "answer": 0, "explanation": "新しい（あたらしい） → 新しくて."}, {"prompt": "Qual è la forma negativa di 有名（ゆうめい）です?", "options": ["有名くない（ゆうめいくない）です", "有名（ゆうめい）じゃありません", "有名かった（ゆうめいかった）です", "有名で（ゆうめいで）"], "answer": 1, "explanation": "有名（ゆうめい） è na-aggettivo: 有名じゃありません."}, {"prompt": "Qual è il passato positivo di 有名（ゆうめい）です?", "options": ["有名かった（ゆうめいかった）です", "有名（ゆうめい）でした", "有名くて（ゆうめいくて）", "有名（ゆうめい）じゃありません"], "answer": 1, "explanation": "Na-aggettivo: base + でした."}, {"prompt": "Qual è la forma TE di 便利（べんり）?", "options": ["便利くて（べんりくて）", "便利で（べんりで）", "便利って（べんりって）", "便利な（べんりな）"], "answer": 1, "explanation": "Na-aggettivo: 便利で."}, {"prompt": "Quale aggettivo significa “dolce”?", "options": ["辛い（からい）", "苦い（にがい）", "甘い（あまい）", "しょっぱい"], "answer": 2, "explanation": "甘い（あまい） = dolce."}, {"prompt": "Quale aggettivo significa “piccante”?", "options": ["辛い（からい）", "甘い（あまい）", "苦い（にがい）", "冷たい（つめたい）"], "answer": 0, "explanation": "辛い（からい） = piccante."}, {"prompt": "Quale aggettivo significa “amaro”?", "options": ["苦い（にがい）", "甘い（あまい）", "寒い（さむい）", "暑い（あつい）"], "answer": 0, "explanation": "苦い（にがい） = amaro."}, {"prompt": "Quale aggettivo significa “caldo, clima”?", "options": ["熱い（あつい）", "暑い（あつい）", "暖かい（あたたかい）", "冷たい（つめたい）"], "answer": 1, "explanation": "暑い（あつい） si usa per il clima caldo."}, {"prompt": "Quale aggettivo significa “caldo, oggetto”?", "options": ["暑い（あつい）", "熱い（あつい）", "寒い（さむい）", "涼しい（すずしい）"], "answer": 1, "explanation": "熱い（あつい） si usa per oggetti caldi al tatto."}, {"prompt": "Quale aggettivo significa “freddo, clima”?", "options": ["冷たい（つめたい）", "寒い（さむい）", "涼しい（すずしい）", "暑い（あつい）"], "answer": 1, "explanation": "寒い（さむい） si usa per il clima freddo."}, {"prompt": "Quale aggettivo significa “freddo al tatto”?", "options": ["寒い（さむい）", "冷たい（つめたい）", "涼しい（すずしい）", "薄い（うすい）"], "answer": 1, "explanation": "冷たい（つめたい） = freddo al tatto."}, {"prompt": "Quale aggettivo significa “occupato”?", "options": ["忙しい（いそがしい）", "暇（ひま）", "元気（げんき）", "眠い（ねむい）"], "answer": 0, "explanation": "忙しい（いそがしい） = occupato."}, {"prompt": "Quale aggettivo significa “libero / tempo libero”?", "options": ["忙しい（いそがしい）", "暇（ひま）", "便利（べんり）", "丁寧（ていねい）"], "answer": 1, "explanation": "暇（ひま） = libero, con tempo libero."}, {"prompt": "Qual è la forma negativa di 忙しい（いそがしい）です?", "options": ["忙しくない（いそがしくない）です", "忙しい（いそがしい）じゃありません", "忙しかった（いそがしかった）です", "忙しくて（いそがしくて）"], "answer": 0, "explanation": "忙しい（いそがしい） è i-aggettivo: 忙しくないです."}, {"prompt": "Qual è il passato negativo di 便利（べんり）です?", "options": ["便利くなかった（べんりくなかった）です", "便利（べんり）じゃありませんでした", "便利（べんり）でした", "便利（べんり）じゃなくて"], "answer": 1, "explanation": "便利（べんり） è na-aggettivo: 便利じゃありませんでした."}, {"prompt": "Qual è la forma TE negativa di 便利（べんり）?", "options": ["便利くなくて（べんりくなくて）", "便利（べんり）じゃなくて", "便利なくて（べんりなくて）", "便利でないて（べんりでないて）"], "answer": 1, "explanation": "Na-aggettivo negativo in TE: じゃなくて."}, {"prompt": "Quale traduzione è più adatta per 好き（すき）?", "options": ["non gradito", "preferito / che piace", "famoso", "sicuro"], "answer": 1, "explanation": "好き（すき） = che piace / preferito. È un na-aggettivo."}];
+    const TEST_SIZE = 10;
+    let currentQuestions = [];
+
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+    function startQuiz() {
+      currentQuestions = shuffle(uniqueQuestions(QUESTION_BANK)).slice(0, TEST_SIZE).map(q => {
+        const opts = q.options.map((text, index) => ({ text, originalIndex: index }));
+        const shuffledOptions = shuffle(opts);
+        return {
+          ...q,
+          shuffledOptions,
+          correctShuffledIndex: shuffledOptions.findIndex(o => o.originalIndex === q.answer)
+        };
+      });
+      document.getElementById('quizResult').innerHTML = '';
+      renderQuiz();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderQuiz() {
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = currentQuestions.map((q, qi) => `
+        <article class="quiz-question" data-question="${qi}">
+          <h2>${qi + 1}. ${q.prompt}</h2>
+          <div class="quiz-options">
+            ${q.shuffledOptions.map((opt, oi) => `
+              <label>
+                <input type="radio" name="q${qi}" value="${oi}">
+                <span>${opt.text}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div class="quiz-feedback"></div>
+        </article>
+      `).join('');
+    }
+
+    function checkQuiz() {
+      let correct = 0;
+      currentQuestions.forEach((q, qi) => {
+        const article = document.querySelector(`.quiz-question[data-question="${qi}"]`);
+        const selected = article.querySelector(`input[name="q${qi}"]:checked`);
+        const feedback = article.querySelector('.quiz-feedback');
+        article.classList.remove('correct','wrong','missing');
+
+        if (!selected) {
+          article.classList.add('missing');
+          feedback.innerHTML = `<strong>Non risposta.</strong> Soluzione: ${q.shuffledOptions[q.correctShuffledIndex].text}<br><span>${q.explanation}</span>`;
+          return;
+        }
+
+        const isCorrect = Number(selected.value) === q.correctShuffledIndex;
+        if (isCorrect) {
+          correct++;
+          article.classList.add('correct');
+          feedback.innerHTML = `<strong>Corretto.</strong><br><span>${q.explanation}</span>`;
+        } else {
+          article.classList.add('wrong');
+          feedback.innerHTML = `<strong>Errato.</strong> Soluzione: ${q.shuffledOptions[q.correctShuffledIndex].text}<br><span>${q.explanation}</span>`;
+        }
+      });
+
+      const result = document.getElementById('quizResult');
+      result.innerHTML = `<strong>Punteggio: ${correct} / ${TEST_SIZE}</strong><span>${correct >= 8 ? 'Ottimo lavoro.' : correct >= 6 ? 'Buono, ma rivedi gli errori.' : 'Conviene ripassare le regole e rifare il test.'}</span>`;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('checkQuiz').addEventListener('click', checkQuiz);
+    document.getElementById('resetQuiz').addEventListener('click', startQuiz);
+    startQuiz();
+  </script>
+</body>
+</html>

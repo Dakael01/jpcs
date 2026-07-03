@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vocabulary — Viaggio e trasporti · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/06_vocabulary/vocabulary_practice_travel_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Vocabulary — Viaggio e trasporti · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="vocabulary_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+    <form id="quizForm"></form>
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#5f6872">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+<script>
+const QUESTION_POOL = [{"prompt": "Traduci in italiano.", "focus": "電車", "options": ["treno", "io", "tu", "amico / amica"], "answer": 0, "explanation": "電車（でんしゃ）= treno."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "treno", "options": ["電車", "私", "あなた", "友達"], "answer": 0, "explanation": "treno = 電車（でんしゃ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "電車", "options": ["でんしゃ", "わたし", "あなた", "ともだち"], "answer": 0, "explanation": "電車 si legge でんしゃ."}, {"prompt": "Qual è il romaji corretto?", "focus": "電車", "options": ["densha", "watashi", "anata", "tomodachi"], "answer": 0, "explanation": "電車 = densha."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "電車", "options": ["Viaggio e trasporti", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "電車 è nella scheda: Viaggio e trasporti."}, {"prompt": "Traduci in italiano.", "focus": "車", "options": ["auto", "tu", "amico / amica", "persona"], "answer": 0, "explanation": "車（くるま）= auto."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "auto", "options": ["車", "あなた", "友達", "人"], "answer": 0, "explanation": "auto = 車（くるま）."}, {"prompt": "Qual è la lettura corretta?", "focus": "車", "options": ["くるま", "あなた", "ともだち", "ひと"], "answer": 0, "explanation": "車 si legge くるま."}, {"prompt": "Qual è il romaji corretto?", "focus": "車", "options": ["kuruma", "anata", "tomodachi", "hito"], "answer": 0, "explanation": "車 = kuruma."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "車", "options": ["Viaggio e trasporti", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "車 è nella scheda: Viaggio e trasporti."}, {"prompt": "Traduci in italiano.", "focus": "バス", "options": ["autobus", "amico / amica", "persona", "bambino"], "answer": 0, "explanation": "バス（バス）= autobus."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "autobus", "options": ["バス", "友達", "人", "子供"], "answer": 0, "explanation": "autobus = バス（バス）."}, {"prompt": "Qual è la lettura corretta?", "focus": "バス", "options": ["バス", "ともだち", "ひと", "こども"], "answer": 0, "explanation": "バス si legge バス."}, {"prompt": "Qual è il romaji corretto?", "focus": "バス", "options": ["basu", "tomodachi", "hito", "kodomo"], "answer": 0, "explanation": "バス = basu."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "バス", "options": ["Viaggio e trasporti", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "バス è nella scheda: Viaggio e trasporti."}, {"prompt": "Traduci in italiano.", "focus": "自転車", "options": ["bicicletta", "persona", "bambino", "insegnante"], "answer": 0, "explanation": "自転車（じてんしゃ）= bicicletta."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "bicicletta", "options": ["自転車", "人", "子供", "先生"], "answer": 0, "explanation": "bicicletta = 自転車（じてんしゃ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "自転車", "options": ["じてんしゃ", "ひと", "こども", "せんせい"], "answer": 0, "explanation": "自転車 si legge じてんしゃ."}, {"prompt": "Qual è il romaji corretto?", "focus": "自転車", "options": ["jitensha", "hito", "kodomo", "sensei"], "answer": 0, "explanation": "自転車 = jitensha."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "自転車", "options": ["Viaggio e trasporti", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "自転車 è nella scheda: Viaggio e trasporti."}, {"prompt": "Traduci in italiano.", "focus": "空港", "options": ["aeroporto", "bambino", "insegnante", "studente"], "answer": 0, "explanation": "空港（くうこう）= aeroporto."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "aeroporto", "options": ["空港", "子供", "先生", "学生"], "answer": 0, "explanation": "aeroporto = 空港（くうこう）."}, {"prompt": "Qual è la lettura corretta?", "focus": "空港", "options": ["くうこう", "こども", "せんせい", "がくせい"], "answer": 0, "explanation": "空港 si legge くうこう."}, {"prompt": "Qual è il romaji corretto?", "focus": "空港", "options": ["kuukou", "kodomo", "sensei", "gakusei"], "answer": 0, "explanation": "空港 = kuukou."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "空港", "options": ["Viaggio e trasporti", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "空港 è nella scheda: Viaggio e trasporti."}, {"prompt": "Traduci in italiano.", "focus": "切符", "options": ["biglietto", "insegnante", "studente", "mia madre"], "answer": 0, "explanation": "切符（きっぷ）= biglietto."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "biglietto", "options": ["切符", "先生", "学生", "母"], "answer": 0, "explanation": "biglietto = 切符（きっぷ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "切符", "options": ["きっぷ", "せんせい", "がくせい", "はは"], "answer": 0, "explanation": "切符 si legge きっぷ."}, {"prompt": "Qual è il romaji corretto?", "focus": "切符", "options": ["kippu", "sensei", "gakusei", "haha"], "answer": 0, "explanation": "切符 = kippu."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "切符", "options": ["Viaggio e trasporti", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "切符 è nella scheda: Viaggio e trasporti."}, {"prompt": "Traduci in italiano.", "focus": "駅員", "options": ["addetto della stazione", "studente", "mia madre", "mio padre"], "answer": 0, "explanation": "駅員（えきいん）= addetto della stazione."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "addetto della stazione", "options": ["駅員", "学生", "母", "父"], "answer": 0, "explanation": "addetto della stazione = 駅員（えきいん）."}, {"prompt": "Qual è la lettura corretta?", "focus": "駅員", "options": ["えきいん", "がくせい", "はは", "ちち"], "answer": 0, "explanation": "駅員 si legge えきいん."}, {"prompt": "Qual è il romaji corretto?", "focus": "駅員", "options": ["ekiin", "gakusei", "haha", "chichi"], "answer": 0, "explanation": "駅員 = ekiin."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "駅員", "options": ["Viaggio e trasporti", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "駅員 è nella scheda: Viaggio e trasporti."}, {"prompt": "Traduci in italiano.", "focus": "ホテル", "options": ["hotel", "mia madre", "mio padre", "famiglia"], "answer": 0, "explanation": "ホテル（ホテル）= hotel."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "hotel", "options": ["ホテル", "母", "父", "家族"], "answer": 0, "explanation": "hotel = ホテル（ホテル）."}, {"prompt": "Qual è la lettura corretta?", "focus": "ホテル", "options": ["ホテル", "はは", "ちち", "かぞく"], "answer": 0, "explanation": "ホテル si legge ホテル."}, {"prompt": "Qual è il romaji corretto?", "focus": "ホテル", "options": ["hoteru", "haha", "chichi", "kazoku"], "answer": 0, "explanation": "ホテル = hoteru."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "ホテル", "options": ["Viaggio e trasporti", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "ホテル è nella scheda: Viaggio e trasporti."}, {"prompt": "Traduci in italiano.", "focus": "道", "options": ["strada", "mio padre", "famiglia", "casa"], "answer": 0, "explanation": "道（みち）= strada."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "strada", "options": ["道", "父", "家族", "家"], "answer": 0, "explanation": "strada = 道（みち）."}, {"prompt": "Qual è la lettura corretta?", "focus": "道", "options": ["みち", "ちち", "かぞく", "いえ"], "answer": 0, "explanation": "道 si legge みち."}, {"prompt": "Qual è il romaji corretto?", "focus": "道", "options": ["michi", "chichi", "kazoku", "ie"], "answer": 0, "explanation": "道 = michi."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "道", "options": ["Viaggio e trasporti", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "道 è nella scheda: Viaggio e trasporti."}, {"prompt": "Traduci in italiano.", "focus": "地図", "options": ["mappa", "famiglia", "casa", "stanza"], "answer": 0, "explanation": "地図（ちず）= mappa."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "mappa", "options": ["地図", "家族", "家", "部屋"], "answer": 0, "explanation": "mappa = 地図（ちず）."}, {"prompt": "Qual è la lettura corretta?", "focus": "地図", "options": ["ちず", "かぞく", "いえ", "へや"], "answer": 0, "explanation": "地図 si legge ちず."}, {"prompt": "Qual è il romaji corretto?", "focus": "地図", "options": ["chizu", "kazoku", "ie", "heya"], "answer": 0, "explanation": "地図 = chizu."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "地図", "options": ["Viaggio e trasporti", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "地図 è nella scheda: Viaggio e trasporti."}];
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {...item, shuffledOptions: options, correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)};
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>`).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>`;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

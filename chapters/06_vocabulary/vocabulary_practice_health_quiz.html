@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vocabulary — Salute · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/06_vocabulary/vocabulary_practice_health_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Vocabulary — Salute · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="vocabulary_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+    <form id="quizForm"></form>
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#5f6872">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+<script>
+const QUESTION_POOL = [{"prompt": "Traduci in italiano.", "focus": "健康", "options": ["salute", "io", "tu", "amico / amica"], "answer": 0, "explanation": "健康（けんこう）= salute."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "salute", "options": ["健康", "私", "あなた", "友達"], "answer": 0, "explanation": "salute = 健康（けんこう）."}, {"prompt": "Qual è la lettura corretta?", "focus": "健康", "options": ["けんこう", "わたし", "あなた", "ともだち"], "answer": 0, "explanation": "健康 si legge けんこう."}, {"prompt": "Qual è il romaji corretto?", "focus": "健康", "options": ["kenkou", "watashi", "anata", "tomodachi"], "answer": 0, "explanation": "健康 = kenkou."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "健康", "options": ["Salute", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "健康 è nella scheda: Salute."}, {"prompt": "Traduci in italiano.", "focus": "病気", "options": ["malattia", "tu", "amico / amica", "persona"], "answer": 0, "explanation": "病気（びょうき）= malattia."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "malattia", "options": ["病気", "あなた", "友達", "人"], "answer": 0, "explanation": "malattia = 病気（びょうき）."}, {"prompt": "Qual è la lettura corretta?", "focus": "病気", "options": ["びょうき", "あなた", "ともだち", "ひと"], "answer": 0, "explanation": "病気 si legge びょうき."}, {"prompt": "Qual è il romaji corretto?", "focus": "病気", "options": ["byouki", "anata", "tomodachi", "hito"], "answer": 0, "explanation": "病気 = byouki."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "病気", "options": ["Salute", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "病気 è nella scheda: Salute."}, {"prompt": "Traduci in italiano.", "focus": "薬", "options": ["medicina", "amico / amica", "persona", "bambino"], "answer": 0, "explanation": "薬（くすり）= medicina."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "medicina", "options": ["薬", "友達", "人", "子供"], "answer": 0, "explanation": "medicina = 薬（くすり）."}, {"prompt": "Qual è la lettura corretta?", "focus": "薬", "options": ["くすり", "ともだち", "ひと", "こども"], "answer": 0, "explanation": "薬 si legge くすり."}, {"prompt": "Qual è il romaji corretto?", "focus": "薬", "options": ["kusuri", "tomodachi", "hito", "kodomo"], "answer": 0, "explanation": "薬 = kusuri."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "薬", "options": ["Salute", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "薬 è nella scheda: Salute."}, {"prompt": "Traduci in italiano.", "focus": "医者", "options": ["medico", "persona", "bambino", "insegnante"], "answer": 0, "explanation": "医者（いしゃ）= medico."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "medico", "options": ["医者", "人", "子供", "先生"], "answer": 0, "explanation": "medico = 医者（いしゃ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "医者", "options": ["いしゃ", "ひと", "こども", "せんせい"], "answer": 0, "explanation": "医者 si legge いしゃ."}, {"prompt": "Qual è il romaji corretto?", "focus": "医者", "options": ["isha", "hito", "kodomo", "sensei"], "answer": 0, "explanation": "医者 = isha."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "医者", "options": ["Salute", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "医者 è nella scheda: Salute."}, {"prompt": "Traduci in italiano.", "focus": "歯医者", "options": ["dentista", "bambino", "insegnante", "studente"], "answer": 0, "explanation": "歯医者（はいしゃ）= dentista."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "dentista", "options": ["歯医者", "子供", "先生", "学生"], "answer": 0, "explanation": "dentista = 歯医者（はいしゃ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "歯医者", "options": ["はいしゃ", "こども", "せんせい", "がくせい"], "answer": 0, "explanation": "歯医者 si legge はいしゃ."}, {"prompt": "Qual è il romaji corretto?", "focus": "歯医者", "options": ["haisha", "kodomo", "sensei", "gakusei"], "answer": 0, "explanation": "歯医者 = haisha."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "歯医者", "options": ["Salute", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "歯医者 è nella scheda: Salute."}, {"prompt": "Traduci in italiano.", "focus": "熱", "options": ["febbre", "insegnante", "studente", "mia madre"], "answer": 0, "explanation": "熱（ねつ）= febbre."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "febbre", "options": ["熱", "先生", "学生", "母"], "answer": 0, "explanation": "febbre = 熱（ねつ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "熱", "options": ["ねつ", "せんせい", "がくせい", "はは"], "answer": 0, "explanation": "熱 si legge ねつ."}, {"prompt": "Qual è il romaji corretto?", "focus": "熱", "options": ["netsu", "sensei", "gakusei", "haha"], "answer": 0, "explanation": "熱 = netsu."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "熱", "options": ["Salute", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "熱 è nella scheda: Salute."}, {"prompt": "Traduci in italiano.", "focus": "頭痛", "options": ["mal di testa", "studente", "mia madre", "mio padre"], "answer": 0, "explanation": "頭痛（ずつう）= mal di testa."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "mal di testa", "options": ["頭痛", "学生", "母", "父"], "answer": 0, "explanation": "mal di testa = 頭痛（ずつう）."}, {"prompt": "Qual è la lettura corretta?", "focus": "頭痛", "options": ["ずつう", "がくせい", "はは", "ちち"], "answer": 0, "explanation": "頭痛 si legge ずつう."}, {"prompt": "Qual è il romaji corretto?", "focus": "頭痛", "options": ["zutsuu", "gakusei", "haha", "chichi"], "answer": 0, "explanation": "頭痛 = zutsuu."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "頭痛", "options": ["Salute", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "頭痛 è nella scheda: Salute."}, {"prompt": "Traduci in italiano.", "focus": "風邪", "options": ["raffreddore", "mia madre", "mio padre", "famiglia"], "answer": 0, "explanation": "風邪（かぜ）= raffreddore."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "raffreddore", "options": ["風邪", "母", "父", "家族"], "answer": 0, "explanation": "raffreddore = 風邪（かぜ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "風邪", "options": ["かぜ", "はは", "ちち", "かぞく"], "answer": 0, "explanation": "風邪 si legge かぜ."}, {"prompt": "Qual è il romaji corretto?", "focus": "風邪", "options": ["kaze", "haha", "chichi", "kazoku"], "answer": 0, "explanation": "風邪 = kaze."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "風邪", "options": ["Salute", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "風邪 è nella scheda: Salute."}, {"prompt": "Traduci in italiano.", "focus": "怪我", "options": ["ferita / infortunio", "mio padre", "famiglia", "casa"], "answer": 0, "explanation": "怪我（けが）= ferita / infortunio."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "ferita / infortunio", "options": ["怪我", "父", "家族", "家"], "answer": 0, "explanation": "ferita / infortunio = 怪我（けが）."}, {"prompt": "Qual è la lettura corretta?", "focus": "怪我", "options": ["けが", "ちち", "かぞく", "いえ"], "answer": 0, "explanation": "怪我 si legge けが."}, {"prompt": "Qual è il romaji corretto?", "focus": "怪我", "options": ["kega", "chichi", "kazoku", "ie"], "answer": 0, "explanation": "怪我 = kega."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "怪我", "options": ["Salute", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "怪我 è nella scheda: Salute."}, {"prompt": "Traduci in italiano.", "focus": "痛い", "options": ["doloroso / fa male", "famiglia", "casa", "stanza"], "answer": 0, "explanation": "痛い（いたい）= doloroso / fa male."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "doloroso / fa male", "options": ["痛い", "家族", "家", "部屋"], "answer": 0, "explanation": "doloroso / fa male = 痛い（いたい）."}, {"prompt": "Qual è la lettura corretta?", "focus": "痛い", "options": ["いたい", "かぞく", "いえ", "へや"], "answer": 0, "explanation": "痛い si legge いたい."}, {"prompt": "Qual è il romaji corretto?", "focus": "痛い", "options": ["itai", "kazoku", "ie", "heya"], "answer": 0, "explanation": "痛い = itai."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "痛い", "options": ["Salute", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "痛い è nella scheda: Salute."}];
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {...item, shuffledOptions: options, correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)};
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>`).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>`;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

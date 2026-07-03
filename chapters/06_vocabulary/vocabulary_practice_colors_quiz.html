@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vocabulary — Colori · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/06_vocabulary/vocabulary_practice_colors_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Vocabulary — Colori · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="vocabulary_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+    <form id="quizForm"></form>
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#5f6872">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+<script>
+const QUESTION_POOL = [{"prompt": "Traduci in italiano.", "focus": "色", "options": ["colore", "io", "tu", "amico / amica"], "answer": 0, "explanation": "色（いろ）= colore."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "colore", "options": ["色", "私", "あなた", "友達"], "answer": 0, "explanation": "colore = 色（いろ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "色", "options": ["いろ", "わたし", "あなた", "ともだち"], "answer": 0, "explanation": "色 si legge いろ."}, {"prompt": "Qual è il romaji corretto?", "focus": "色", "options": ["iro", "watashi", "anata", "tomodachi"], "answer": 0, "explanation": "色 = iro."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "色", "options": ["Colori", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "色 è nella scheda: Colori."}, {"prompt": "Traduci in italiano.", "focus": "赤", "options": ["rosso", "tu", "amico / amica", "persona"], "answer": 0, "explanation": "赤（あか）= rosso."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "rosso", "options": ["赤", "あなた", "友達", "人"], "answer": 0, "explanation": "rosso = 赤（あか）."}, {"prompt": "Qual è la lettura corretta?", "focus": "赤", "options": ["あか", "あなた", "ともだち", "ひと"], "answer": 0, "explanation": "赤 si legge あか."}, {"prompt": "Qual è il romaji corretto?", "focus": "赤", "options": ["aka", "anata", "tomodachi", "hito"], "answer": 0, "explanation": "赤 = aka."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "赤", "options": ["Colori", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "赤 è nella scheda: Colori."}, {"prompt": "Traduci in italiano.", "focus": "青", "options": ["blu", "amico / amica", "persona", "bambino"], "answer": 0, "explanation": "青（あお）= blu."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "blu", "options": ["青", "友達", "人", "子供"], "answer": 0, "explanation": "blu = 青（あお）."}, {"prompt": "Qual è la lettura corretta?", "focus": "青", "options": ["あお", "ともだち", "ひと", "こども"], "answer": 0, "explanation": "青 si legge あお."}, {"prompt": "Qual è il romaji corretto?", "focus": "青", "options": ["ao", "tomodachi", "hito", "kodomo"], "answer": 0, "explanation": "青 = ao."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "青", "options": ["Colori", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "青 è nella scheda: Colori."}, {"prompt": "Traduci in italiano.", "focus": "白", "options": ["bianco", "persona", "bambino", "insegnante"], "answer": 0, "explanation": "白（しろ）= bianco."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "bianco", "options": ["白", "人", "子供", "先生"], "answer": 0, "explanation": "bianco = 白（しろ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "白", "options": ["しろ", "ひと", "こども", "せんせい"], "answer": 0, "explanation": "白 si legge しろ."}, {"prompt": "Qual è il romaji corretto?", "focus": "白", "options": ["shiro", "hito", "kodomo", "sensei"], "answer": 0, "explanation": "白 = shiro."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "白", "options": ["Colori", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "白 è nella scheda: Colori."}, {"prompt": "Traduci in italiano.", "focus": "黒", "options": ["nero", "bambino", "insegnante", "studente"], "answer": 0, "explanation": "黒（くろ）= nero."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "nero", "options": ["黒", "子供", "先生", "学生"], "answer": 0, "explanation": "nero = 黒（くろ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "黒", "options": ["くろ", "こども", "せんせい", "がくせい"], "answer": 0, "explanation": "黒 si legge くろ."}, {"prompt": "Qual è il romaji corretto?", "focus": "黒", "options": ["kuro", "kodomo", "sensei", "gakusei"], "answer": 0, "explanation": "黒 = kuro."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "黒", "options": ["Colori", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "黒 è nella scheda: Colori."}, {"prompt": "Traduci in italiano.", "focus": "緑", "options": ["verde", "insegnante", "studente", "mia madre"], "answer": 0, "explanation": "緑（みどり）= verde."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "verde", "options": ["緑", "先生", "学生", "母"], "answer": 0, "explanation": "verde = 緑（みどり）."}, {"prompt": "Qual è la lettura corretta?", "focus": "緑", "options": ["みどり", "せんせい", "がくせい", "はは"], "answer": 0, "explanation": "緑 si legge みどり."}, {"prompt": "Qual è il romaji corretto?", "focus": "緑", "options": ["midori", "sensei", "gakusei", "haha"], "answer": 0, "explanation": "緑 = midori."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "緑", "options": ["Colori", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "緑 è nella scheda: Colori."}, {"prompt": "Traduci in italiano.", "focus": "黄色", "options": ["giallo", "studente", "mia madre", "mio padre"], "answer": 0, "explanation": "黄色（きいろ）= giallo."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "giallo", "options": ["黄色", "学生", "母", "父"], "answer": 0, "explanation": "giallo = 黄色（きいろ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "黄色", "options": ["きいろ", "がくせい", "はは", "ちち"], "answer": 0, "explanation": "黄色 si legge きいろ."}, {"prompt": "Qual è il romaji corretto?", "focus": "黄色", "options": ["kiiro", "gakusei", "haha", "chichi"], "answer": 0, "explanation": "黄色 = kiiro."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "黄色", "options": ["Colori", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "黄色 è nella scheda: Colori."}, {"prompt": "Traduci in italiano.", "focus": "茶色", "options": ["marrone", "mia madre", "mio padre", "famiglia"], "answer": 0, "explanation": "茶色（ちゃいろ）= marrone."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "marrone", "options": ["茶色", "母", "父", "家族"], "answer": 0, "explanation": "marrone = 茶色（ちゃいろ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "茶色", "options": ["ちゃいろ", "はは", "ちち", "かぞく"], "answer": 0, "explanation": "茶色 si legge ちゃいろ."}, {"prompt": "Qual è il romaji corretto?", "focus": "茶色", "options": ["chairo", "haha", "chichi", "kazoku"], "answer": 0, "explanation": "茶色 = chairo."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "茶色", "options": ["Colori", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "茶色 è nella scheda: Colori."}, {"prompt": "Traduci in italiano.", "focus": "ピンク", "options": ["rosa", "mio padre", "famiglia", "casa"], "answer": 0, "explanation": "ピンク（ピンク）= rosa."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "rosa", "options": ["ピンク", "父", "家族", "家"], "answer": 0, "explanation": "rosa = ピンク（ピンク）."}, {"prompt": "Qual è la lettura corretta?", "focus": "ピンク", "options": ["ピンク", "ちち", "かぞく", "いえ"], "answer": 0, "explanation": "ピンク si legge ピンク."}, {"prompt": "Qual è il romaji corretto?", "focus": "ピンク", "options": ["pinku", "chichi", "kazoku", "ie"], "answer": 0, "explanation": "ピンク = pinku."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "ピンク", "options": ["Colori", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "ピンク è nella scheda: Colori."}, {"prompt": "Traduci in italiano.", "focus": "紫", "options": ["viola", "famiglia", "casa", "stanza"], "answer": 0, "explanation": "紫（むらさき）= viola."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "viola", "options": ["紫", "家族", "家", "部屋"], "answer": 0, "explanation": "viola = 紫（むらさき）."}, {"prompt": "Qual è la lettura corretta?", "focus": "紫", "options": ["むらさき", "かぞく", "いえ", "へや"], "answer": 0, "explanation": "紫 si legge むらさき."}, {"prompt": "Qual è il romaji corretto?", "focus": "紫", "options": ["murasaki", "kazoku", "ie", "heya"], "answer": 0, "explanation": "紫 = murasaki."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "紫", "options": ["Colori", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "紫 è nella scheda: Colori."}];
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {...item, shuffledOptions: options, correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)};
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>`).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>`;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

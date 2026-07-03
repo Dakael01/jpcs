@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Grammar — Domande con か · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/02_grammar/grammar_practice_questions_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Grammar — Domande con か · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="grammar_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+
+    <form id="quizForm"></form>
+
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#3e763d">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+
+<script>
+const QUESTION_POOL = [{"prompt": "Trasforma in domanda cortese.", "focus": "学生です。", "options": ["学生ですか。", "学生です。か", "学生ですですか。", "学生じゃありません。"], "answer": 0, "explanation": "Per fare una domanda cortese si aggiunge か alla fine."}, {"prompt": "Trasforma in domanda cortese.", "focus": "これは本です。", "options": ["これは本ですか。", "これは本です。か", "これは本ですですか。", "これは本じゃありません。"], "answer": 0, "explanation": "Per fare una domanda cortese si aggiunge か alla fine."}, {"prompt": "Trasforma in domanda cortese.", "focus": "今日は月曜日です。", "options": ["今日は月曜日ですか。", "今日は月曜日です。か", "今日は月曜日ですですか。", "今日は月曜日じゃありません。"], "answer": 0, "explanation": "Per fare una domanda cortese si aggiunge か alla fine."}, {"prompt": "Trasforma in domanda cortese.", "focus": "ここは学校です。", "options": ["ここは学校ですか。", "ここは学校です。か", "ここは学校ですですか。", "ここは学校じゃありません。"], "answer": 0, "explanation": "Per fare una domanda cortese si aggiunge か alla fine."}, {"prompt": "Trasforma in domanda cortese.", "focus": "それはペンです。", "options": ["それはペンですか。", "それはペンです。か", "それはペンですですか。", "それはペンじゃありません。"], "answer": 0, "explanation": "Per fare una domanda cortese si aggiunge か alla fine."}, {"prompt": "Trasforma in domanda cortese.", "focus": "あれは駅です。", "options": ["あれは駅ですか。", "あれは駅です。か", "あれは駅ですですか。", "あれは駅じゃありません。"], "answer": 0, "explanation": "Per fare una domanda cortese si aggiunge か alla fine."}, {"prompt": "Quale traduzione è corretta?", "focus": "これは何ですか。", "options": ["Che cos’è questo?", "Che cos’è quello?", "Che cos’è quello laggiù?", "Dov’è la stazione?"], "answer": 0, "explanation": "これは何ですか。 = Che cos’è questo?"}, {"prompt": "Quale traduzione è corretta?", "focus": "それは何ですか。", "options": ["Che cos’è quello?", "Che cos’è questo?", "Che cos’è quello laggiù?", "Dov’è la stazione?"], "answer": 0, "explanation": "それは何ですか。 = Che cos’è quello?"}, {"prompt": "Quale traduzione è corretta?", "focus": "あれは何ですか。", "options": ["Che cos’è quello laggiù?", "Che cos’è questo?", "Che cos’è quello?", "Dov’è la stazione?"], "answer": 0, "explanation": "あれは何ですか。 = Che cos’è quello laggiù?"}, {"prompt": "Quale traduzione è corretta?", "focus": "駅はどこですか。", "options": ["Dov’è la stazione?", "Che cos’è questo?", "Che cos’è quello?", "Che cos’è quello laggiù?"], "answer": 0, "explanation": "駅はどこですか。 = Dov’è la stazione?"}, {"prompt": "Quale traduzione è corretta?", "focus": "トイレはどこですか。", "options": ["Dov’è il bagno?", "Che cos’è questo?", "Che cos’è quello?", "Che cos’è quello laggiù?"], "answer": 0, "explanation": "トイレはどこですか。 = Dov’è il bagno?"}, {"prompt": "Quale traduzione è corretta?", "focus": "学校はどこですか。", "options": ["Dov’è la scuola?", "Che cos’è questo?", "Che cos’è quello?", "Che cos’è quello laggiù?"], "answer": 0, "explanation": "学校はどこですか。 = Dov’è la scuola?"}, {"prompt": "Che funzione ha か in questa frase?", "focus": "私ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "学生ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "先生ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "本ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "ペンですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "水ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "学校ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "駅ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "店ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "日本ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "友達ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "猫ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "犬ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "車ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "家ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "図書館ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "私ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "学生ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "先生ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "本ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "ペンですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "水ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "学校ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "駅ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "店ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "日本ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "友達ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "猫ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "犬ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "車ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "家ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "図書館ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "私ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "学生ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "先生ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "本ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "ペンですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}, {"prompt": "Che funzione ha か in questa frase?", "focus": "水ですか。", "options": ["Segna una domanda.", "Segna il passato.", "Indica possesso.", "Indica luogo."], "answer": 0, "explanation": "か alla fine trasforma la frase in domanda."}];
+
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {
+      ...item,
+      shuffledOptions: options,
+      correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)
+    };
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>
+    `).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>
+    `;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

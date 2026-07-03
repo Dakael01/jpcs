@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Grammar — あります / います · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/02_grammar/grammar_practice_ari_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Grammar — あります / います · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="grammar_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+
+    <form id="quizForm"></form>
+
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#3e763d">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+
+<script>
+const QUESTION_POOL = [{"prompt": "Scegli la forma corretta.", "focus": "本 が ___", "options": ["あります", "います", "です", "行きます"], "answer": 0, "explanation": "Per cose/oggetti/luoghi si usa あります."}, {"prompt": "Scegli la forma corretta.", "focus": "ペン が ___", "options": ["あります", "います", "です", "行きます"], "answer": 0, "explanation": "Per cose/oggetti/luoghi si usa あります."}, {"prompt": "Scegli la forma corretta.", "focus": "水 が ___", "options": ["あります", "います", "です", "行きます"], "answer": 0, "explanation": "Per cose/oggetti/luoghi si usa あります."}, {"prompt": "Scegli la forma corretta.", "focus": "駅 が ___", "options": ["あります", "います", "です", "行きます"], "answer": 0, "explanation": "Per cose/oggetti/luoghi si usa あります."}, {"prompt": "Scegli la forma corretta.", "focus": "店 が ___", "options": ["あります", "います", "です", "行きます"], "answer": 0, "explanation": "Per cose/oggetti/luoghi si usa あります."}, {"prompt": "Scegli la forma corretta.", "focus": "車 が ___", "options": ["あります", "います", "です", "行きます"], "answer": 0, "explanation": "Per cose/oggetti/luoghi si usa あります."}, {"prompt": "Scegli la forma corretta.", "focus": "家 が ___", "options": ["あります", "います", "です", "行きます"], "answer": 0, "explanation": "Per cose/oggetti/luoghi si usa あります."}, {"prompt": "Scegli la forma corretta.", "focus": "猫 が ___", "options": ["います", "あります", "です", "飲みます"], "answer": 0, "explanation": "Per persone e animali si usa います."}, {"prompt": "Scegli la forma corretta.", "focus": "犬 が ___", "options": ["います", "あります", "です", "飲みます"], "answer": 0, "explanation": "Per persone e animali si usa います."}, {"prompt": "Scegli la forma corretta.", "focus": "先生 が ___", "options": ["います", "あります", "です", "飲みます"], "answer": 0, "explanation": "Per persone e animali si usa います."}, {"prompt": "Scegli la forma corretta.", "focus": "友達 が ___", "options": ["います", "あります", "です", "飲みます"], "answer": 0, "explanation": "Per persone e animali si usa います."}, {"prompt": "Scegli la forma corretta.", "focus": "人 が ___", "options": ["います", "あります", "です", "飲みます"], "answer": 0, "explanation": "Per persone e animali si usa います."}, {"prompt": "Scegli la forma corretta.", "focus": "学生 が ___", "options": ["います", "あります", "です", "飲みます"], "answer": 0, "explanation": "Per persone e animali si usa います."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "本", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "本 è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "ペン", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "ペン è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "水", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "水 è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "駅", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "駅 è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "店", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "店 è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "車", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "車 è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "家", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "家 è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "猫", "options": ["います", "あります", "飲みます", "読みます"], "answer": 0, "explanation": "猫 è persona/animale: usa います."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "犬", "options": ["います", "あります", "飲みます", "読みます"], "answer": 0, "explanation": "犬 è persona/animale: usa います."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "先生", "options": ["います", "あります", "飲みます", "読みます"], "answer": 0, "explanation": "先生 è persona/animale: usa います."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "友達", "options": ["います", "あります", "飲みます", "読みます"], "answer": 0, "explanation": "友達 è persona/animale: usa います."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "人", "options": ["います", "あります", "飲みます", "読みます"], "answer": 0, "explanation": "人 è persona/animale: usa います."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "学生", "options": ["います", "あります", "飲みます", "読みます"], "answer": 0, "explanation": "学生 è persona/animale: usa います."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "本", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "本 è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "ペン", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "ペン è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "水", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "水 è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "駅", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "駅 è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "店", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "店 è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "車", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "車 è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "家", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "家 è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "猫", "options": ["います", "あります", "飲みます", "読みます"], "answer": 0, "explanation": "猫 è persona/animale: usa います."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "犬", "options": ["います", "あります", "飲みます", "読みます"], "answer": 0, "explanation": "犬 è persona/animale: usa います."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "先生", "options": ["います", "あります", "飲みます", "読みます"], "answer": 0, "explanation": "先生 è persona/animale: usa います."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "友達", "options": ["います", "あります", "飲みます", "読みます"], "answer": 0, "explanation": "友達 è persona/animale: usa います."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "人", "options": ["います", "あります", "飲みます", "読みます"], "answer": 0, "explanation": "人 è persona/animale: usa います."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "学生", "options": ["います", "あります", "飲みます", "読みます"], "answer": 0, "explanation": "学生 è persona/animale: usa います."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "本", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "本 è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "ペン", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "ペン è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "水", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "水 è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "駅", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "駅 è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "店", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "店 è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "車", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "車 è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "家", "options": ["あります", "います", "来ます", "見ます"], "answer": 0, "explanation": "家 è una cosa/luogo: usa あります."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "猫", "options": ["います", "あります", "飲みます", "読みます"], "answer": 0, "explanation": "猫 è persona/animale: usa います."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "犬", "options": ["います", "あります", "飲みます", "読みます"], "answer": 0, "explanation": "犬 è persona/animale: usa います."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "先生", "options": ["います", "あります", "飲みます", "読みます"], "answer": 0, "explanation": "先生 è persona/animale: usa います."}, {"prompt": "Che verbo si usa con questo sostantivo?", "focus": "友達", "options": ["います", "あります", "飲みます", "読みます"], "answer": 0, "explanation": "友達 è persona/animale: usa います."}];
+
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {
+      ...item,
+      shuffledOptions: options,
+      correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)
+    };
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>
+    `).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>
+    `;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

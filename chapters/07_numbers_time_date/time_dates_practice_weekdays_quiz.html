@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Time &amp; Dates — Giorni della settimana · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/07_numbers_time_date/time_dates_practice_weekdays_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Time &amp; Dates — Giorni della settimana · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="time_dates_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+
+    <form id="quizForm"></form>
+
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#935b29">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+
+<script>
+const QUESTION_POOL = [{"prompt": "Che giorno è 月曜日?", "focus": "月曜日", "options": ["lunedì", "martedì", "mercoledì", "giovedì"], "answer": 0, "explanation": "月曜日 si legge げつようび e significa lunedì."}, {"prompt": "Come si dice lunedì in giapponese?", "focus": "lunedì", "options": ["月曜日（げつようび）", "火曜日（かようび）", "水曜日（すいようび）", "木曜日（もくようび）"], "answer": 0, "explanation": "lunedì = 月曜日（げつようび）."}, {"prompt": "Che giorno è 火曜日?", "focus": "火曜日", "options": ["martedì", "lunedì", "mercoledì", "giovedì"], "answer": 0, "explanation": "火曜日 si legge かようび e significa martedì."}, {"prompt": "Come si dice martedì in giapponese?", "focus": "martedì", "options": ["火曜日（かようび）", "月曜日（げつようび）", "水曜日（すいようび）", "木曜日（もくようび）"], "answer": 0, "explanation": "martedì = 火曜日（かようび）."}, {"prompt": "Che giorno è 水曜日?", "focus": "水曜日", "options": ["mercoledì", "lunedì", "martedì", "giovedì"], "answer": 0, "explanation": "水曜日 si legge すいようび e significa mercoledì."}, {"prompt": "Come si dice mercoledì in giapponese?", "focus": "mercoledì", "options": ["水曜日（すいようび）", "月曜日（げつようび）", "火曜日（かようび）", "木曜日（もくようび）"], "answer": 0, "explanation": "mercoledì = 水曜日（すいようび）."}, {"prompt": "Che giorno è 木曜日?", "focus": "木曜日", "options": ["giovedì", "lunedì", "martedì", "mercoledì"], "answer": 0, "explanation": "木曜日 si legge もくようび e significa giovedì."}, {"prompt": "Come si dice giovedì in giapponese?", "focus": "giovedì", "options": ["木曜日（もくようび）", "月曜日（げつようび）", "火曜日（かようび）", "水曜日（すいようび）"], "answer": 0, "explanation": "giovedì = 木曜日（もくようび）."}, {"prompt": "Che giorno è 金曜日?", "focus": "金曜日", "options": ["venerdì", "lunedì", "martedì", "mercoledì"], "answer": 0, "explanation": "金曜日 si legge きんようび e significa venerdì."}, {"prompt": "Come si dice venerdì in giapponese?", "focus": "venerdì", "options": ["金曜日（きんようび）", "月曜日（げつようび）", "火曜日（かようび）", "水曜日（すいようび）"], "answer": 0, "explanation": "venerdì = 金曜日（きんようび）."}, {"prompt": "Che giorno è 土曜日?", "focus": "土曜日", "options": ["sabato", "lunedì", "martedì", "mercoledì"], "answer": 0, "explanation": "土曜日 si legge どようび e significa sabato."}, {"prompt": "Come si dice sabato in giapponese?", "focus": "sabato", "options": ["土曜日（どようび）", "月曜日（げつようび）", "火曜日（かようび）", "水曜日（すいようび）"], "answer": 0, "explanation": "sabato = 土曜日（どようび）."}, {"prompt": "Che giorno è 日曜日?", "focus": "日曜日", "options": ["domenica", "lunedì", "martedì", "mercoledì"], "answer": 0, "explanation": "日曜日 si legge にちようび e significa domenica."}, {"prompt": "Come si dice domenica in giapponese?", "focus": "domenica", "options": ["日曜日（にちようび）", "月曜日（げつようび）", "火曜日（かようび）", "水曜日（すいようび）"], "answer": 0, "explanation": "domenica = 日曜日（にちようび）."}, {"prompt": "Nel giorno 月曜日, che idea richiama il kanji 月?", "focus": "月", "options": ["luna / lunedì", "fuoco / martedì", "acqua / mercoledì", "albero / giovedì"], "answer": 0, "explanation": "月曜日 usa 月: luna / lunedì."}, {"prompt": "Nel giorno 火曜日, che idea richiama il kanji 火?", "focus": "火", "options": ["fuoco / martedì", "luna / lunedì", "acqua / mercoledì", "albero / giovedì"], "answer": 0, "explanation": "火曜日 usa 火: fuoco / martedì."}, {"prompt": "Nel giorno 水曜日, che idea richiama il kanji 水?", "focus": "水", "options": ["acqua / mercoledì", "luna / lunedì", "fuoco / martedì", "albero / giovedì"], "answer": 0, "explanation": "水曜日 usa 水: acqua / mercoledì."}, {"prompt": "Nel giorno 木曜日, che idea richiama il kanji 木?", "focus": "木", "options": ["albero / giovedì", "luna / lunedì", "fuoco / martedì", "acqua / mercoledì"], "answer": 0, "explanation": "木曜日 usa 木: albero / giovedì."}, {"prompt": "Nel giorno 金曜日, che idea richiama il kanji 金?", "focus": "金", "options": ["oro / venerdì", "luna / lunedì", "fuoco / martedì", "acqua / mercoledì"], "answer": 0, "explanation": "金曜日 usa 金: oro / venerdì."}, {"prompt": "Nel giorno 土曜日, che idea richiama il kanji 土?", "focus": "土", "options": ["terra / sabato", "luna / lunedì", "fuoco / martedì", "acqua / mercoledì"], "answer": 0, "explanation": "土曜日 usa 土: terra / sabato."}, {"prompt": "Nel giorno 日曜日, che idea richiama il kanji 日?", "focus": "日", "options": ["sole / domenica", "luna / lunedì", "fuoco / martedì", "acqua / mercoledì"], "answer": 0, "explanation": "日曜日 usa 日: sole / domenica."}, {"prompt": "Qual è la lettura di 月曜日?", "focus": "月曜日", "options": ["げつようび", "かようび", "すいようび", "もくようび"], "answer": 0, "explanation": "月曜日 = げつようび."}, {"prompt": "Qual è la lettura di 火曜日?", "focus": "火曜日", "options": ["かようび", "げつようび", "すいようび", "もくようび"], "answer": 0, "explanation": "火曜日 = かようび."}, {"prompt": "Qual è la lettura di 水曜日?", "focus": "水曜日", "options": ["すいようび", "げつようび", "かようび", "もくようび"], "answer": 0, "explanation": "水曜日 = すいようび."}, {"prompt": "Qual è la lettura di 木曜日?", "focus": "木曜日", "options": ["もくようび", "げつようび", "かようび", "すいようび"], "answer": 0, "explanation": "木曜日 = もくようび."}, {"prompt": "Qual è la lettura di 金曜日?", "focus": "金曜日", "options": ["きんようび", "げつようび", "かようび", "すいようび"], "answer": 0, "explanation": "金曜日 = きんようび."}, {"prompt": "Qual è la lettura di 土曜日?", "focus": "土曜日", "options": ["どようび", "げつようび", "かようび", "すいようび"], "answer": 0, "explanation": "土曜日 = どようび."}, {"prompt": "Qual è la lettura di 日曜日?", "focus": "日曜日", "options": ["にちようび", "げつようび", "かようび", "すいようび"], "answer": 0, "explanation": "日曜日 = にちようび."}, {"prompt": "Qual è la lettura di 月曜日?", "focus": "月曜日", "options": ["げつようび", "かようび", "すいようび", "もくようび"], "answer": 0, "explanation": "月曜日 = げつようび."}, {"prompt": "Qual è la lettura di 火曜日?", "focus": "火曜日", "options": ["かようび", "げつようび", "すいようび", "もくようび"], "answer": 0, "explanation": "火曜日 = かようび."}, {"prompt": "Qual è la lettura di 水曜日?", "focus": "水曜日", "options": ["すいようび", "げつようび", "かようび", "もくようび"], "answer": 0, "explanation": "水曜日 = すいようび."}, {"prompt": "Qual è la lettura di 木曜日?", "focus": "木曜日", "options": ["もくようび", "げつようび", "かようび", "すいようび"], "answer": 0, "explanation": "木曜日 = もくようび."}, {"prompt": "Qual è la lettura di 金曜日?", "focus": "金曜日", "options": ["きんようび", "げつようび", "かようび", "すいようび"], "answer": 0, "explanation": "金曜日 = きんようび."}, {"prompt": "Qual è la lettura di 土曜日?", "focus": "土曜日", "options": ["どようび", "げつようび", "かようび", "すいようび"], "answer": 0, "explanation": "土曜日 = どようび."}, {"prompt": "Qual è la lettura di 日曜日?", "focus": "日曜日", "options": ["にちようび", "げつようび", "かようび", "すいようび"], "answer": 0, "explanation": "日曜日 = にちようび."}, {"prompt": "Qual è la lettura di 月曜日?", "focus": "月曜日", "options": ["げつようび", "かようび", "すいようび", "もくようび"], "answer": 0, "explanation": "月曜日 = げつようび."}, {"prompt": "Qual è la lettura di 火曜日?", "focus": "火曜日", "options": ["かようび", "げつようび", "すいようび", "もくようび"], "answer": 0, "explanation": "火曜日 = かようび."}, {"prompt": "Qual è la lettura di 水曜日?", "focus": "水曜日", "options": ["すいようび", "げつようび", "かようび", "もくようび"], "answer": 0, "explanation": "水曜日 = すいようび."}, {"prompt": "Qual è la lettura di 木曜日?", "focus": "木曜日", "options": ["もくようび", "げつようび", "かようび", "すいようび"], "answer": 0, "explanation": "木曜日 = もくようび."}, {"prompt": "Qual è la lettura di 金曜日?", "focus": "金曜日", "options": ["きんようび", "げつようび", "かようび", "すいようび"], "answer": 0, "explanation": "金曜日 = きんようび."}, {"prompt": "Qual è la lettura di 土曜日?", "focus": "土曜日", "options": ["どようび", "げつようび", "かようび", "すいようび"], "answer": 0, "explanation": "土曜日 = どようび."}, {"prompt": "Qual è la lettura di 日曜日?", "focus": "日曜日", "options": ["にちようび", "げつようび", "かようび", "すいようび"], "answer": 0, "explanation": "日曜日 = にちようび."}, {"prompt": "Qual è la lettura di 月曜日?", "focus": "月曜日", "options": ["げつようび", "かようび", "すいようび", "もくようび"], "answer": 0, "explanation": "月曜日 = げつようび."}, {"prompt": "Qual è la lettura di 火曜日?", "focus": "火曜日", "options": ["かようび", "げつようび", "すいようび", "もくようび"], "answer": 0, "explanation": "火曜日 = かようび."}, {"prompt": "Qual è la lettura di 水曜日?", "focus": "水曜日", "options": ["すいようび", "げつようび", "かようび", "もくようび"], "answer": 0, "explanation": "水曜日 = すいようび."}, {"prompt": "Qual è la lettura di 木曜日?", "focus": "木曜日", "options": ["もくようび", "げつようび", "かようび", "すいようび"], "answer": 0, "explanation": "木曜日 = もくようび."}, {"prompt": "Qual è la lettura di 金曜日?", "focus": "金曜日", "options": ["きんようび", "げつようび", "かようび", "すいようび"], "answer": 0, "explanation": "金曜日 = きんようび."}, {"prompt": "Qual è la lettura di 土曜日?", "focus": "土曜日", "options": ["どようび", "げつようび", "かようび", "すいようび"], "answer": 0, "explanation": "土曜日 = どようび."}, {"prompt": "Qual è la lettura di 日曜日?", "focus": "日曜日", "options": ["にちようび", "げつようび", "かようび", "すいようび"], "answer": 0, "explanation": "日曜日 = にちようび."}, {"prompt": "Qual è la lettura di 月曜日?", "focus": "月曜日", "options": ["げつようび", "かようび", "すいようび", "もくようび"], "answer": 0, "explanation": "月曜日 = げつようび."}];
+
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {
+      ...item,
+      shuffledOptions: options,
+      correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)
+    };
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>
+    `).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>
+    `;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

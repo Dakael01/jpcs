@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Grammar — これ / それ / あれ · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/02_grammar/grammar_practice_kore_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Grammar — これ / それ / あれ · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="grammar_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+
+    <form id="quizForm"></form>
+
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#3e763d">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+
+<script>
+const QUESTION_POOL = [{"prompt": "Che cosa indica これ?", "focus": "これ", "options": ["questo, vicino a chi parla", "quello, vicino a chi ascolta", "quello laggiù, lontano da entrambi", "これ"], "answer": 0, "explanation": "これ = questo, vicino a chi parla."}, {"prompt": "Traduci la frase.", "focus": "これは本です。", "options": ["Questo è libro.", "Questo libro", "Qui è libro.", "libro è qui."], "answer": 0, "explanation": "これ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "これはペンです。", "options": ["Questo è penna.", "Questo penna", "Qui è penna.", "penna è qui."], "answer": 0, "explanation": "これ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "これは水です。", "options": ["Questo è acqua.", "Questo acqua", "Qui è acqua.", "acqua è qui."], "answer": 0, "explanation": "これ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "これは学校です。", "options": ["Questo è scuola.", "Questo scuola", "Qui è scuola.", "scuola è qui."], "answer": 0, "explanation": "これ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "これは駅です。", "options": ["Questo è stazione.", "Questo stazione", "Qui è stazione.", "stazione è qui."], "answer": 0, "explanation": "これ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "これは店です。", "options": ["Questo è negozio.", "Questo negozio", "Qui è negozio.", "negozio è qui."], "answer": 0, "explanation": "これ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "これは日本です。", "options": ["Questo è Giappone.", "Questo Giappone", "Qui è Giappone.", "Giappone è qui."], "answer": 0, "explanation": "これ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "これは友達です。", "options": ["Questo è amico.", "Questo amico", "Qui è amico.", "amico è qui."], "answer": 0, "explanation": "これ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "これは猫です。", "options": ["Questo è gatto.", "Questo gatto", "Qui è gatto.", "gatto è qui."], "answer": 0, "explanation": "これ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "これは犬です。", "options": ["Questo è cane.", "Questo cane", "Qui è cane.", "cane è qui."], "answer": 0, "explanation": "これ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "これは車です。", "options": ["Questo è auto.", "Questo auto", "Qui è auto.", "auto è qui."], "answer": 0, "explanation": "これ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "これは家です。", "options": ["Questo è casa.", "Questo casa", "Qui è casa.", "casa è qui."], "answer": 0, "explanation": "これ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "これは図書館です。", "options": ["Questo è biblioteca.", "Questo biblioteca", "Qui è biblioteca.", "biblioteca è qui."], "answer": 0, "explanation": "これ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "これは月曜日です。", "options": ["Questo è lunedì.", "Questo lunedì", "Qui è lunedì.", "lunedì è qui."], "answer": 0, "explanation": "これ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "これは日曜日です。", "options": ["Questo è domenica.", "Questo domenica", "Qui è domenica.", "domenica è qui."], "answer": 0, "explanation": "これ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "これは先生です。", "options": ["Questo è insegnante.", "Questo insegnante", "Qui è insegnante.", "insegnante è qui."], "answer": 0, "explanation": "これ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "これは学生です。", "options": ["Questo è studente.", "Questo studente", "Qui è studente.", "studente è qui."], "answer": 0, "explanation": "これ sta da solo e funziona come soggetto."}, {"prompt": "Che cosa indica それ?", "focus": "それ", "options": ["quello, vicino a chi ascolta", "questo, vicino a chi parla", "quello laggiù, lontano da entrambi", "これ"], "answer": 0, "explanation": "それ = quello, vicino a chi ascolta."}, {"prompt": "Traduci la frase.", "focus": "それは本です。", "options": ["Quello è libro.", "Questo libro", "Qui è libro.", "libro è qui."], "answer": 0, "explanation": "それ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "それはペンです。", "options": ["Quello è penna.", "Questo penna", "Qui è penna.", "penna è qui."], "answer": 0, "explanation": "それ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "それは水です。", "options": ["Quello è acqua.", "Questo acqua", "Qui è acqua.", "acqua è qui."], "answer": 0, "explanation": "それ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "それは学校です。", "options": ["Quello è scuola.", "Questo scuola", "Qui è scuola.", "scuola è qui."], "answer": 0, "explanation": "それ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "それは駅です。", "options": ["Quello è stazione.", "Questo stazione", "Qui è stazione.", "stazione è qui."], "answer": 0, "explanation": "それ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "それは店です。", "options": ["Quello è negozio.", "Questo negozio", "Qui è negozio.", "negozio è qui."], "answer": 0, "explanation": "それ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "それは日本です。", "options": ["Quello è Giappone.", "Questo Giappone", "Qui è Giappone.", "Giappone è qui."], "answer": 0, "explanation": "それ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "それは友達です。", "options": ["Quello è amico.", "Questo amico", "Qui è amico.", "amico è qui."], "answer": 0, "explanation": "それ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "それは猫です。", "options": ["Quello è gatto.", "Questo gatto", "Qui è gatto.", "gatto è qui."], "answer": 0, "explanation": "それ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "それは犬です。", "options": ["Quello è cane.", "Questo cane", "Qui è cane.", "cane è qui."], "answer": 0, "explanation": "それ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "それは車です。", "options": ["Quello è auto.", "Questo auto", "Qui è auto.", "auto è qui."], "answer": 0, "explanation": "それ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "それは家です。", "options": ["Quello è casa.", "Questo casa", "Qui è casa.", "casa è qui."], "answer": 0, "explanation": "それ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "それは図書館です。", "options": ["Quello è biblioteca.", "Questo biblioteca", "Qui è biblioteca.", "biblioteca è qui."], "answer": 0, "explanation": "それ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "それは月曜日です。", "options": ["Quello è lunedì.", "Questo lunedì", "Qui è lunedì.", "lunedì è qui."], "answer": 0, "explanation": "それ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "それは日曜日です。", "options": ["Quello è domenica.", "Questo domenica", "Qui è domenica.", "domenica è qui."], "answer": 0, "explanation": "それ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "それは先生です。", "options": ["Quello è insegnante.", "Questo insegnante", "Qui è insegnante.", "insegnante è qui."], "answer": 0, "explanation": "それ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "それは学生です。", "options": ["Quello è studente.", "Questo studente", "Qui è studente.", "studente è qui."], "answer": 0, "explanation": "それ sta da solo e funziona come soggetto."}, {"prompt": "Che cosa indica あれ?", "focus": "あれ", "options": ["quello laggiù, lontano da entrambi", "questo, vicino a chi parla", "quello, vicino a chi ascolta", "これ"], "answer": 0, "explanation": "あれ = quello laggiù, lontano da entrambi."}, {"prompt": "Traduci la frase.", "focus": "あれは本です。", "options": ["Quello laggiù è libro.", "Questo libro", "Qui è libro.", "libro è qui."], "answer": 0, "explanation": "あれ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "あれはペンです。", "options": ["Quello laggiù è penna.", "Questo penna", "Qui è penna.", "penna è qui."], "answer": 0, "explanation": "あれ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "あれは水です。", "options": ["Quello laggiù è acqua.", "Questo acqua", "Qui è acqua.", "acqua è qui."], "answer": 0, "explanation": "あれ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "あれは学校です。", "options": ["Quello laggiù è scuola.", "Questo scuola", "Qui è scuola.", "scuola è qui."], "answer": 0, "explanation": "あれ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "あれは駅です。", "options": ["Quello laggiù è stazione.", "Questo stazione", "Qui è stazione.", "stazione è qui."], "answer": 0, "explanation": "あれ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "あれは店です。", "options": ["Quello laggiù è negozio.", "Questo negozio", "Qui è negozio.", "negozio è qui."], "answer": 0, "explanation": "あれ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "あれは日本です。", "options": ["Quello laggiù è Giappone.", "Questo Giappone", "Qui è Giappone.", "Giappone è qui."], "answer": 0, "explanation": "あれ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "あれは友達です。", "options": ["Quello laggiù è amico.", "Questo amico", "Qui è amico.", "amico è qui."], "answer": 0, "explanation": "あれ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "あれは猫です。", "options": ["Quello laggiù è gatto.", "Questo gatto", "Qui è gatto.", "gatto è qui."], "answer": 0, "explanation": "あれ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "あれは犬です。", "options": ["Quello laggiù è cane.", "Questo cane", "Qui è cane.", "cane è qui."], "answer": 0, "explanation": "あれ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "あれは車です。", "options": ["Quello laggiù è auto.", "Questo auto", "Qui è auto.", "auto è qui."], "answer": 0, "explanation": "あれ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "あれは家です。", "options": ["Quello laggiù è casa.", "Questo casa", "Qui è casa.", "casa è qui."], "answer": 0, "explanation": "あれ sta da solo e funziona come soggetto."}, {"prompt": "Traduci la frase.", "focus": "あれは図書館です。", "options": ["Quello laggiù è biblioteca.", "Questo biblioteca", "Qui è biblioteca.", "biblioteca è qui."], "answer": 0, "explanation": "あれ sta da solo e funziona come soggetto."}];
+
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {
+      ...item,
+      shuffledOptions: options,
+      correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)
+    };
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>
+    `).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>
+    `;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

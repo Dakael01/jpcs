@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Time &amp; Dates — Ore e minuti · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/07_numbers_time_date/time_dates_practice_time_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Time &amp; Dates — Ore e minuti · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="time_dates_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+
+    <form id="quizForm"></form>
+
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#935b29">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+
+<script>
+const QUESTION_POOL = [{"prompt": "Che orario indica 一時?", "focus": "一時", "options": ["le 1", "le 2", "le 3", "le 4"], "answer": 0, "explanation": "一時 si legge いちじ e indica le 1."}, {"prompt": "Che orario indica 二時?", "focus": "二時", "options": ["le 2", "le 1", "le 3", "le 4"], "answer": 0, "explanation": "二時 si legge にじ e indica le 2."}, {"prompt": "Che orario indica 三時?", "focus": "三時", "options": ["le 3", "le 1", "le 2", "le 4"], "answer": 0, "explanation": "三時 si legge さんじ e indica le 3."}, {"prompt": "Che orario indica 四時?", "focus": "四時", "options": ["le 4", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "四時 si legge よじ e indica le 4."}, {"prompt": "Che orario indica 五時?", "focus": "五時", "options": ["le 5", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "五時 si legge ごじ e indica le 5."}, {"prompt": "Che orario indica 六時?", "focus": "六時", "options": ["le 6", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "六時 si legge ろくじ e indica le 6."}, {"prompt": "Che orario indica 七時?", "focus": "七時", "options": ["le 7", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "七時 si legge しちじ e indica le 7."}, {"prompt": "Che orario indica 八時?", "focus": "八時", "options": ["le 8", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "八時 si legge はちじ e indica le 8."}, {"prompt": "Che orario indica 九時?", "focus": "九時", "options": ["le 9", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "九時 si legge くじ e indica le 9."}, {"prompt": "Che orario indica 十時?", "focus": "十時", "options": ["le 10", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "十時 si legge じゅうじ e indica le 10."}, {"prompt": "Che orario indica 十一時?", "focus": "十一時", "options": ["le 11", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "十一時 si legge じゅういちじ e indica le 11."}, {"prompt": "Che orario indica 十二時?", "focus": "十二時", "options": ["le 12", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "十二時 si legge じゅうにじ e indica le 12."}, {"prompt": "Che orario indica 一時十分?", "focus": "一時十分", "options": ["le 1:10", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "一時十分 si legge いちじじゅっぷん e indica le 1:10."}, {"prompt": "Che orario indica 一時半?", "focus": "一時半", "options": ["le 1:30", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "一時半 si legge いちじはん e indica le 1:30."}, {"prompt": "Che orario indica 一時四十五分?", "focus": "一時四十五分", "options": ["le 1:45", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "一時四十五分 si legge いちじよんじゅうごふん e indica le 1:45."}, {"prompt": "Che orario indica 三時十分?", "focus": "三時十分", "options": ["le 3:10", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "三時十分 si legge さんじじゅっぷん e indica le 3:10."}, {"prompt": "Che orario indica 三時半?", "focus": "三時半", "options": ["le 3:30", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "三時半 si legge さんじはん e indica le 3:30."}, {"prompt": "Che orario indica 三時四十五分?", "focus": "三時四十五分", "options": ["le 3:45", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "三時四十五分 si legge さんじよんじゅうごふん e indica le 3:45."}, {"prompt": "Che orario indica 四時十分?", "focus": "四時十分", "options": ["le 4:10", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "四時十分 si legge よじじゅっぷん e indica le 4:10."}, {"prompt": "Che orario indica 四時半?", "focus": "四時半", "options": ["le 4:30", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "四時半 si legge よじはん e indica le 4:30."}, {"prompt": "Che orario indica 四時四十五分?", "focus": "四時四十五分", "options": ["le 4:45", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "四時四十五分 si legge よじよんじゅうごふん e indica le 4:45."}, {"prompt": "Che orario indica 七時十分?", "focus": "七時十分", "options": ["le 7:10", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "七時十分 si legge しちじじゅっぷん e indica le 7:10."}, {"prompt": "Che orario indica 七時半?", "focus": "七時半", "options": ["le 7:30", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "七時半 si legge しちじはん e indica le 7:30."}, {"prompt": "Che orario indica 七時四十五分?", "focus": "七時四十五分", "options": ["le 7:45", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "七時四十五分 si legge しちじよんじゅうごふん e indica le 7:45."}, {"prompt": "Che orario indica 九時十分?", "focus": "九時十分", "options": ["le 9:10", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "九時十分 si legge くじじゅっぷん e indica le 9:10."}, {"prompt": "Che orario indica 九時半?", "focus": "九時半", "options": ["le 9:30", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "九時半 si legge くじはん e indica le 9:30."}, {"prompt": "Che orario indica 九時四十五分?", "focus": "九時四十五分", "options": ["le 9:45", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "九時四十五分 si legge くじよんじゅうごふん e indica le 9:45."}, {"prompt": "Che orario indica 十時十分?", "focus": "十時十分", "options": ["le 10:10", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "十時十分 si legge じゅうじじゅっぷん e indica le 10:10."}, {"prompt": "Che orario indica 十時半?", "focus": "十時半", "options": ["le 10:30", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "十時半 si legge じゅうじはん e indica le 10:30."}, {"prompt": "Che orario indica 十時四十五分?", "focus": "十時四十五分", "options": ["le 10:45", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "十時四十五分 si legge じゅうじよんじゅうごふん e indica le 10:45."}, {"prompt": "Che orario indica 十二時十分?", "focus": "十二時十分", "options": ["le 12:10", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "十二時十分 si legge じゅうにじじゅっぷん e indica le 12:10."}, {"prompt": "Che orario indica 十二時半?", "focus": "十二時半", "options": ["le 12:30", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "十二時半 si legge じゅうにじはん e indica le 12:30."}, {"prompt": "Che orario indica 十二時四十五分?", "focus": "十二時四十五分", "options": ["le 12:45", "le 1", "le 2", "le 3"], "answer": 0, "explanation": "十二時四十五分 si legge じゅうにじよんじゅうごふん e indica le 12:45."}, {"prompt": "Qual è la lettura di 一時?", "focus": "一時", "options": ["いちじ", "にじ", "さんじ", "よじ"], "answer": 0, "explanation": "一時 = いちじ."}, {"prompt": "Qual è la lettura di 二時?", "focus": "二時", "options": ["にじ", "いちじ", "さんじ", "よじ"], "answer": 0, "explanation": "二時 = にじ."}, {"prompt": "Qual è la lettura di 三時?", "focus": "三時", "options": ["さんじ", "いちじ", "にじ", "よじ"], "answer": 0, "explanation": "三時 = さんじ."}, {"prompt": "Qual è la lettura di 四時?", "focus": "四時", "options": ["よじ", "いちじ", "にじ", "さんじ"], "answer": 0, "explanation": "四時 = よじ."}, {"prompt": "Qual è la lettura di 五時?", "focus": "五時", "options": ["ごじ", "いちじ", "にじ", "さんじ"], "answer": 0, "explanation": "五時 = ごじ."}, {"prompt": "Qual è la lettura di 六時?", "focus": "六時", "options": ["ろくじ", "いちじ", "にじ", "さんじ"], "answer": 0, "explanation": "六時 = ろくじ."}, {"prompt": "Qual è la lettura di 七時?", "focus": "七時", "options": ["しちじ", "いちじ", "にじ", "さんじ"], "answer": 0, "explanation": "七時 = しちじ."}, {"prompt": "Qual è la lettura di 八時?", "focus": "八時", "options": ["はちじ", "いちじ", "にじ", "さんじ"], "answer": 0, "explanation": "八時 = はちじ."}, {"prompt": "Qual è la lettura di 九時?", "focus": "九時", "options": ["くじ", "いちじ", "にじ", "さんじ"], "answer": 0, "explanation": "九時 = くじ."}, {"prompt": "Qual è la lettura di 十時?", "focus": "十時", "options": ["じゅうじ", "いちじ", "にじ", "さんじ"], "answer": 0, "explanation": "十時 = じゅうじ."}, {"prompt": "Qual è la lettura di 十一時?", "focus": "十一時", "options": ["じゅういちじ", "いちじ", "にじ", "さんじ"], "answer": 0, "explanation": "十一時 = じゅういちじ."}, {"prompt": "Qual è la lettura di 十二時?", "focus": "十二時", "options": ["じゅうにじ", "いちじ", "にじ", "さんじ"], "answer": 0, "explanation": "十二時 = じゅうにじ."}, {"prompt": "Qual è la lettura di 一時十分?", "focus": "一時十分", "options": ["いちじじゅっぷん", "いちじ", "にじ", "さんじ"], "answer": 0, "explanation": "一時十分 = いちじじゅっぷん."}, {"prompt": "Qual è la lettura di 一時半?", "focus": "一時半", "options": ["いちじはん", "いちじ", "にじ", "さんじ"], "answer": 0, "explanation": "一時半 = いちじはん."}, {"prompt": "Qual è la lettura di 一時四十五分?", "focus": "一時四十五分", "options": ["いちじよんじゅうごふん", "いちじ", "にじ", "さんじ"], "answer": 0, "explanation": "一時四十五分 = いちじよんじゅうごふん."}, {"prompt": "Qual è la lettura di 三時十分?", "focus": "三時十分", "options": ["さんじじゅっぷん", "いちじ", "にじ", "さんじ"], "answer": 0, "explanation": "三時十分 = さんじじゅっぷん."}, {"prompt": "Qual è la lettura di 三時半?", "focus": "三時半", "options": ["さんじはん", "いちじ", "にじ", "さんじ"], "answer": 0, "explanation": "三時半 = さんじはん."}];
+
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {
+      ...item,
+      shuffledOptions: options,
+      correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)
+    };
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>
+    `).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>
+    `;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

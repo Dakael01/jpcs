@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kanji v2 — Scegli il significato · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/01_alphabets/kanji_v2_practice_meaning_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Kanji v2 — Scegli il significato · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="kanji_v2_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+    <section class="print-section"><h2>Istruzioni</h2><p>Scegli la risposta corretta e premi <strong>Verifica</strong>.</p></section>
+    <form id="quizForm"></form>
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#7a5486">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+<script>
+const QUESTION_POOL = [{"prompt": "Scegli il significato corretto.", "focus": "日", "options": ["sole / giorno", "luna / mese", "fuoco", "acqua"], "answer": 0, "explanation": "日 = sole / giorno."}, {"prompt": "Scegli il significato corretto.", "focus": "月", "options": ["luna / mese", "fuoco", "acqua", "albero / legno"], "answer": 0, "explanation": "月 = luna / mese."}, {"prompt": "Scegli il significato corretto.", "focus": "火", "options": ["fuoco", "acqua", "albero / legno", "montagna"], "answer": 0, "explanation": "火 = fuoco."}, {"prompt": "Scegli il significato corretto.", "focus": "水", "options": ["acqua", "albero / legno", "montagna", "fiume"], "answer": 0, "explanation": "水 = acqua."}, {"prompt": "Scegli il significato corretto.", "focus": "木", "options": ["albero / legno", "montagna", "fiume", "risaia / campo"], "answer": 0, "explanation": "木 = albero / legno."}, {"prompt": "Scegli il significato corretto.", "focus": "山", "options": ["montagna", "fiume", "risaia / campo", "cielo / vuoto"], "answer": 0, "explanation": "山 = montagna."}, {"prompt": "Scegli il significato corretto.", "focus": "川", "options": ["fiume", "risaia / campo", "cielo / vuoto", "pioggia"], "answer": 0, "explanation": "川 = fiume."}, {"prompt": "Scegli il significato corretto.", "focus": "田", "options": ["risaia / campo", "cielo / vuoto", "pioggia", "persona"], "answer": 0, "explanation": "田 = risaia / campo."}, {"prompt": "Scegli il significato corretto.", "focus": "空", "options": ["cielo / vuoto", "pioggia", "persona", "donna"], "answer": 0, "explanation": "空 = cielo / vuoto."}, {"prompt": "Scegli il significato corretto.", "focus": "雨", "options": ["pioggia", "persona", "donna", "uomo"], "answer": 0, "explanation": "雨 = pioggia."}, {"prompt": "Scegli il significato corretto.", "focus": "人", "options": ["persona", "donna", "uomo", "bambino"], "answer": 0, "explanation": "人 = persona."}, {"prompt": "Scegli il significato corretto.", "focus": "女", "options": ["donna", "uomo", "bambino", "occhio"], "answer": 0, "explanation": "女 = donna."}, {"prompt": "Scegli il significato corretto.", "focus": "男", "options": ["uomo", "bambino", "occhio", "bocca"], "answer": 0, "explanation": "男 = uomo."}, {"prompt": "Scegli il significato corretto.", "focus": "子", "options": ["bambino", "occhio", "bocca", "orecchio"], "answer": 0, "explanation": "子 = bambino."}, {"prompt": "Scegli il significato corretto.", "focus": "目", "options": ["occhio", "bocca", "orecchio", "mano"], "answer": 0, "explanation": "目 = occhio."}, {"prompt": "Scegli il significato corretto.", "focus": "口", "options": ["bocca", "orecchio", "mano", "piede / gamba"], "answer": 0, "explanation": "口 = bocca."}, {"prompt": "Scegli il significato corretto.", "focus": "耳", "options": ["orecchio", "mano", "piede / gamba", "cuore / mente"], "answer": 0, "explanation": "耳 = orecchio."}, {"prompt": "Scegli il significato corretto.", "focus": "手", "options": ["mano", "sole / giorno", "luna / mese", "fuoco"], "answer": 0, "explanation": "手 = mano."}, {"prompt": "Scegli il significato corretto.", "focus": "足", "options": ["piede / gamba", "luna / mese", "fuoco", "acqua"], "answer": 0, "explanation": "足 = piede / gamba."}, {"prompt": "Scegli il significato corretto.", "focus": "心", "options": ["cuore / mente", "fuoco", "acqua", "albero / legno"], "answer": 0, "explanation": "心 = cuore / mente."}, {"prompt": "Scegli il significato corretto.", "focus": "一", "options": ["uno", "acqua", "albero / legno", "montagna"], "answer": 0, "explanation": "一 = uno."}, {"prompt": "Scegli il significato corretto.", "focus": "二", "options": ["due", "albero / legno", "montagna", "fiume"], "answer": 0, "explanation": "二 = due."}, {"prompt": "Scegli il significato corretto.", "focus": "三", "options": ["tre", "montagna", "fiume", "risaia / campo"], "answer": 0, "explanation": "三 = tre."}, {"prompt": "Scegli il significato corretto.", "focus": "四", "options": ["quattro", "fiume", "risaia / campo", "cielo / vuoto"], "answer": 0, "explanation": "四 = quattro."}, {"prompt": "Scegli il significato corretto.", "focus": "五", "options": ["cinque", "risaia / campo", "cielo / vuoto", "pioggia"], "answer": 0, "explanation": "五 = cinque."}, {"prompt": "Scegli il significato corretto.", "focus": "六", "options": ["sei", "cielo / vuoto", "pioggia", "persona"], "answer": 0, "explanation": "六 = sei."}, {"prompt": "Scegli il significato corretto.", "focus": "七", "options": ["sette", "pioggia", "persona", "donna"], "answer": 0, "explanation": "七 = sette."}, {"prompt": "Scegli il significato corretto.", "focus": "八", "options": ["otto", "persona", "donna", "uomo"], "answer": 0, "explanation": "八 = otto."}, {"prompt": "Scegli il significato corretto.", "focus": "九", "options": ["nove", "donna", "uomo", "bambino"], "answer": 0, "explanation": "九 = nove."}, {"prompt": "Scegli il significato corretto.", "focus": "十", "options": ["dieci", "uomo", "bambino", "occhio"], "answer": 0, "explanation": "十 = dieci."}, {"prompt": "Scegli il significato corretto.", "focus": "年", "options": ["anno", "bambino", "occhio", "bocca"], "answer": 0, "explanation": "年 = anno."}, {"prompt": "Scegli il significato corretto.", "focus": "時", "options": ["ora / tempo", "occhio", "bocca", "orecchio"], "answer": 0, "explanation": "時 = ora / tempo."}, {"prompt": "Scegli il significato corretto.", "focus": "分", "options": ["minuto / parte / capire", "bocca", "orecchio", "mano"], "answer": 0, "explanation": "分 = minuto / parte / capire."}, {"prompt": "Scegli il significato corretto.", "focus": "今", "options": ["adesso", "orecchio", "mano", "piede / gamba"], "answer": 0, "explanation": "今 = adesso."}, {"prompt": "Scegli il significato corretto.", "focus": "前", "options": ["prima / davanti", "sole / giorno", "luna / mese", "fuoco"], "answer": 0, "explanation": "前 = prima / davanti."}, {"prompt": "Scegli il significato corretto.", "focus": "後", "options": ["dopo / dietro", "luna / mese", "fuoco", "acqua"], "answer": 0, "explanation": "後 = dopo / dietro."}, {"prompt": "Scegli il significato corretto.", "focus": "午", "options": ["mezzogiorno", "fuoco", "acqua", "albero / legno"], "answer": 0, "explanation": "午 = mezzogiorno."}, {"prompt": "Scegli il significato corretto.", "focus": "間", "options": ["intervallo / spazio", "acqua", "albero / legno", "montagna"], "answer": 0, "explanation": "間 = intervallo / spazio."}, {"prompt": "Scegli il significato corretto.", "focus": "週", "options": ["settimana", "albero / legno", "montagna", "fiume"], "answer": 0, "explanation": "週 = settimana."}, {"prompt": "Scegli il significato corretto.", "focus": "毎", "options": ["ogni", "montagna", "fiume", "risaia / campo"], "answer": 0, "explanation": "毎 = ogni."}, {"prompt": "Scegli il significato corretto.", "focus": "学", "options": ["studio / imparare", "fiume", "risaia / campo", "cielo / vuoto"], "answer": 0, "explanation": "学 = studio / imparare."}, {"prompt": "Scegli il significato corretto.", "focus": "校", "options": ["scuola", "risaia / campo", "cielo / vuoto", "pioggia"], "answer": 0, "explanation": "校 = scuola."}, {"prompt": "Scegli il significato corretto.", "focus": "先", "options": ["prima / precedente", "cielo / vuoto", "pioggia", "persona"], "answer": 0, "explanation": "先 = prima / precedente."}, {"prompt": "Scegli il significato corretto.", "focus": "生", "options": ["vita / nascere", "pioggia", "persona", "donna"], "answer": 0, "explanation": "生 = vita / nascere."}, {"prompt": "Scegli il significato corretto.", "focus": "本", "options": ["libro / origine", "persona", "donna", "uomo"], "answer": 0, "explanation": "本 = libro / origine."}, {"prompt": "Scegli il significato corretto.", "focus": "国", "options": ["paese / nazione", "donna", "uomo", "bambino"], "answer": 0, "explanation": "国 = paese / nazione."}, {"prompt": "Scegli il significato corretto.", "focus": "駅", "options": ["stazione", "uomo", "bambino", "occhio"], "answer": 0, "explanation": "駅 = stazione."}, {"prompt": "Scegli il significato corretto.", "focus": "店", "options": ["negozio", "bambino", "occhio", "bocca"], "answer": 0, "explanation": "店 = negozio."}, {"prompt": "Scegli il significato corretto.", "focus": "家", "options": ["casa / famiglia", "occhio", "bocca", "orecchio"], "answer": 0, "explanation": "家 = casa / famiglia."}, {"prompt": "Scegli il significato corretto.", "focus": "外", "options": ["fuori / esterno", "bocca", "orecchio", "mano"], "answer": 0, "explanation": "外 = fuori / esterno."}];
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {...item, shuffledOptions: options, correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)};
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option"><input type="radio" name="${name}" value="${cidx}"><span>${choice.text}</span></label>`).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus kanji-v2-quiz-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>`;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

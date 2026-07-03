@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Volume 03 — Verbs · Tipi di verbi · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/05_verbs/verbs_practice_types_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="practice-page-body verbs-practice-body">
+  <main class="practice-page">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Volume 03 — Verbs · Tipi di verbi · Quiz</h1>
+        <p>50 domande totali · 10 pescate random a ogni test</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="verbs_practice.html">← Practice</a>
+        <a href="verbs.html">Indice Verbs</a>
+      </nav>
+    </header>
+
+    <section class="quiz-control-card quiz-intro-card">
+      <p>Scegli una risposta per ogni domanda. In fondo alla pagina trovi <strong>Verifica</strong>. Con <strong>Rifai test</strong> vengono pescate altre 10 domande.</p>
+      <div id="quizResult" class="quiz-result" aria-live="polite"></div>
+    </section>
+
+    <section id="quizContainer" class="quiz-container"></section>
+
+    <section class="quiz-control-card quiz-bottom-actions">
+      <div class="quiz-buttons">
+        <button id="checkQuiz">Verifica</button>
+        <button id="resetQuiz" class="secondary">Rifai test</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const QUESTION_BANK = [{"prompt": "Che tipo di verbo è 食べる（たべる）?", "options": ["RU-verbo", "U-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "食べる（たべる） è un RU-verbo. Significa: mangiare."}, {"prompt": "Che tipo di verbo è 見る（みる）?", "options": ["RU-verbo", "U-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "見る（みる） è un RU-verbo. Significa: vedere / guardare."}, {"prompt": "Che tipo di verbo è 起きる（おきる）?", "options": ["RU-verbo", "U-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "起きる（おきる） è un RU-verbo. Significa: svegliarsi / alzarsi."}, {"prompt": "Che tipo di verbo è 寝る（ねる）?", "options": ["RU-verbo", "U-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "寝る（ねる） è un RU-verbo. Significa: dormire."}, {"prompt": "Che tipo di verbo è 開ける（あける）?", "options": ["RU-verbo", "U-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "開ける（あける） è un RU-verbo. Significa: aprire."}, {"prompt": "Che tipo di verbo è 閉める（しめる）?", "options": ["RU-verbo", "U-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "閉める（しめる） è un RU-verbo. Significa: chiudere."}, {"prompt": "Che tipo di verbo è 教える（おしえる）?", "options": ["RU-verbo", "U-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "教える（おしえる） è un RU-verbo. Significa: insegnare / dire."}, {"prompt": "Che tipo di verbo è 忘れる（わすれる）?", "options": ["RU-verbo", "U-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "忘れる（わすれる） è un RU-verbo. Significa: dimenticare."}, {"prompt": "Che tipo di verbo è 借りる（かりる）?", "options": ["RU-verbo", "U-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "借りる（かりる） è un RU-verbo. Significa: prendere in prestito."}, {"prompt": "Che tipo di verbo è 浴びる（あびる）?", "options": ["RU-verbo", "U-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "浴びる（あびる） è un RU-verbo. Significa: fare / ricevere, es. doccia."}, {"prompt": "Che tipo di verbo è 出る（でる）?", "options": ["RU-verbo", "U-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "出る（でる） è un RU-verbo. Significa: uscire."}, {"prompt": "Che tipo di verbo è 入れる（いれる）?", "options": ["RU-verbo", "U-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "入れる（いれる） è un RU-verbo. Significa: mettere dentro."}, {"prompt": "Che tipo di verbo è 着る（きる）?", "options": ["RU-verbo", "U-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "着る（きる） è un RU-verbo. Significa: indossare."}, {"prompt": "Che tipo di verbo è いる?", "options": ["RU-verbo", "U-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "いる è un RU-verbo. Significa: esserci, per esseri animati."}, {"prompt": "Che tipo di verbo è できる?", "options": ["RU-verbo", "U-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "できる è un RU-verbo. Significa: potere / riuscire."}, {"prompt": "Che tipo di verbo è 降りる（おりる）?", "options": ["RU-verbo", "U-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "降りる（おりる） è un RU-verbo. Significa: scendere / scendere da un mezzo."}, {"prompt": "Che tipo di verbo è 飲む（のむ）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "飲む（のむ） è un U-verbo. Significa: bere."}, {"prompt": "Che tipo di verbo è 読む（よむ）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "読む（よむ） è un U-verbo. Significa: leggere."}, {"prompt": "Che tipo di verbo è 休む（やすむ）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "休む（やすむ） è un U-verbo. Significa: riposare."}, {"prompt": "Che tipo di verbo è 死ぬ（しぬ）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "死ぬ（しぬ） è un U-verbo. Significa: morire."}, {"prompt": "Che tipo di verbo è 遊ぶ（あそぶ）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "遊ぶ（あそぶ） è un U-verbo. Significa: giocare / divertirsi."}, {"prompt": "Che tipo di verbo è 呼ぶ（よぶ）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "呼ぶ（よぶ） è un U-verbo. Significa: chiamare."}, {"prompt": "Che tipo di verbo è 泳ぐ（およぐ）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "泳ぐ（およぐ） è un U-verbo. Significa: nuotare."}, {"prompt": "Che tipo di verbo è 書く（かく）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "書く（かく） è un U-verbo. Significa: scrivere."}, {"prompt": "Che tipo di verbo è 聞く（きく）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "聞く（きく） è un U-verbo. Significa: ascoltare / chiedere."}, {"prompt": "Che tipo di verbo è 働く（はたらく）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "働く（はたらく） è un U-verbo. Significa: lavorare."}, {"prompt": "Che tipo di verbo è 行く（いく）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "行く（いく） è un U-verbo. Significa: andare."}, {"prompt": "Che tipo di verbo è 話す（はなす）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "話す（はなす） è un U-verbo. Significa: parlare."}, {"prompt": "Che tipo di verbo è 買う（かう）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "買う（かう） è un U-verbo. Significa: comprare."}, {"prompt": "Che tipo di verbo è 会う（あう）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "会う（あう） è un U-verbo. Significa: incontrare."}, {"prompt": "Che tipo di verbo è 待つ（まつ）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "待つ（まつ） è un U-verbo. Significa: aspettare."}, {"prompt": "Che tipo di verbo è 持つ（もつ）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "持つ（もつ） è un U-verbo. Significa: tenere / avere con sé."}, {"prompt": "Che tipo di verbo è 帰る（かえる）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "帰る（かえる） è un U-verbo. Significa: tornare."}, {"prompt": "Che tipo di verbo è 入る（はいる）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "入る（はいる） è un U-verbo. Significa: entrare."}, {"prompt": "Che tipo di verbo è 作る（つくる）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "作る（つくる） è un U-verbo. Significa: fare / creare."}, {"prompt": "Che tipo di verbo è 乗る（のる）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "乗る（のる） è un U-verbo. Significa: salire su un mezzo."}, {"prompt": "Che tipo di verbo è 売る（うる）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "売る（うる） è un U-verbo. Significa: vendere."}, {"prompt": "Che tipo di verbo è 切る（きる）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "切る（きる） è un U-verbo. Significa: tagliare."}, {"prompt": "Che tipo di verbo è 分かる（わかる）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "分かる（わかる） è un U-verbo. Significa: capire."}, {"prompt": "Che tipo di verbo è 座る（すわる）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "座る（すわる） è un U-verbo. Significa: sedersi."}, {"prompt": "Che tipo di verbo è 立つ（たつ）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "立つ（たつ） è un U-verbo. Significa: stare in piedi / alzarsi."}, {"prompt": "Che tipo di verbo è 使う（つかう）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "使う（つかう） è un U-verbo. Significa: usare."}, {"prompt": "Che tipo di verbo è 洗う（あらう）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "洗う（あらう） è un U-verbo. Significa: lavare."}, {"prompt": "Che tipo di verbo è 取る（とる）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "取る（とる） è un U-verbo. Significa: prendere."}, {"prompt": "Che tipo di verbo è 住む（すむ）?", "options": ["U-verbo", "RU-verbo", "Irregolare", "Aggettivo"], "answer": 0, "explanation": "住む（すむ） è un U-verbo. Significa: vivere / abitare."}, {"prompt": "Che tipo di verbo è する?", "options": ["Irregolare", "RU-verbo", "U-verbo", "Aggettivo"], "answer": 0, "explanation": "する è un Irregolare. Significa: fare."}, {"prompt": "Che tipo di verbo è 勉強する（べんきょうする）?", "options": ["Irregolare", "RU-verbo", "U-verbo", "Aggettivo"], "answer": 0, "explanation": "勉強する（べんきょうする） è un Irregolare. Significa: studiare."}, {"prompt": "Che tipo di verbo è 来る（くる）?", "options": ["Irregolare", "RU-verbo", "U-verbo", "Aggettivo"], "answer": 0, "explanation": "来る（くる） è un Irregolare. Significa: venire."}, {"prompt": "Che tipo di verbo è 掃除する（そうじする）?", "options": ["Irregolare", "RU-verbo", "U-verbo", "Aggettivo"], "answer": 0, "explanation": "掃除する（そうじする） è un Irregolare. Significa: pulire."}, {"prompt": "Che tipo di verbo è 料理する（りょうりする）?", "options": ["Irregolare", "RU-verbo", "U-verbo", "Aggettivo"], "answer": 0, "explanation": "料理する（りょうりする） è un Irregolare. Significa: cucinare."}];
+    const TEST_SIZE = 10;
+    let currentQuestions = [];
+
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+    function startQuiz() {
+      currentQuestions = shuffle(uniqueQuestions(QUESTION_BANK)).slice(0, TEST_SIZE).map(q => {
+        const opts = q.options.map((text, index) => ({ text, originalIndex: index }));
+        const shuffledOptions = shuffle(opts);
+        return {
+          ...q,
+          shuffledOptions,
+          correctShuffledIndex: shuffledOptions.findIndex(o => o.originalIndex === q.answer)
+        };
+      });
+      document.getElementById('quizResult').innerHTML = '';
+      renderQuiz();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderQuiz() {
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = currentQuestions.map((q, qi) => `
+        <article class="quiz-question" data-question="${qi}">
+          <h2>${qi + 1}. ${q.prompt}</h2>
+          <div class="quiz-options">
+            ${q.shuffledOptions.map((opt, oi) => `
+              <label>
+                <input type="radio" name="q${qi}" value="${oi}">
+                <span>${opt.text}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div class="quiz-feedback"></div>
+        </article>
+      `).join('');
+    }
+
+    function checkQuiz() {
+      let correct = 0;
+      currentQuestions.forEach((q, qi) => {
+        const article = document.querySelector(`.quiz-question[data-question="${qi}"]`);
+        const selected = article.querySelector(`input[name="q${qi}"]:checked`);
+        const feedback = article.querySelector('.quiz-feedback');
+        article.classList.remove('correct','wrong','missing');
+
+        if (!selected) {
+          article.classList.add('missing');
+          feedback.innerHTML = `<strong>Non risposta.</strong> Soluzione: ${q.shuffledOptions[q.correctShuffledIndex].text}<br><span>${q.explanation}</span>`;
+          return;
+        }
+
+        const isCorrect = Number(selected.value) === q.correctShuffledIndex;
+        if (isCorrect) {
+          correct++;
+          article.classList.add('correct');
+          feedback.innerHTML = `<strong>Corretto.</strong><br><span>${q.explanation}</span>`;
+        } else {
+          article.classList.add('wrong');
+          feedback.innerHTML = `<strong>Errato.</strong> Soluzione: ${q.shuffledOptions[q.correctShuffledIndex].text}<br><span>${q.explanation}</span>`;
+        }
+      });
+
+      const result = document.getElementById('quizResult');
+      result.innerHTML = `<strong>Punteggio: ${correct} / ${TEST_SIZE}</strong><span>${correct >= 8 ? 'Ottimo lavoro.' : correct >= 6 ? 'Buono, ma rivedi gli errori.' : 'Conviene ripassare le regole e rifare il test.'}</span>`;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('checkQuiz').addEventListener('click', checkQuiz);
+    document.getElementById('resetQuiz').addEventListener('click', startQuiz);
+    startQuiz();
+  </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kanji v2 — Scegli la lettura · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/01_alphabets/kanji_v2_practice_reading_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Kanji v2 — Scegli la lettura · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="kanji_v2_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+    <section class="print-section"><h2>Istruzioni</h2><p>Scegli la risposta corretta e premi <strong>Verifica</strong>.</p></section>
+    <form id="quizForm"></form>
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#7a5486">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+<script>
+const QUESTION_POOL = [{"prompt": "Scegli la lettura corretta.", "focus": "日", "options": ["ON: ニチ・ジツ / KUN: ひ・か", "ON: ゲツ・ガツ / KUN: つき", "ON: カ / KUN: ひ・ほ", "ON: スイ / KUN: みず"], "answer": 0, "explanation": "日: ON: ニチ・ジツ / KUN: ひ・か."}, {"prompt": "Scegli la lettura corretta.", "focus": "月", "options": ["ON: ゲツ・ガツ / KUN: つき", "ON: カ / KUN: ひ・ほ", "ON: スイ / KUN: みず", "ON: モク・ボク / KUN: き・こ"], "answer": 0, "explanation": "月: ON: ゲツ・ガツ / KUN: つき."}, {"prompt": "Scegli la lettura corretta.", "focus": "火", "options": ["ON: カ / KUN: ひ・ほ", "ON: スイ / KUN: みず", "ON: モク・ボク / KUN: き・こ", "ON: サン / KUN: やま"], "answer": 0, "explanation": "火: ON: カ / KUN: ひ・ほ."}, {"prompt": "Scegli la lettura corretta.", "focus": "水", "options": ["ON: スイ / KUN: みず", "ON: モク・ボク / KUN: き・こ", "ON: サン / KUN: やま", "ON: セン / KUN: かわ"], "answer": 0, "explanation": "水: ON: スイ / KUN: みず."}, {"prompt": "Scegli la lettura corretta.", "focus": "木", "options": ["ON: モク・ボク / KUN: き・こ", "ON: サン / KUN: やま", "ON: セン / KUN: かわ", "ON: デン / KUN: た"], "answer": 0, "explanation": "木: ON: モク・ボク / KUN: き・こ."}, {"prompt": "Scegli la lettura corretta.", "focus": "山", "options": ["ON: サン / KUN: やま", "ON: セン / KUN: かわ", "ON: デン / KUN: た", "ON: クウ / KUN: そら・あく"], "answer": 0, "explanation": "山: ON: サン / KUN: やま."}, {"prompt": "Scegli la lettura corretta.", "focus": "川", "options": ["ON: セン / KUN: かわ", "ON: デン / KUN: た", "ON: クウ / KUN: そら・あく", "ON: ウ / KUN: あめ・あま"], "answer": 0, "explanation": "川: ON: セン / KUN: かわ."}, {"prompt": "Scegli la lettura corretta.", "focus": "田", "options": ["ON: デン / KUN: た", "ON: クウ / KUN: そら・あく", "ON: ウ / KUN: あめ・あま", "ON: ジン・ニン / KUN: ひと"], "answer": 0, "explanation": "田: ON: デン / KUN: た."}, {"prompt": "Scegli la lettura corretta.", "focus": "空", "options": ["ON: クウ / KUN: そら・あく", "ON: ウ / KUN: あめ・あま", "ON: ジン・ニン / KUN: ひと", "ON: ジョ・ニョ / KUN: おんな"], "answer": 0, "explanation": "空: ON: クウ / KUN: そら・あく."}, {"prompt": "Scegli la lettura corretta.", "focus": "雨", "options": ["ON: ウ / KUN: あめ・あま", "ON: ジン・ニン / KUN: ひと", "ON: ジョ・ニョ / KUN: おんな", "ON: ダン・ナン / KUN: おとこ"], "answer": 0, "explanation": "雨: ON: ウ / KUN: あめ・あま."}, {"prompt": "Scegli la lettura corretta.", "focus": "人", "options": ["ON: ジン・ニン / KUN: ひと", "ON: ジョ・ニョ / KUN: おんな", "ON: ダン・ナン / KUN: おとこ", "ON: シ・ス / KUN: こ"], "answer": 0, "explanation": "人: ON: ジン・ニン / KUN: ひと."}, {"prompt": "Scegli la lettura corretta.", "focus": "女", "options": ["ON: ジョ・ニョ / KUN: おんな", "ON: ダン・ナン / KUN: おとこ", "ON: シ・ス / KUN: こ", "ON: モク / KUN: め"], "answer": 0, "explanation": "女: ON: ジョ・ニョ / KUN: おんな."}, {"prompt": "Scegli la lettura corretta.", "focus": "男", "options": ["ON: ダン・ナン / KUN: おとこ", "ON: シ・ス / KUN: こ", "ON: モク / KUN: め", "ON: コウ・ク / KUN: くち"], "answer": 0, "explanation": "男: ON: ダン・ナン / KUN: おとこ."}, {"prompt": "Scegli la lettura corretta.", "focus": "子", "options": ["ON: シ・ス / KUN: こ", "ON: モク / KUN: め", "ON: コウ・ク / KUN: くち", "ON: ジ / KUN: みみ"], "answer": 0, "explanation": "子: ON: シ・ス / KUN: こ."}, {"prompt": "Scegli la lettura corretta.", "focus": "目", "options": ["ON: モク / KUN: め", "ON: コウ・ク / KUN: くち", "ON: ジ / KUN: みみ", "ON: シュ / KUN: て"], "answer": 0, "explanation": "目: ON: モク / KUN: め."}, {"prompt": "Scegli la lettura corretta.", "focus": "口", "options": ["ON: コウ・ク / KUN: くち", "ON: ジ / KUN: みみ", "ON: シュ / KUN: て", "ON: ソク / KUN: あし・たりる"], "answer": 0, "explanation": "口: ON: コウ・ク / KUN: くち."}, {"prompt": "Scegli la lettura corretta.", "focus": "耳", "options": ["ON: ジ / KUN: みみ", "ON: シュ / KUN: て", "ON: ソク / KUN: あし・たりる", "ON: シン / KUN: こころ"], "answer": 0, "explanation": "耳: ON: ジ / KUN: みみ."}, {"prompt": "Scegli la lettura corretta.", "focus": "手", "options": ["ON: シュ / KUN: て", "ON: ニチ・ジツ / KUN: ひ・か", "ON: ゲツ・ガツ / KUN: つき", "ON: カ / KUN: ひ・ほ"], "answer": 0, "explanation": "手: ON: シュ / KUN: て."}, {"prompt": "Scegli la lettura corretta.", "focus": "足", "options": ["ON: ソク / KUN: あし・たりる", "ON: ゲツ・ガツ / KUN: つき", "ON: カ / KUN: ひ・ほ", "ON: スイ / KUN: みず"], "answer": 0, "explanation": "足: ON: ソク / KUN: あし・たりる."}, {"prompt": "Scegli la lettura corretta.", "focus": "心", "options": ["ON: シン / KUN: こころ", "ON: カ / KUN: ひ・ほ", "ON: スイ / KUN: みず", "ON: モク・ボク / KUN: き・こ"], "answer": 0, "explanation": "心: ON: シン / KUN: こころ."}, {"prompt": "Scegli la lettura corretta.", "focus": "一", "options": ["ON: イチ・イツ / KUN: ひと", "ON: スイ / KUN: みず", "ON: モク・ボク / KUN: き・こ", "ON: サン / KUN: やま"], "answer": 0, "explanation": "一: ON: イチ・イツ / KUN: ひと."}, {"prompt": "Scegli la lettura corretta.", "focus": "二", "options": ["ON: ニ / KUN: ふた", "ON: モク・ボク / KUN: き・こ", "ON: サン / KUN: やま", "ON: セン / KUN: かわ"], "answer": 0, "explanation": "二: ON: ニ / KUN: ふた."}, {"prompt": "Scegli la lettura corretta.", "focus": "三", "options": ["ON: サン / KUN: みっ", "ON: サン / KUN: やま", "ON: セン / KUN: かわ", "ON: デン / KUN: た"], "answer": 0, "explanation": "三: ON: サン / KUN: みっ."}, {"prompt": "Scegli la lettura corretta.", "focus": "四", "options": ["ON: シ / KUN: よん・よ", "ON: セン / KUN: かわ", "ON: デン / KUN: た", "ON: クウ / KUN: そら・あく"], "answer": 0, "explanation": "四: ON: シ / KUN: よん・よ."}, {"prompt": "Scegli la lettura corretta.", "focus": "五", "options": ["ON: ゴ / KUN: いつ", "ON: デン / KUN: た", "ON: クウ / KUN: そら・あく", "ON: ウ / KUN: あめ・あま"], "answer": 0, "explanation": "五: ON: ゴ / KUN: いつ."}, {"prompt": "Scegli la lettura corretta.", "focus": "六", "options": ["ON: ロク / KUN: むっ", "ON: クウ / KUN: そら・あく", "ON: ウ / KUN: あめ・あま", "ON: ジン・ニン / KUN: ひと"], "answer": 0, "explanation": "六: ON: ロク / KUN: むっ."}, {"prompt": "Scegli la lettura corretta.", "focus": "七", "options": ["ON: シチ / KUN: なな・なの", "ON: ウ / KUN: あめ・あま", "ON: ジン・ニン / KUN: ひと", "ON: ジョ・ニョ / KUN: おんな"], "answer": 0, "explanation": "七: ON: シチ / KUN: なな・なの."}, {"prompt": "Scegli la lettura corretta.", "focus": "八", "options": ["ON: ハチ / KUN: やっ・よう", "ON: ジン・ニン / KUN: ひと", "ON: ジョ・ニョ / KUN: おんな", "ON: ダン・ナン / KUN: おとこ"], "answer": 0, "explanation": "八: ON: ハチ / KUN: やっ・よう."}, {"prompt": "Scegli la lettura corretta.", "focus": "九", "options": ["ON: キュウ・ク / KUN: ここの", "ON: ジョ・ニョ / KUN: おんな", "ON: ダン・ナン / KUN: おとこ", "ON: シ・ス / KUN: こ"], "answer": 0, "explanation": "九: ON: キュウ・ク / KUN: ここの."}, {"prompt": "Scegli la lettura corretta.", "focus": "十", "options": ["ON: ジュウ / KUN: とお", "ON: ダン・ナン / KUN: おとこ", "ON: シ・ス / KUN: こ", "ON: モク / KUN: め"], "answer": 0, "explanation": "十: ON: ジュウ / KUN: とお."}, {"prompt": "Scegli la lettura corretta.", "focus": "年", "options": ["ON: ネン / KUN: とし", "ON: シ・ス / KUN: こ", "ON: モク / KUN: め", "ON: コウ・ク / KUN: くち"], "answer": 0, "explanation": "年: ON: ネン / KUN: とし."}, {"prompt": "Scegli la lettura corretta.", "focus": "時", "options": ["ON: ジ / KUN: とき", "ON: モク / KUN: め", "ON: コウ・ク / KUN: くち", "ON: ジ / KUN: みみ"], "answer": 0, "explanation": "時: ON: ジ / KUN: とき."}, {"prompt": "Scegli la lettura corretta.", "focus": "分", "options": ["ON: ブン・フン・ブ / KUN: わかる", "ON: コウ・ク / KUN: くち", "ON: ジ / KUN: みみ", "ON: シュ / KUN: て"], "answer": 0, "explanation": "分: ON: ブン・フン・ブ / KUN: わかる."}, {"prompt": "Scegli la lettura corretta.", "focus": "今", "options": ["ON: コン・キン / KUN: いま", "ON: ジ / KUN: みみ", "ON: シュ / KUN: て", "ON: ソク / KUN: あし・たりる"], "answer": 0, "explanation": "今: ON: コン・キン / KUN: いま."}, {"prompt": "Scegli la lettura corretta.", "focus": "前", "options": ["ON: ゼン / KUN: まえ", "ON: ニチ・ジツ / KUN: ひ・か", "ON: ゲツ・ガツ / KUN: つき", "ON: カ / KUN: ひ・ほ"], "answer": 0, "explanation": "前: ON: ゼン / KUN: まえ."}, {"prompt": "Scegli la lettura corretta.", "focus": "後", "options": ["ON: ゴ・コウ / KUN: あと・うしろ", "ON: ゲツ・ガツ / KUN: つき", "ON: カ / KUN: ひ・ほ", "ON: スイ / KUN: みず"], "answer": 0, "explanation": "後: ON: ゴ・コウ / KUN: あと・うしろ."}, {"prompt": "Scegli la lettura corretta.", "focus": "午", "options": ["ON: ゴ / KUN: うま", "ON: カ / KUN: ひ・ほ", "ON: スイ / KUN: みず", "ON: モク・ボク / KUN: き・こ"], "answer": 0, "explanation": "午: ON: ゴ / KUN: うま."}, {"prompt": "Scegli la lettura corretta.", "focus": "間", "options": ["ON: カン・ケン / KUN: あいだ・ま", "ON: スイ / KUN: みず", "ON: モク・ボク / KUN: き・こ", "ON: サン / KUN: やま"], "answer": 0, "explanation": "間: ON: カン・ケン / KUN: あいだ・ま."}, {"prompt": "Scegli la lettura corretta.", "focus": "週", "options": ["ON: シュウ / KUN: —", "ON: モク・ボク / KUN: き・こ", "ON: サン / KUN: やま", "ON: セン / KUN: かわ"], "answer": 0, "explanation": "週: ON: シュウ / KUN: —."}, {"prompt": "Scegli la lettura corretta.", "focus": "毎", "options": ["ON: マイ / KUN: ごと", "ON: サン / KUN: やま", "ON: セン / KUN: かわ", "ON: デン / KUN: た"], "answer": 0, "explanation": "毎: ON: マイ / KUN: ごと."}, {"prompt": "Scegli la lettura corretta.", "focus": "学", "options": ["ON: ガク / KUN: まなぶ", "ON: セン / KUN: かわ", "ON: デン / KUN: た", "ON: クウ / KUN: そら・あく"], "answer": 0, "explanation": "学: ON: ガク / KUN: まなぶ."}, {"prompt": "Scegli la lettura corretta.", "focus": "校", "options": ["ON: コウ / KUN: —", "ON: デン / KUN: た", "ON: クウ / KUN: そら・あく", "ON: ウ / KUN: あめ・あま"], "answer": 0, "explanation": "校: ON: コウ / KUN: —."}, {"prompt": "Scegli la lettura corretta.", "focus": "先", "options": ["ON: セン / KUN: さき", "ON: クウ / KUN: そら・あく", "ON: ウ / KUN: あめ・あま", "ON: ジン・ニン / KUN: ひと"], "answer": 0, "explanation": "先: ON: セン / KUN: さき."}, {"prompt": "Scegli la lettura corretta.", "focus": "生", "options": ["ON: セイ・ショウ / KUN: いきる・うまれる", "ON: ウ / KUN: あめ・あま", "ON: ジン・ニン / KUN: ひと", "ON: ジョ・ニョ / KUN: おんな"], "answer": 0, "explanation": "生: ON: セイ・ショウ / KUN: いきる・うまれる."}, {"prompt": "Scegli la lettura corretta.", "focus": "本", "options": ["ON: ホン / KUN: もと", "ON: ジン・ニン / KUN: ひと", "ON: ジョ・ニョ / KUN: おんな", "ON: ダン・ナン / KUN: おとこ"], "answer": 0, "explanation": "本: ON: ホン / KUN: もと."}, {"prompt": "Scegli la lettura corretta.", "focus": "国", "options": ["ON: コク / KUN: くに", "ON: ジョ・ニョ / KUN: おんな", "ON: ダン・ナン / KUN: おとこ", "ON: シ・ス / KUN: こ"], "answer": 0, "explanation": "国: ON: コク / KUN: くに."}, {"prompt": "Scegli la lettura corretta.", "focus": "駅", "options": ["ON: エキ / KUN: —", "ON: ダン・ナン / KUN: おとこ", "ON: シ・ス / KUN: こ", "ON: モク / KUN: め"], "answer": 0, "explanation": "駅: ON: エキ / KUN: —."}, {"prompt": "Scegli la lettura corretta.", "focus": "店", "options": ["ON: テン / KUN: みせ", "ON: シ・ス / KUN: こ", "ON: モク / KUN: め", "ON: コウ・ク / KUN: くち"], "answer": 0, "explanation": "店: ON: テン / KUN: みせ."}, {"prompt": "Scegli la lettura corretta.", "focus": "家", "options": ["ON: カ・ケ / KUN: いえ・うち", "ON: モク / KUN: め", "ON: コウ・ク / KUN: くち", "ON: ジ / KUN: みみ"], "answer": 0, "explanation": "家: ON: カ・ケ / KUN: いえ・うち."}, {"prompt": "Scegli la lettura corretta.", "focus": "外", "options": ["ON: ガイ・ゲ / KUN: そと・ほか", "ON: コウ・ク / KUN: くち", "ON: ジ / KUN: みみ", "ON: シュ / KUN: て"], "answer": 0, "explanation": "外: ON: ガイ・ゲ / KUN: そと・ほか."}];
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {...item, shuffledOptions: options, correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)};
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option"><input type="radio" name="${name}" value="${cidx}"><span>${choice.text}</span></label>`).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus kanji-v2-quiz-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>`;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

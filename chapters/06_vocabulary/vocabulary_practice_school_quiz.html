@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vocabulary — Scuola e studio · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/06_vocabulary/vocabulary_practice_school_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Vocabulary — Scuola e studio · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="vocabulary_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+    <form id="quizForm"></form>
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#5f6872">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+<script>
+const QUESTION_POOL = [{"prompt": "Traduci in italiano.", "focus": "勉強", "options": ["studio", "io", "tu", "amico / amica"], "answer": 0, "explanation": "勉強（べんきょう）= studio."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "studio", "options": ["勉強", "私", "あなた", "友達"], "answer": 0, "explanation": "studio = 勉強（べんきょう）."}, {"prompt": "Qual è la lettura corretta?", "focus": "勉強", "options": ["べんきょう", "わたし", "あなた", "ともだち"], "answer": 0, "explanation": "勉強 si legge べんきょう."}, {"prompt": "Qual è il romaji corretto?", "focus": "勉強", "options": ["benkyou", "watashi", "anata", "tomodachi"], "answer": 0, "explanation": "勉強 = benkyou."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "勉強", "options": ["Scuola e studio", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "勉強 è nella scheda: Scuola e studio."}, {"prompt": "Traduci in italiano.", "focus": "授業", "options": ["lezione", "tu", "amico / amica", "persona"], "answer": 0, "explanation": "授業（じゅぎょう）= lezione."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "lezione", "options": ["授業", "あなた", "友達", "人"], "answer": 0, "explanation": "lezione = 授業（じゅぎょう）."}, {"prompt": "Qual è la lettura corretta?", "focus": "授業", "options": ["じゅぎょう", "あなた", "ともだち", "ひと"], "answer": 0, "explanation": "授業 si legge じゅぎょう."}, {"prompt": "Qual è il romaji corretto?", "focus": "授業", "options": ["jugyou", "anata", "tomodachi", "hito"], "answer": 0, "explanation": "授業 = jugyou."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "授業", "options": ["Scuola e studio", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "授業 è nella scheda: Scuola e studio."}, {"prompt": "Traduci in italiano.", "focus": "宿題", "options": ["compiti", "amico / amica", "persona", "bambino"], "answer": 0, "explanation": "宿題（しゅくだい）= compiti."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "compiti", "options": ["宿題", "友達", "人", "子供"], "answer": 0, "explanation": "compiti = 宿題（しゅくだい）."}, {"prompt": "Qual è la lettura corretta?", "focus": "宿題", "options": ["しゅくだい", "ともだち", "ひと", "こども"], "answer": 0, "explanation": "宿題 si legge しゅくだい."}, {"prompt": "Qual è il romaji corretto?", "focus": "宿題", "options": ["shukudai", "tomodachi", "hito", "kodomo"], "answer": 0, "explanation": "宿題 = shukudai."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "宿題", "options": ["Scuola e studio", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "宿題 è nella scheda: Scuola e studio."}, {"prompt": "Traduci in italiano.", "focus": "教室", "options": ["aula", "persona", "bambino", "insegnante"], "answer": 0, "explanation": "教室（きょうしつ）= aula."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "aula", "options": ["教室", "人", "子供", "先生"], "answer": 0, "explanation": "aula = 教室（きょうしつ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "教室", "options": ["きょうしつ", "ひと", "こども", "せんせい"], "answer": 0, "explanation": "教室 si legge きょうしつ."}, {"prompt": "Qual è il romaji corretto?", "focus": "教室", "options": ["kyoushitsu", "hito", "kodomo", "sensei"], "answer": 0, "explanation": "教室 = kyoushitsu."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "教室", "options": ["Scuola e studio", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "教室 è nella scheda: Scuola e studio."}, {"prompt": "Traduci in italiano.", "focus": "ノート", "options": ["quaderno / note", "bambino", "insegnante", "studente"], "answer": 0, "explanation": "ノート（ノート）= quaderno / note."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "quaderno / note", "options": ["ノート", "子供", "先生", "学生"], "answer": 0, "explanation": "quaderno / note = ノート（ノート）."}, {"prompt": "Qual è la lettura corretta?", "focus": "ノート", "options": ["ノート", "こども", "せんせい", "がくせい"], "answer": 0, "explanation": "ノート si legge ノート."}, {"prompt": "Qual è il romaji corretto?", "focus": "ノート", "options": ["nooto", "kodomo", "sensei", "gakusei"], "answer": 0, "explanation": "ノート = nooto."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "ノート", "options": ["Scuola e studio", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "ノート è nella scheda: Scuola e studio."}, {"prompt": "Traduci in italiano.", "focus": "辞書", "options": ["dizionario", "insegnante", "studente", "mia madre"], "answer": 0, "explanation": "辞書（じしょ）= dizionario."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "dizionario", "options": ["辞書", "先生", "学生", "母"], "answer": 0, "explanation": "dizionario = 辞書（じしょ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "辞書", "options": ["じしょ", "せんせい", "がくせい", "はは"], "answer": 0, "explanation": "辞書 si legge じしょ."}, {"prompt": "Qual è il romaji corretto?", "focus": "辞書", "options": ["jisho", "sensei", "gakusei", "haha"], "answer": 0, "explanation": "辞書 = jisho."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "辞書", "options": ["Scuola e studio", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "辞書 è nella scheda: Scuola e studio."}, {"prompt": "Traduci in italiano.", "focus": "質問", "options": ["domanda", "studente", "mia madre", "mio padre"], "answer": 0, "explanation": "質問（しつもん）= domanda."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "domanda", "options": ["質問", "学生", "母", "父"], "answer": 0, "explanation": "domanda = 質問（しつもん）."}, {"prompt": "Qual è la lettura corretta?", "focus": "質問", "options": ["しつもん", "がくせい", "はは", "ちち"], "answer": 0, "explanation": "質問 si legge しつもん."}, {"prompt": "Qual è il romaji corretto?", "focus": "質問", "options": ["shitsumon", "gakusei", "haha", "chichi"], "answer": 0, "explanation": "質問 = shitsumon."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "質問", "options": ["Scuola e studio", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "質問 è nella scheda: Scuola e studio."}, {"prompt": "Traduci in italiano.", "focus": "答え", "options": ["risposta", "mia madre", "mio padre", "famiglia"], "answer": 0, "explanation": "答え（こたえ）= risposta."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "risposta", "options": ["答え", "母", "父", "家族"], "answer": 0, "explanation": "risposta = 答え（こたえ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "答え", "options": ["こたえ", "はは", "ちち", "かぞく"], "answer": 0, "explanation": "答え si legge こたえ."}, {"prompt": "Qual è il romaji corretto?", "focus": "答え", "options": ["kotae", "haha", "chichi", "kazoku"], "answer": 0, "explanation": "答え = kotae."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "答え", "options": ["Scuola e studio", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "答え è nella scheda: Scuola e studio."}, {"prompt": "Traduci in italiano.", "focus": "日本語", "options": ["lingua giapponese", "mio padre", "famiglia", "casa"], "answer": 0, "explanation": "日本語（にほんご）= lingua giapponese."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "lingua giapponese", "options": ["日本語", "父", "家族", "家"], "answer": 0, "explanation": "lingua giapponese = 日本語（にほんご）."}, {"prompt": "Qual è la lettura corretta?", "focus": "日本語", "options": ["にほんご", "ちち", "かぞく", "いえ"], "answer": 0, "explanation": "日本語 si legge にほんご."}, {"prompt": "Qual è il romaji corretto?", "focus": "日本語", "options": ["nihongo", "chichi", "kazoku", "ie"], "answer": 0, "explanation": "日本語 = nihongo."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "日本語", "options": ["Scuola e studio", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "日本語 è nella scheda: Scuola e studio."}, {"prompt": "Traduci in italiano.", "focus": "英語", "options": ["lingua inglese", "famiglia", "casa", "stanza"], "answer": 0, "explanation": "英語（えいご）= lingua inglese."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "lingua inglese", "options": ["英語", "家族", "家", "部屋"], "answer": 0, "explanation": "lingua inglese = 英語（えいご）."}, {"prompt": "Qual è la lettura corretta?", "focus": "英語", "options": ["えいご", "かぞく", "いえ", "へや"], "answer": 0, "explanation": "英語 si legge えいご."}, {"prompt": "Qual è il romaji corretto?", "focus": "英語", "options": ["eigo", "kazoku", "ie", "heya"], "answer": 0, "explanation": "英語 = eigo."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "英語", "options": ["Scuola e studio", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "英語 è nella scheda: Scuola e studio."}];
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {...item, shuffledOptions: options, correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)};
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>`).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>`;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vocabulary — Natura · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/06_vocabulary/vocabulary_practice_nature_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Vocabulary — Natura · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="vocabulary_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+    <form id="quizForm"></form>
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#5f6872">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+<script>
+const QUESTION_POOL = [{"prompt": "Traduci in italiano.", "focus": "自然", "options": ["natura", "io", "tu", "amico / amica"], "answer": 0, "explanation": "自然（しぜん）= natura."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "natura", "options": ["自然", "私", "あなた", "友達"], "answer": 0, "explanation": "natura = 自然（しぜん）."}, {"prompt": "Qual è la lettura corretta?", "focus": "自然", "options": ["しぜん", "わたし", "あなた", "ともだち"], "answer": 0, "explanation": "自然 si legge しぜん."}, {"prompt": "Qual è il romaji corretto?", "focus": "自然", "options": ["shizen", "watashi", "anata", "tomodachi"], "answer": 0, "explanation": "自然 = shizen."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "自然", "options": ["Natura", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "自然 è nella scheda: Natura."}, {"prompt": "Traduci in italiano.", "focus": "海", "options": ["mare", "tu", "amico / amica", "persona"], "answer": 0, "explanation": "海（うみ）= mare."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "mare", "options": ["海", "あなた", "友達", "人"], "answer": 0, "explanation": "mare = 海（うみ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "海", "options": ["うみ", "あなた", "ともだち", "ひと"], "answer": 0, "explanation": "海 si legge うみ."}, {"prompt": "Qual è il romaji corretto?", "focus": "海", "options": ["umi", "anata", "tomodachi", "hito"], "answer": 0, "explanation": "海 = umi."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "海", "options": ["Natura", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "海 è nella scheda: Natura."}, {"prompt": "Traduci in italiano.", "focus": "森", "options": ["foresta", "amico / amica", "persona", "bambino"], "answer": 0, "explanation": "森（もり）= foresta."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "foresta", "options": ["森", "友達", "人", "子供"], "answer": 0, "explanation": "foresta = 森（もり）."}, {"prompt": "Qual è la lettura corretta?", "focus": "森", "options": ["もり", "ともだち", "ひと", "こども"], "answer": 0, "explanation": "森 si legge もり."}, {"prompt": "Qual è il romaji corretto?", "focus": "森", "options": ["mori", "tomodachi", "hito", "kodomo"], "answer": 0, "explanation": "森 = mori."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "森", "options": ["Natura", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "森 è nella scheda: Natura."}, {"prompt": "Traduci in italiano.", "focus": "花", "options": ["fiore", "persona", "bambino", "insegnante"], "answer": 0, "explanation": "花（はな）= fiore."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "fiore", "options": ["花", "人", "子供", "先生"], "answer": 0, "explanation": "fiore = 花（はな）."}, {"prompt": "Qual è la lettura corretta?", "focus": "花", "options": ["はな", "ひと", "こども", "せんせい"], "answer": 0, "explanation": "花 si legge はな."}, {"prompt": "Qual è il romaji corretto?", "focus": "花", "options": ["hana", "hito", "kodomo", "sensei"], "answer": 0, "explanation": "花 = hana."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "花", "options": ["Natura", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "花 è nella scheda: Natura."}, {"prompt": "Traduci in italiano.", "focus": "木", "options": ["albero", "bambino", "insegnante", "studente"], "answer": 0, "explanation": "木（き）= albero."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "albero", "options": ["木", "子供", "先生", "学生"], "answer": 0, "explanation": "albero = 木（き）."}, {"prompt": "Qual è la lettura corretta?", "focus": "木", "options": ["き", "こども", "せんせい", "がくせい"], "answer": 0, "explanation": "木 si legge き."}, {"prompt": "Qual è il romaji corretto?", "focus": "木", "options": ["ki", "kodomo", "sensei", "gakusei"], "answer": 0, "explanation": "木 = ki."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "木", "options": ["Natura", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "木 è nella scheda: Natura."}, {"prompt": "Traduci in italiano.", "focus": "草", "options": ["erba", "insegnante", "studente", "mia madre"], "answer": 0, "explanation": "草（くさ）= erba."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "erba", "options": ["草", "先生", "学生", "母"], "answer": 0, "explanation": "erba = 草（くさ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "草", "options": ["くさ", "せんせい", "がくせい", "はは"], "answer": 0, "explanation": "草 si legge くさ."}, {"prompt": "Qual è il romaji corretto?", "focus": "草", "options": ["kusa", "sensei", "gakusei", "haha"], "answer": 0, "explanation": "草 = kusa."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "草", "options": ["Natura", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "草 è nella scheda: Natura."}, {"prompt": "Traduci in italiano.", "focus": "石", "options": ["pietra", "studente", "mia madre", "mio padre"], "answer": 0, "explanation": "石（いし）= pietra."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "pietra", "options": ["石", "学生", "母", "父"], "answer": 0, "explanation": "pietra = 石（いし）."}, {"prompt": "Qual è la lettura corretta?", "focus": "石", "options": ["いし", "がくせい", "はは", "ちち"], "answer": 0, "explanation": "石 si legge いし."}, {"prompt": "Qual è il romaji corretto?", "focus": "石", "options": ["ishi", "gakusei", "haha", "chichi"], "answer": 0, "explanation": "石 = ishi."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "石", "options": ["Natura", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "石 è nella scheda: Natura."}, {"prompt": "Traduci in italiano.", "focus": "湖", "options": ["lago", "mia madre", "mio padre", "famiglia"], "answer": 0, "explanation": "湖（みずうみ）= lago."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "lago", "options": ["湖", "母", "父", "家族"], "answer": 0, "explanation": "lago = 湖（みずうみ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "湖", "options": ["みずうみ", "はは", "ちち", "かぞく"], "answer": 0, "explanation": "湖 si legge みずうみ."}, {"prompt": "Qual è il romaji corretto?", "focus": "湖", "options": ["mizuumi", "haha", "chichi", "kazoku"], "answer": 0, "explanation": "湖 = mizuumi."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "湖", "options": ["Natura", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "湖 è nella scheda: Natura."}, {"prompt": "Traduci in italiano.", "focus": "島", "options": ["isola", "mio padre", "famiglia", "casa"], "answer": 0, "explanation": "島（しま）= isola."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "isola", "options": ["島", "父", "家族", "家"], "answer": 0, "explanation": "isola = 島（しま）."}, {"prompt": "Qual è la lettura corretta?", "focus": "島", "options": ["しま", "ちち", "かぞく", "いえ"], "answer": 0, "explanation": "島 si legge しま."}, {"prompt": "Qual è il romaji corretto?", "focus": "島", "options": ["shima", "chichi", "kazoku", "ie"], "answer": 0, "explanation": "島 = shima."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "島", "options": ["Natura", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "島 è nella scheda: Natura."}, {"prompt": "Traduci in italiano.", "focus": "星", "options": ["stella", "famiglia", "casa", "stanza"], "answer": 0, "explanation": "星（ほし）= stella."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "stella", "options": ["星", "家族", "家", "部屋"], "answer": 0, "explanation": "stella = 星（ほし）."}, {"prompt": "Qual è la lettura corretta?", "focus": "星", "options": ["ほし", "かぞく", "いえ", "へや"], "answer": 0, "explanation": "星 si legge ほし."}, {"prompt": "Qual è il romaji corretto?", "focus": "星", "options": ["hoshi", "kazoku", "ie", "heya"], "answer": 0, "explanation": "星 = hoshi."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "星", "options": ["Natura", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "星 è nella scheda: Natura."}];
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {...item, shuffledOptions: options, correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)};
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>`).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>`;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

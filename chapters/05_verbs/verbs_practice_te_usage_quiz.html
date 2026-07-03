@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Volume 03 — Verbs · Uso della TE · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/05_verbs/verbs_practice_te_usage_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="practice-page-body verbs-practice-body">
+  <main class="practice-page">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Volume 03 — Verbs · Uso della TE · Quiz</h1>
+        <p>50 domande totali · 10 pescate random a ogni test</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="verbs_practice.html">← Practice</a>
+        <a href="verbs.html">Indice Verbs</a>
+      </nav>
+    </header>
+
+    <section class="quiz-control-card quiz-intro-card">
+      <p>Scegli una risposta per ogni domanda. In fondo alla pagina trovi <strong>Verifica</strong>. Con <strong>Rifai test</strong> vengono pescate altre 10 domande.</p>
+      <div id="quizResult" class="quiz-result" aria-live="polite"></div>
+    </section>
+
+    <section id="quizContainer" class="quiz-container"></section>
+
+    <section class="quiz-control-card quiz-bottom-actions">
+      <div class="quiz-buttons">
+        <button id="checkQuiz">Verifica</button>
+        <button id="resetQuiz" class="secondary">Rifai test</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const QUESTION_BANK = [{"prompt": "Come fai una richiesta cortese con 食べる（たべる）?", "options": ["食べて（たべて）ください", "食べます（たべます）ください", "食べる（たべる）ください", "食べました（たべました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 食べて（たべて）ください."}, {"prompt": "Come dici “sto / sta facendo: vedere / guardare” con 見る（みる）?", "options": ["見て（みて）います", "見ます（みます）います", "見る（みる）います", "見ました（みました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 見て（みて）います."}, {"prompt": "Come fai una richiesta cortese con 起きる（おきる）?", "options": ["起きて（おきて）ください", "起きます（おきます）ください", "起きる（おきる）ください", "起きました（おきました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 起きて（おきて）ください."}, {"prompt": "Come dici “sto / sta facendo: dormire” con 寝る（ねる）?", "options": ["寝て（ねて）います", "寝ます（ねます）います", "寝る（ねる）います", "寝ました（ねました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 寝て（ねて）います."}, {"prompt": "Come fai una richiesta cortese con 開ける（あける）?", "options": ["開けて（あけて）ください", "開けます（あけます）ください", "開ける（あける）ください", "開けました（あけました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 開けて（あけて）ください."}, {"prompt": "Come dici “sto / sta facendo: chiudere” con 閉める（しめる）?", "options": ["閉めて（しめて）います", "閉めます（しめます）います", "閉める（しめる）います", "閉めました（しめました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 閉めて（しめて）います."}, {"prompt": "Come fai una richiesta cortese con 教える（おしえる）?", "options": ["教えて（おしえて）ください", "教えます（おしえます）ください", "教える（おしえる）ください", "教えました（おしえました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 教えて（おしえて）ください."}, {"prompt": "Come dici “sto / sta facendo: dimenticare” con 忘れる（わすれる）?", "options": ["忘れて（わすれて）います", "忘れます（わすれます）います", "忘れる（わすれる）います", "忘れました（わすれました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 忘れて（わすれて）います."}, {"prompt": "Come fai una richiesta cortese con 借りる（かりる）?", "options": ["借りて（かりて）ください", "借ります（かります）ください", "借りる（かりる）ください", "借りました（かりました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 借りて（かりて）ください."}, {"prompt": "Come dici “sto / sta facendo: fare / ricevere, es. doccia” con 浴びる（あびる）?", "options": ["浴びて（あびて）います", "浴びます（あびます）います", "浴びる（あびる）います", "浴びました（あびました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 浴びて（あびて）います."}, {"prompt": "Come fai una richiesta cortese con 出る（でる）?", "options": ["出て（でて）ください", "出ます（でます）ください", "出る（でる）ください", "出ました（でました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 出て（でて）ください."}, {"prompt": "Come dici “sto / sta facendo: mettere dentro” con 入れる（いれる）?", "options": ["入れて（いれて）います", "入れます（いれます）います", "入れる（いれる）います", "入れました（いれました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 入れて（いれて）います."}, {"prompt": "Come fai una richiesta cortese con 着る（きる）?", "options": ["着て（きて）ください", "着ます（きます）ください", "着る（きる）ください", "着ました（きました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 着て（きて）ください."}, {"prompt": "Come dici “sto / sta facendo: esserci, per esseri animati” con いる?", "options": ["いています", "いますいます", "いるいます", "いましたいます"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → いています."}, {"prompt": "Come fai una richiesta cortese con できる?", "options": ["できてください", "できますください", "できるください", "できましたください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → できてください."}, {"prompt": "Come dici “sto / sta facendo: scendere / scendere da un mezzo” con 降りる（おりる）?", "options": ["降りて（おりて）います", "降ります（おります）います", "降りる（おりる）います", "降りました（おりました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 降りて（おりて）います."}, {"prompt": "Come fai una richiesta cortese con 飲む（のむ）?", "options": ["飲んで（のんで）ください", "飲みます（のみます）ください", "飲む（のむ）ください", "飲みました（のみました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 飲んで（のんで）ください."}, {"prompt": "Come dici “sto / sta facendo: leggere” con 読む（よむ）?", "options": ["読んで（よんで）います", "読みます（よみます）います", "読む（よむ）います", "読みました（よみました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 読んで（よんで）います."}, {"prompt": "Come fai una richiesta cortese con 休む（やすむ）?", "options": ["休んで（やすんで）ください", "休みます（やすみます）ください", "休む（やすむ）ください", "休みました（やすみました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 休んで（やすんで）ください."}, {"prompt": "Come dici “sto / sta facendo: morire” con 死ぬ（しぬ）?", "options": ["死んで（しんで）います", "死にます（しにます）います", "死ぬ（しぬ）います", "死にました（しにました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 死んで（しんで）います."}, {"prompt": "Come fai una richiesta cortese con 遊ぶ（あそぶ）?", "options": ["遊んで（あそんで）ください", "遊びます（あそびます）ください", "遊ぶ（あそぶ）ください", "遊びました（あそびました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 遊んで（あそんで）ください."}, {"prompt": "Come dici “sto / sta facendo: chiamare” con 呼ぶ（よぶ）?", "options": ["呼んで（よんで）います", "呼びます（よびます）います", "呼ぶ（よぶ）います", "呼びました（よびました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 呼んで（よんで）います."}, {"prompt": "Come fai una richiesta cortese con 泳ぐ（およぐ）?", "options": ["泳いで（およいで）ください", "泳ぎます（およぎます）ください", "泳ぐ（およぐ）ください", "泳ぎました（およぎました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 泳いで（およいで）ください."}, {"prompt": "Come dici “sto / sta facendo: scrivere” con 書く（かく）?", "options": ["書いて（かいて）います", "書きます（かきます）います", "書く（かく）います", "書きました（かきました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 書いて（かいて）います."}, {"prompt": "Come fai una richiesta cortese con 聞く（きく）?", "options": ["聞いて（きいて）ください", "聞きます（ききます）ください", "聞く（きく）ください", "聞きました（ききました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 聞いて（きいて）ください."}, {"prompt": "Come dici “sto / sta facendo: lavorare” con 働く（はたらく）?", "options": ["働いて（はたらいて）います", "働きます（はたらきます）います", "働く（はたらく）います", "働きました（はたらきました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 働いて（はたらいて）います."}, {"prompt": "Come fai una richiesta cortese con 行く（いく）?", "options": ["行って（いって）ください", "行きます（いきます）ください", "行く（いく）ください", "行きました（いきました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 行って（いって）ください."}, {"prompt": "Come dici “sto / sta facendo: parlare” con 話す（はなす）?", "options": ["話して（はなして）います", "話します（はなします）います", "話す（はなす）います", "話しました（はなしました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 話して（はなして）います."}, {"prompt": "Come fai una richiesta cortese con 買う（かう）?", "options": ["買って（かって）ください", "買います（かいます）ください", "買う（かう）ください", "買いました（かいました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 買って（かって）ください."}, {"prompt": "Come dici “sto / sta facendo: incontrare” con 会う（あう）?", "options": ["会って（あって）います", "会います（あいます）います", "会う（あう）います", "会いました（あいました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 会って（あって）います."}, {"prompt": "Come fai una richiesta cortese con 待つ（まつ）?", "options": ["待って（まって）ください", "待ちます（まちます）ください", "待つ（まつ）ください", "待ちました（まちました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 待って（まって）ください."}, {"prompt": "Come dici “sto / sta facendo: tenere / avere con sé” con 持つ（もつ）?", "options": ["持って（もって）います", "持ちます（もちます）います", "持つ（もつ）います", "持ちました（もちました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 持って（もって）います."}, {"prompt": "Come fai una richiesta cortese con 帰る（かえる）?", "options": ["帰って（かえって）ください", "帰ります（かえります）ください", "帰る（かえる）ください", "帰りました（かえりました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 帰って（かえって）ください."}, {"prompt": "Come dici “sto / sta facendo: entrare” con 入る（はいる）?", "options": ["入って（はいって）います", "入ります（はいります）います", "入る（はいる）います", "入りました（はいりました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 入って（はいって）います."}, {"prompt": "Come fai una richiesta cortese con 作る（つくる）?", "options": ["作って（つくって）ください", "作ります（つくります）ください", "作る（つくる）ください", "作りました（つくりました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 作って（つくって）ください."}, {"prompt": "Come dici “sto / sta facendo: salire su un mezzo” con 乗る（のる）?", "options": ["乗って（のって）います", "乗ります（のります）います", "乗る（のる）います", "乗りました（のりました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 乗って（のって）います."}, {"prompt": "Come fai una richiesta cortese con 売る（うる）?", "options": ["売って（うって）ください", "売ります（うります）ください", "売る（うる）ください", "売りました（うりました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 売って（うって）ください."}, {"prompt": "Come dici “sto / sta facendo: tagliare” con 切る（きる）?", "options": ["切って（きって）います", "切ります（きります）います", "切る（きる）います", "切りました（きりました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 切って（きって）います."}, {"prompt": "Come fai una richiesta cortese con 分かる（わかる）?", "options": ["分かって（わかって）ください", "分かります（わかります）ください", "分かる（わかる）ください", "分かりました（わかりました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 分かって（わかって）ください."}, {"prompt": "Come dici “sto / sta facendo: sedersi” con 座る（すわる）?", "options": ["座って（すわって）います", "座ります（すわります）います", "座る（すわる）います", "座りました（すわりました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 座って（すわって）います."}, {"prompt": "Come fai una richiesta cortese con 立つ（たつ）?", "options": ["立って（たって）ください", "立ちます（たちます）ください", "立つ（たつ）ください", "立ちました（たちました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 立って（たって）ください."}, {"prompt": "Come dici “sto / sta facendo: usare” con 使う（つかう）?", "options": ["使って（つかって）います", "使います（つかいます）います", "使う（つかう）います", "使いました（つかいました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 使って（つかって）います."}, {"prompt": "Come fai una richiesta cortese con 洗う（あらう）?", "options": ["洗って（あらって）ください", "洗います（あらいます）ください", "洗う（あらう）ください", "洗いました（あらいました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 洗って（あらって）ください."}, {"prompt": "Come dici “sto / sta facendo: prendere” con 取る（とる）?", "options": ["取って（とって）います", "取ります（とります）います", "取る（とる）います", "取りました（とりました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 取って（とって）います."}, {"prompt": "Come fai una richiesta cortese con 住む（すむ）?", "options": ["住んで（すんで）ください", "住みます（すみます）ください", "住む（すむ）ください", "住みました（すみました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 住んで（すんで）ください."}, {"prompt": "Come dici “sto / sta facendo: fare” con する?", "options": ["しています", "しますいます", "するいます", "しましたいます"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → しています."}, {"prompt": "Come fai una richiesta cortese con 勉強する（べんきょうする）?", "options": ["勉強して（べんきょうして）ください", "勉強します（べんきょうします）ください", "勉強する（べんきょうする）ください", "勉強しました（べんきょうしました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 勉強して（べんきょうして）ください."}, {"prompt": "Come dici “sto / sta facendo: venire” con 来る（くる）?", "options": ["来て（きて）います", "来ます（きます）います", "来る（くる）います", "来ました（きました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 来て（きて）います."}, {"prompt": "Come fai una richiesta cortese con 掃除する（そうじする）?", "options": ["掃除して（そうじして）ください", "掃除します（そうじします）ください", "掃除する（そうじする）ください", "掃除しました（そうじしました）ください"], "answer": 0, "explanation": "Richiesta base: forma TE + ください → 掃除して（そうじして）ください."}, {"prompt": "Come dici “sto / sta facendo: cucinare” con 料理する（りょうりする）?", "options": ["料理して（りょうりして）います", "料理します（りょうりします）います", "料理する（りょうりする）います", "料理しました（りょうりしました）います"], "answer": 0, "explanation": "Forma progressiva base: forma TE + います → 料理して（りょうりして）います."}];
+    const TEST_SIZE = 10;
+    let currentQuestions = [];
+
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+    function startQuiz() {
+      currentQuestions = shuffle(uniqueQuestions(QUESTION_BANK)).slice(0, TEST_SIZE).map(q => {
+        const opts = q.options.map((text, index) => ({ text, originalIndex: index }));
+        const shuffledOptions = shuffle(opts);
+        return {
+          ...q,
+          shuffledOptions,
+          correctShuffledIndex: shuffledOptions.findIndex(o => o.originalIndex === q.answer)
+        };
+      });
+      document.getElementById('quizResult').innerHTML = '';
+      renderQuiz();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderQuiz() {
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = currentQuestions.map((q, qi) => `
+        <article class="quiz-question" data-question="${qi}">
+          <h2>${qi + 1}. ${q.prompt}</h2>
+          <div class="quiz-options">
+            ${q.shuffledOptions.map((opt, oi) => `
+              <label>
+                <input type="radio" name="q${qi}" value="${oi}">
+                <span>${opt.text}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div class="quiz-feedback"></div>
+        </article>
+      `).join('');
+    }
+
+    function checkQuiz() {
+      let correct = 0;
+      currentQuestions.forEach((q, qi) => {
+        const article = document.querySelector(`.quiz-question[data-question="${qi}"]`);
+        const selected = article.querySelector(`input[name="q${qi}"]:checked`);
+        const feedback = article.querySelector('.quiz-feedback');
+        article.classList.remove('correct','wrong','missing');
+
+        if (!selected) {
+          article.classList.add('missing');
+          feedback.innerHTML = `<strong>Non risposta.</strong> Soluzione: ${q.shuffledOptions[q.correctShuffledIndex].text}<br><span>${q.explanation}</span>`;
+          return;
+        }
+
+        const isCorrect = Number(selected.value) === q.correctShuffledIndex;
+        if (isCorrect) {
+          correct++;
+          article.classList.add('correct');
+          feedback.innerHTML = `<strong>Corretto.</strong><br><span>${q.explanation}</span>`;
+        } else {
+          article.classList.add('wrong');
+          feedback.innerHTML = `<strong>Errato.</strong> Soluzione: ${q.shuffledOptions[q.correctShuffledIndex].text}<br><span>${q.explanation}</span>`;
+        }
+      });
+
+      const result = document.getElementById('quizResult');
+      result.innerHTML = `<strong>Punteggio: ${correct} / ${TEST_SIZE}</strong><span>${correct >= 8 ? 'Ottimo lavoro.' : correct >= 6 ? 'Buono, ma rivedi gli errori.' : 'Conviene ripassare le regole e rifare il test.'}</span>`;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('checkQuiz').addEventListener('click', checkQuiz);
+    document.getElementById('resetQuiz').addEventListener('click', startQuiz);
+    startQuiz();
+  </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Numbers & Counters — Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/07_numbers_time_date/counters_practice_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Numbers & Counters — Quiz</h1>
+        <p>10 domande random su 50 · numeri + soldi</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="counters_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+
+    <form id="quizForm"></form>
+
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+
+<script>
+const QUESTION_POOL = [{"q": "三百", "prompt": "Qual è la lettura corretta di 三百?", "choices": ["さんびゃく", "さんひゃく", "さんぴゃく", "さんびゃっく"], "answer": 0}, {"q": "八百", "prompt": "Qual è la lettura corretta di 八百?", "choices": ["はちひゃく", "はっぴゃく", "はっびゃく", "はちびゃく"], "answer": 1}, {"q": "三千円", "prompt": "Come si legge 3.000 yen?", "choices": ["さんぜんえん", "さんせんえん", "さんびゃくえん", "さんまんえん"], "answer": 0}, {"q": "一万円", "prompt": "Come si legge 10.000 yen?", "choices": ["いちせんえん", "いちまんえん", "じゅうまんえん", "せんえん"], "answer": 1}, {"q": "500円", "prompt": "Che cosa significa 500円?", "choices": ["50 yen", "500 yen", "5.000 yen", "15 yen"], "answer": 1}, {"q": "九", "prompt": "Qual è una lettura corretta di 九?", "choices": ["きゅう", "きょ", "くう", "こう"], "answer": 0}, {"q": "四", "prompt": "Quale coppia contiene due letture corrette di 四?", "choices": ["よん / し", "よ / よつ", "し / ご", "よん / く"], "answer": 0}, {"q": "七", "prompt": "Quale coppia contiene due letture corrette di 七?", "choices": ["なな / しち", "し / ひち", "な / しち", "なな / きゅう"], "answer": 0}, {"q": "六百円", "prompt": "Come si legge 600 yen?", "choices": ["ろくひゃくえん", "ろっぴゃくえん", "ろくびゃくえん", "ろっぴゃっくえん"], "answer": 1}, {"q": "八千", "prompt": "Come si legge 8.000?", "choices": ["はっせん", "はちせん", "はっぜん", "はちぜん"], "answer": 0}, {"q": "十一", "prompt": "Qual è la lettura corretta di 十一?", "choices": ["じゅういち", "じゅうひとつ", "いちじゅう", "じゅうに"], "answer": 0}, {"q": "二十", "prompt": "Qual è la lettura corretta di 二十?", "choices": ["にとお", "にじゅう", "ふたじゅう", "にじ"], "answer": 1}, {"q": "二十一", "prompt": "Come si legge 21?", "choices": ["にじゅういち", "にいち", "にじゅうひとつ", "にじゅうに"], "answer": 0}, {"q": "千円", "prompt": "Che cosa significa 千円?", "choices": ["100 yen", "1.000 yen", "10.000 yen", "3.000 yen"], "answer": 1}, {"q": "百", "prompt": "Qual è la lettura corretta di 百?", "choices": ["びゃく", "ひゃく", "ひゃっく", "ぴゃく"], "answer": 1}, {"q": "一万", "prompt": "Qual è il valore di 一万?", "choices": ["1.000", "10.000", "100.000", "100"], "answer": 1}, {"q": "これはいくらですか。", "prompt": "Che cosa significa questa frase?", "choices": ["Quanto costa questo?", "Quanti ce ne sono?", "Che numero è questo?", "Posso pagare?"], "answer": 0}, {"q": "五百円です。", "prompt": "Che cosa significa?", "choices": ["Sono 5.000 yen", "Sono 500 yen", "Sono 50 yen", "Costa 5 yen"], "answer": 1}, {"q": "現金で払います。", "prompt": "Che cosa significa?", "choices": ["Pago in contanti.", "Pago con carta.", "Costa troppo.", "Faccio uno sconto."], "answer": 0}, {"q": "カードで払います。", "prompt": "Che cosa significa?", "choices": ["Pago in contanti.", "Pago con carta.", "Non pago.", "Cambio soldi."], "answer": 1}, {"q": "三十", "prompt": "Qual è la lettura corretta di 三十?", "choices": ["さんじゅう", "みじゅう", "さんじ", "さんとう"], "answer": 0}, {"q": "二百", "prompt": "Come si legge 二百?", "choices": ["にひゃく", "にびゃく", "にっぴゃく", "にひゃっく"], "answer": 0}, {"q": "三百円", "prompt": "Che cosa significa 三百円?", "choices": ["30 yen", "300 yen", "3.000 yen", "13 yen"], "answer": 1}, {"q": "八百円", "prompt": "Che cosa significa 八百円?", "choices": ["80 yen", "800 yen", "8.000 yen", "18 yen"], "answer": 1}, {"q": "十円", "prompt": "Come si legge 十円?", "choices": ["じゅうえん", "とおえん", "じゅえん", "じゅにえん"], "answer": 0}, {"q": "100円", "prompt": "Come si dice 100 yen in giapponese?", "choices": ["ひゃくえん", "せんえん", "ひゃくまんえん", "じゅうえん"], "answer": 0}, {"q": "三千", "prompt": "Come si legge 3.000?", "choices": ["さんせん", "さんぜん", "みせん", "さんじゅう"], "answer": 1}, {"q": "一つ", "prompt": "Qual è la lettura corretta di 1 oggetto (contatore つ)?", "choices": ["いちつ", "ひとつ", "いっつ", "ひと"], "answer": 1}, {"q": "三つ", "prompt": "Qual è la lettura corretta di 3 oggetti (contatore つ)?", "choices": ["さんつ", "みっつ", "みつ", "さんみつ"], "answer": 1}, {"q": "八つ", "prompt": "Qual è la lettura corretta di 8 oggetti (contatore つ)?", "choices": ["はちつ", "やっつ", "やつ", "はっつ"], "answer": 1}, {"q": "十", "prompt": "Che numero è 十?", "choices": ["100", "1", "10", "20"], "answer": 2}, {"q": "千", "prompt": "Che numero è 千?", "choices": ["100", "1.000", "10.000", "10"], "answer": 1}, {"q": "万", "prompt": "Che numero è 万?", "choices": ["10.000", "1.000", "100.000", "100"], "answer": 0}, {"q": "ろっぴゃくえん", "prompt": "Qual è la scrittura corretta?", "choices": ["600円", "60円", "6.000円", "16円"], "answer": 0}, {"q": "はっぴゃく", "prompt": "Qual è la scrittura corretta?", "choices": ["800", "8", "80", "8.000"], "answer": 0}, {"q": "せんえん", "prompt": "Qual è la scrittura corretta?", "choices": ["100円", "1.000円", "10.000円", "3.000円"], "answer": 1}, {"q": "いちまんえん", "prompt": "Qual è la scrittura corretta?", "choices": ["1.000円", "10.000円", "100.000円", "10円"], "answer": 1}, {"q": "さんぜんえん", "prompt": "Qual è la scrittura corretta?", "choices": ["300円", "3.000円", "30.000円", "13円"], "answer": 1}, {"q": "五", "prompt": "Che numero è 五?", "choices": ["4", "5", "6", "7"], "answer": 1}, {"q": "八", "prompt": "Che numero è 八?", "choices": ["6", "7", "8", "9"], "answer": 2}, {"q": "九百", "prompt": "Come si legge 900?", "choices": ["きゅうひゃく", "きゅうびゃく", "くひゃく", "きゅびゃく"], "answer": 0}, {"q": "六千", "prompt": "Come si legge 6.000?", "choices": ["ろくせん", "ろくぜん", "ろっせん", "ろくせっ"], "answer": 0}, {"q": "四百", "prompt": "Come si legge 400?", "choices": ["よんひゃく", "しひゃく", "よひゃく", "よんびゃく"], "answer": 0}, {"q": "二十円", "prompt": "Che cosa significa?", "choices": ["20 yen", "200 yen", "2.000 yen", "12 yen"], "answer": 0}, {"q": "全部で三千円です。", "prompt": "Che cosa significa?", "choices": ["In tutto sono 300 yen.", "In tutto sono 3.000 yen.", "In tutto sono 30.000 yen.", "Sono 3 yen."], "answer": 1}, {"q": "二十", "prompt": "Che numero è 二十?", "choices": ["2", "12", "20", "22"], "answer": 2}, {"q": "二十一", "prompt": "Che numero è 二十一?", "choices": ["12", "21", "201", "210"], "answer": 1}, {"q": "四つ", "prompt": "Qual è la lettura corretta?", "choices": ["よっつ", "よんつ", "しつ", "よつ"], "answer": 0}, {"q": "六つ", "prompt": "Qual è la lettura corretta?", "choices": ["ろくつ", "むっつ", "むつ", "ろっつ"], "answer": 1}, {"q": "九つ", "prompt": "Qual è la lettura corretta?", "choices": ["ここのつ", "きゅうつ", "ここつ", "くつ"], "answer": 0}];
+
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function pickTen() {
+  return shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10);
+}
+
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+
+function renderQuiz() {
+  currentQuestions = pickTen();
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.choices.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice}</span>
+      </label>
+    `).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus">${item.q}</div>
+        <div class="quiz-options">${options}</div>
+      </section>
+    `;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    if (picked && Number(picked.value) === item.answer) correct++;
+  });
+  const result = document.getElementById('quizResult');
+  result.innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

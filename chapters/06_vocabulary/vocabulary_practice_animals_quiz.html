@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vocabulary — Animali · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/06_vocabulary/vocabulary_practice_animals_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Vocabulary — Animali · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="vocabulary_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+    <form id="quizForm"></form>
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#5f6872">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+<script>
+const QUESTION_POOL = [{"prompt": "Traduci in italiano.", "focus": "動物", "options": ["animale", "io", "tu", "amico / amica"], "answer": 0, "explanation": "動物（どうぶつ）= animale."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "animale", "options": ["動物", "私", "あなた", "友達"], "answer": 0, "explanation": "animale = 動物（どうぶつ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "動物", "options": ["どうぶつ", "わたし", "あなた", "ともだち"], "answer": 0, "explanation": "動物 si legge どうぶつ."}, {"prompt": "Qual è il romaji corretto?", "focus": "動物", "options": ["doubutsu", "watashi", "anata", "tomodachi"], "answer": 0, "explanation": "動物 = doubutsu."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "動物", "options": ["Animali", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "動物 è nella scheda: Animali."}, {"prompt": "Traduci in italiano.", "focus": "犬", "options": ["cane", "tu", "amico / amica", "persona"], "answer": 0, "explanation": "犬（いぬ）= cane."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "cane", "options": ["犬", "あなた", "友達", "人"], "answer": 0, "explanation": "cane = 犬（いぬ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "犬", "options": ["いぬ", "あなた", "ともだち", "ひと"], "answer": 0, "explanation": "犬 si legge いぬ."}, {"prompt": "Qual è il romaji corretto?", "focus": "犬", "options": ["inu", "anata", "tomodachi", "hito"], "answer": 0, "explanation": "犬 = inu."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "犬", "options": ["Animali", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "犬 è nella scheda: Animali."}, {"prompt": "Traduci in italiano.", "focus": "猫", "options": ["gatto", "amico / amica", "persona", "bambino"], "answer": 0, "explanation": "猫（ねこ）= gatto."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "gatto", "options": ["猫", "友達", "人", "子供"], "answer": 0, "explanation": "gatto = 猫（ねこ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "猫", "options": ["ねこ", "ともだち", "ひと", "こども"], "answer": 0, "explanation": "猫 si legge ねこ."}, {"prompt": "Qual è il romaji corretto?", "focus": "猫", "options": ["neko", "tomodachi", "hito", "kodomo"], "answer": 0, "explanation": "猫 = neko."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "猫", "options": ["Animali", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "猫 è nella scheda: Animali."}, {"prompt": "Traduci in italiano.", "focus": "鳥", "options": ["uccello", "persona", "bambino", "insegnante"], "answer": 0, "explanation": "鳥（とり）= uccello."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "uccello", "options": ["鳥", "人", "子供", "先生"], "answer": 0, "explanation": "uccello = 鳥（とり）."}, {"prompt": "Qual è la lettura corretta?", "focus": "鳥", "options": ["とり", "ひと", "こども", "せんせい"], "answer": 0, "explanation": "鳥 si legge とり."}, {"prompt": "Qual è il romaji corretto?", "focus": "鳥", "options": ["tori", "hito", "kodomo", "sensei"], "answer": 0, "explanation": "鳥 = tori."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "鳥", "options": ["Animali", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "鳥 è nella scheda: Animali."}, {"prompt": "Traduci in italiano.", "focus": "魚", "options": ["pesce", "bambino", "insegnante", "studente"], "answer": 0, "explanation": "魚（さかな）= pesce."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "pesce", "options": ["魚", "子供", "先生", "学生"], "answer": 0, "explanation": "pesce = 魚（さかな）."}, {"prompt": "Qual è la lettura corretta?", "focus": "魚", "options": ["さかな", "こども", "せんせい", "がくせい"], "answer": 0, "explanation": "魚 si legge さかな."}, {"prompt": "Qual è il romaji corretto?", "focus": "魚", "options": ["sakana", "kodomo", "sensei", "gakusei"], "answer": 0, "explanation": "魚 = sakana."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "魚", "options": ["Animali", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "魚 è nella scheda: Animali."}, {"prompt": "Traduci in italiano.", "focus": "馬", "options": ["cavallo", "insegnante", "studente", "mia madre"], "answer": 0, "explanation": "馬（うま）= cavallo."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "cavallo", "options": ["馬", "先生", "学生", "母"], "answer": 0, "explanation": "cavallo = 馬（うま）."}, {"prompt": "Qual è la lettura corretta?", "focus": "馬", "options": ["うま", "せんせい", "がくせい", "はは"], "answer": 0, "explanation": "馬 si legge うま."}, {"prompt": "Qual è il romaji corretto?", "focus": "馬", "options": ["uma", "sensei", "gakusei", "haha"], "answer": 0, "explanation": "馬 = uma."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "馬", "options": ["Animali", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "馬 è nella scheda: Animali."}, {"prompt": "Traduci in italiano.", "focus": "牛", "options": ["mucca / bue", "studente", "mia madre", "mio padre"], "answer": 0, "explanation": "牛（うし）= mucca / bue."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "mucca / bue", "options": ["牛", "学生", "母", "父"], "answer": 0, "explanation": "mucca / bue = 牛（うし）."}, {"prompt": "Qual è la lettura corretta?", "focus": "牛", "options": ["うし", "がくせい", "はは", "ちち"], "answer": 0, "explanation": "牛 si legge うし."}, {"prompt": "Qual è il romaji corretto?", "focus": "牛", "options": ["ushi", "gakusei", "haha", "chichi"], "answer": 0, "explanation": "牛 = ushi."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "牛", "options": ["Animali", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "牛 è nella scheda: Animali."}, {"prompt": "Traduci in italiano.", "focus": "豚", "options": ["maiale", "mia madre", "mio padre", "famiglia"], "answer": 0, "explanation": "豚（ぶた）= maiale."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "maiale", "options": ["豚", "母", "父", "家族"], "answer": 0, "explanation": "maiale = 豚（ぶた）."}, {"prompt": "Qual è la lettura corretta?", "focus": "豚", "options": ["ぶた", "はは", "ちち", "かぞく"], "answer": 0, "explanation": "豚 si legge ぶた."}, {"prompt": "Qual è il romaji corretto?", "focus": "豚", "options": ["buta", "haha", "chichi", "kazoku"], "answer": 0, "explanation": "豚 = buta."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "豚", "options": ["Animali", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "豚 è nella scheda: Animali."}, {"prompt": "Traduci in italiano.", "focus": "兎", "options": ["coniglio", "mio padre", "famiglia", "casa"], "answer": 0, "explanation": "兎（うさぎ）= coniglio."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "coniglio", "options": ["兎", "父", "家族", "家"], "answer": 0, "explanation": "coniglio = 兎（うさぎ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "兎", "options": ["うさぎ", "ちち", "かぞく", "いえ"], "answer": 0, "explanation": "兎 si legge うさぎ."}, {"prompt": "Qual è il romaji corretto?", "focus": "兎", "options": ["usagi", "chichi", "kazoku", "ie"], "answer": 0, "explanation": "兎 = usagi."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "兎", "options": ["Animali", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "兎 è nella scheda: Animali."}, {"prompt": "Traduci in italiano.", "focus": "虫", "options": ["insetto", "famiglia", "casa", "stanza"], "answer": 0, "explanation": "虫（むし）= insetto."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "insetto", "options": ["虫", "家族", "家", "部屋"], "answer": 0, "explanation": "insetto = 虫（むし）."}, {"prompt": "Qual è la lettura corretta?", "focus": "虫", "options": ["むし", "かぞく", "いえ", "へや"], "answer": 0, "explanation": "虫 si legge むし."}, {"prompt": "Qual è il romaji corretto?", "focus": "虫", "options": ["mushi", "kazoku", "ie", "heya"], "answer": 0, "explanation": "虫 = mushi."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "虫", "options": ["Animali", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "虫 è nella scheda: Animali."}];
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {...item, shuffledOptions: options, correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)};
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>`).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>`;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

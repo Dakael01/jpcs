@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+<style>
+.out{fill:#fffaf7;stroke:#4b2c1f;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.tail{fill:#5a3428;stroke:#4b2c1f;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.eye{fill:#4b2c1f}.eye-open{fill:#fff;stroke:#4b2c1f;stroke-width:4}
+.eye-smile,.mouth-line{fill:none;stroke:#4b2c1f;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.beak{fill:#8b5643;stroke:#4b2c1f;stroke-width:2}.beak-open{fill:#8b5643;stroke:#4b2c1f;stroke-width:3}
+.blush{fill:#ffd6cd;opacity:.85}.feet{fill:none;stroke:#4b2c1f;stroke-width:4;stroke-linecap:round}
+.feather{fill:none;stroke:#4b2c1f;stroke-width:4;stroke-linecap:round}
+.icon.info{fill:#5b91d9}.icon.advice{fill:#63ad62}.icon.motivation{fill:#ffbf45;stroke:#e49a1c;stroke-width:3}.icon.warning{fill:#ff7b86}
+.icon-text{fill:white;font:bold 23px sans-serif;text-anchor:middle}.icon-line{fill:none;stroke:white;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.question{fill:#6d8dc8;font:bold 42px sans-serif}.bubble{fill:#eaf4ff;stroke:#8fb5e8;stroke-width:3}
+.shock-lines{fill:none;stroke:#8b8ed4;stroke-width:5;stroke-linecap:round}
+.book-small{fill:#3d70b2;stroke:#24446d;stroke-width:3}.book-text{fill:white;font:bold 16px serif;text-anchor:middle}
+.heart{fill:#ff9aa6}.zzz{fill:#7d9cc8;font:bold 23px sans-serif}
+</style>
+<path d="M28 80 q-18 10 -24 -3" class="tail"/><path d="M100 80 q18 10 24 -3" class="tail"/>
+<path class="out" d="M22 82 C20 46 39 20 66 22 C94 24 109 49 106 84 C104 105 87 111 65 110 C43 110 25 103 22 82Z"/>
+<path class="feather" d="M48 22 q7 -7 17 -5M68 20 q9 -5 18 2M42 27 q-8 1 -13 8M92 30 q8 2 13 9"/>
+<circle cx="50" cy="62" r="5" class="eye"/><circle cx="78" cy="62" r="5" class="eye"/>
+<ellipse cx="43" cy="73" rx="7" ry="5" class="blush"/><ellipse cx="85" cy="73" rx="7" ry="5" class="blush"/>
+<path d="M61 68 l6 0 l-3 5Z" class="beak"/><path d="M60 73 q4 5 8 0" class="mouth-line"/>
+<path d="M50 105 q4 6 8 0M73 105 q4 6 8 0" class="feet"/>
+<circle cx="101" cy="35" r="14" class="icon info"/><text x="101" y="41" class="icon-text">!</text>
+</svg>

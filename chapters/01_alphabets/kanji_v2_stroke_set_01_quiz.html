@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kanji v2 — Stroke Set 01 · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/01_alphabets/kanji_v2_stroke_set_01_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Kanji v2 — Stroke Set 01 · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="kanji_v2_stroke_set_01.html">← Set 01</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong>.</p>
+    </section>
+    <form id="quizForm"></form>
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#7a5486">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+<script>
+const QUESTION_POOL = [{"prompt": "Quale kanji ha questo significato?", "focus": "sole / giorno", "options": ["日", "月", "火", "水"], "answer": 0, "explanation": "日 = sole / giorno."}, {"prompt": "Quanti tratti ha questo kanji?", "focus": "日", "options": ["4", "3", "5", "8"], "answer": 0, "explanation": "日 ha 4 tratti."}, {"prompt": "Qual è il primo tratto?", "focus": "日", "options": ["sinistra verticale", "piccolo tratto sinistro", "verticale centrale con gancio", "orizzontale"], "answer": 0, "explanation": "Primo tratto di 日: sinistra verticale."}, {"prompt": "Scegli il significato corretto.", "focus": "日", "options": ["sole / giorno", "luna / mese", "fuoco", "acqua"], "answer": 0, "explanation": "日 = sole / giorno."}, {"prompt": "Quale kanji segue questa logica?", "focus": "box: prima lato sinistro, poi alto+destra, interno, chiusura sotto", "options": ["日", "月", "火", "水"], "answer": 0, "explanation": "日: box: prima lato sinistro, poi alto+destra, interno, chiusura sotto."}, {"prompt": "Quale kanji ha questo significato?", "focus": "luna / mese", "options": ["月", "火", "水", "木"], "answer": 0, "explanation": "月 = luna / mese."}, {"prompt": "Quanti tratti ha questo kanji?", "focus": "月", "options": ["4", "3", "5", "8"], "answer": 0, "explanation": "月 ha 4 tratti."}, {"prompt": "Qual è il primo tratto?", "focus": "月", "options": ["sinistra verticale", "piccolo tratto sinistro", "verticale centrale con gancio", "orizzontale"], "answer": 0, "explanation": "Primo tratto di 月: sinistra verticale."}, {"prompt": "Scegli il significato corretto.", "focus": "月", "options": ["luna / mese", "fuoco", "acqua", "albero / legno"], "answer": 0, "explanation": "月 = luna / mese."}, {"prompt": "Quale kanji segue questa logica?", "focus": "simile a 日, ma più alto e stretto", "options": ["月", "火", "水", "木"], "answer": 0, "explanation": "月: simile a 日, ma più alto e stretto."}, {"prompt": "Quale kanji ha questo significato?", "focus": "fuoco", "options": ["火", "水", "木", "山"], "answer": 0, "explanation": "火 = fuoco."}, {"prompt": "Quanti tratti ha questo kanji?", "focus": "火", "options": ["4", "3", "5", "8"], "answer": 0, "explanation": "火 ha 4 tratti."}, {"prompt": "Qual è il primo tratto?", "focus": "火", "options": ["piccolo tratto sinistro", "sinistra verticale", "verticale centrale con gancio", "日"], "answer": 0, "explanation": "Primo tratto di 火: piccolo tratto sinistro."}, {"prompt": "Scegli il significato corretto.", "focus": "火", "options": ["fuoco", "acqua", "albero / legno", "montagna"], "answer": 0, "explanation": "火 = fuoco."}, {"prompt": "Quale kanji segue questa logica?", "focus": "prima i due piccoli tratti, poi il corpo centrale", "options": ["火", "水", "木", "山"], "answer": 0, "explanation": "火: prima i due piccoli tratti, poi il corpo centrale."}, {"prompt": "Quale kanji ha questo significato?", "focus": "acqua", "options": ["水", "木", "山", "川"], "answer": 0, "explanation": "水 = acqua."}, {"prompt": "Quanti tratti ha questo kanji?", "focus": "水", "options": ["4", "3", "5", "8"], "answer": 0, "explanation": "水 ha 4 tratti."}, {"prompt": "Qual è il primo tratto?", "focus": "水", "options": ["verticale centrale con gancio", "sinistra verticale", "piccolo tratto sinistro", "日"], "answer": 0, "explanation": "Primo tratto di 水: verticale centrale con gancio."}, {"prompt": "Scegli il significato corretto.", "focus": "水", "options": ["acqua", "albero / legno", "montagna", "fiume"], "answer": 0, "explanation": "水 = acqua."}, {"prompt": "Quale kanji segue questa logica?", "focus": "prima il centro, poi sinistra, poi parte destra", "options": ["水", "木", "山", "川"], "answer": 0, "explanation": "水: prima il centro, poi sinistra, poi parte destra."}, {"prompt": "Quale kanji ha questo significato?", "focus": "albero / legno", "options": ["木", "山", "川", "田"], "answer": 0, "explanation": "木 = albero / legno."}, {"prompt": "Quanti tratti ha questo kanji?", "focus": "木", "options": ["4", "3", "5", "8"], "answer": 0, "explanation": "木 ha 4 tratti."}, {"prompt": "Qual è il primo tratto?", "focus": "木", "options": ["orizzontale", "sinistra verticale", "piccolo tratto sinistro", "日"], "answer": 0, "explanation": "Primo tratto di 木: orizzontale."}, {"prompt": "Scegli il significato corretto.", "focus": "木", "options": ["albero / legno", "montagna", "fiume", "risaia / campo"], "answer": 0, "explanation": "木 = albero / legno."}, {"prompt": "Quale kanji segue questa logica?", "focus": "prima orizzontale, poi verticale, poi diagonali", "options": ["木", "山", "川", "田"], "answer": 0, "explanation": "木: prima orizzontale, poi verticale, poi diagonali."}, {"prompt": "Quale kanji ha questo significato?", "focus": "montagna", "options": ["山", "川", "田", "空"], "answer": 0, "explanation": "山 = montagna."}, {"prompt": "Quanti tratti ha questo kanji?", "focus": "山", "options": ["3", "4", "5", "8"], "answer": 0, "explanation": "山 ha 3 tratti."}, {"prompt": "Qual è il primo tratto?", "focus": "山", "options": ["verticale centrale", "sinistra verticale", "piccolo tratto sinistro", "日"], "answer": 0, "explanation": "Primo tratto di 山: verticale centrale."}, {"prompt": "Scegli il significato corretto.", "focus": "山", "options": ["montagna", "fiume", "risaia / campo", "cielo / vuoto"], "answer": 0, "explanation": "山 = montagna."}, {"prompt": "Quale kanji segue questa logica?", "focus": "prima il centro, poi sinistra+base, poi destra", "options": ["山", "川", "田", "空"], "answer": 0, "explanation": "山: prima il centro, poi sinistra+base, poi destra."}, {"prompt": "Quale kanji ha questo significato?", "focus": "fiume", "options": ["川", "田", "空", "雨"], "answer": 0, "explanation": "川 = fiume."}, {"prompt": "Quanti tratti ha questo kanji?", "focus": "川", "options": ["3", "4", "5", "8"], "answer": 0, "explanation": "川 ha 3 tratti."}, {"prompt": "Qual è il primo tratto?", "focus": "川", "options": ["tratto sinistro", "sinistra verticale", "piccolo tratto sinistro", "日"], "answer": 0, "explanation": "Primo tratto di 川: tratto sinistro."}, {"prompt": "Scegli il significato corretto.", "focus": "川", "options": ["fiume", "risaia / campo", "cielo / vuoto", "pioggia"], "answer": 0, "explanation": "川 = fiume."}, {"prompt": "Quale kanji segue questa logica?", "focus": "da sinistra verso destra", "options": ["川", "田", "空", "雨"], "answer": 0, "explanation": "川: da sinistra verso destra."}, {"prompt": "Quale kanji ha questo significato?", "focus": "risaia / campo", "options": ["田", "日", "月", "火"], "answer": 0, "explanation": "田 = risaia / campo."}, {"prompt": "Quanti tratti ha questo kanji?", "focus": "田", "options": ["5", "3", "4", "8"], "answer": 0, "explanation": "田 ha 5 tratti."}, {"prompt": "Qual è il primo tratto?", "focus": "田", "options": ["sinistra verticale", "piccolo tratto sinistro", "verticale centrale con gancio", "orizzontale"], "answer": 0, "explanation": "Primo tratto di 田: sinistra verticale."}, {"prompt": "Scegli il significato corretto.", "focus": "田", "options": ["risaia / campo", "sole / giorno", "luna / mese", "fuoco"], "answer": 0, "explanation": "田 = risaia / campo."}, {"prompt": "Quale kanji segue questa logica?", "focus": "ordine giapponese: cornice, verticale interna, orizzontale interna, chiusura", "options": ["田", "日", "月", "火"], "answer": 0, "explanation": "田: ordine giapponese: cornice, verticale interna, orizzontale interna, chiusura."}, {"prompt": "Quale kanji ha questo significato?", "focus": "cielo / vuoto", "options": ["空", "月", "火", "水"], "answer": 0, "explanation": "空 = cielo / vuoto."}, {"prompt": "Quanti tratti ha questo kanji?", "focus": "空", "options": ["8", "3", "4", "5"], "answer": 0, "explanation": "空 ha 8 tratti."}, {"prompt": "Qual è il primo tratto?", "focus": "空", "options": ["punto superiore", "sinistra verticale", "piccolo tratto sinistro", "日"], "answer": 0, "explanation": "Primo tratto di 空: punto superiore."}, {"prompt": "Scegli il significato corretto.", "focus": "空", "options": ["cielo / vuoto", "luna / mese", "fuoco", "acqua"], "answer": 0, "explanation": "空 = cielo / vuoto."}, {"prompt": "Quale kanji segue questa logica?", "focus": "prima 穴 sopra, poi 工 sotto", "options": ["空", "月", "火", "水"], "answer": 0, "explanation": "空: prima 穴 sopra, poi 工 sotto."}, {"prompt": "Quale kanji ha questo significato?", "focus": "pioggia", "options": ["雨", "火", "水", "木"], "answer": 0, "explanation": "雨 = pioggia."}, {"prompt": "Quanti tratti ha questo kanji?", "focus": "雨", "options": ["8", "3", "4", "5"], "answer": 0, "explanation": "雨 ha 8 tratti."}, {"prompt": "Qual è il primo tratto?", "focus": "雨", "options": ["orizzontale superiore", "sinistra verticale", "piccolo tratto sinistro", "日"], "answer": 0, "explanation": "Primo tratto di 雨: orizzontale superiore."}, {"prompt": "Scegli il significato corretto.", "focus": "雨", "options": ["pioggia", "fuoco", "acqua", "albero / legno"], "answer": 0, "explanation": "雨 = pioggia."}, {"prompt": "Quale kanji segue questa logica?", "focus": "prima la cornice superiore, poi i quattro tratti interni", "options": ["雨", "火", "水", "木"], "answer": 0, "explanation": "雨: prima la cornice superiore, poi i quattro tratti interni."}];
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {...item, shuffledOptions: options, correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)};
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option"><input type="radio" name="${name}" value="${cidx}"><span>${choice.text}</span></label>`).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus kanji-v2-quiz-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>`;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

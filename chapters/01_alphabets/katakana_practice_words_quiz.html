@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Katakana — Parole straniere · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/01_alphabets/katakana_practice_words_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Katakana — Parole straniere · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="katakana_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+    <form id="quizForm"></form>
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#7a5486">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+<script>
+const QUESTION_POOL = [{"prompt": "Leggi questa mini parola in katakana.", "focus": "パン", "options": ["pan — pane", "basu — autobus", "hoteru — hotel", "sumaho — smartphone"], "answer": 0, "explanation": "パン = pan — pane."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "pan — pane", "options": ["パン", "バス", "ホテル", "スマホ"], "answer": 0, "explanation": "pan — pane = パン."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "バス", "options": ["basu — autobus", "hoteru — hotel", "sumaho — smartphone", "koohii — caffè"], "answer": 0, "explanation": "バス = basu — autobus."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "basu — autobus", "options": ["バス", "ホテル", "スマホ", "コーヒー"], "answer": 0, "explanation": "basu — autobus = バス."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "ホテル", "options": ["hoteru — hotel", "sumaho — smartphone", "koohii — caffè", "nooto — quaderno / note"], "answer": 0, "explanation": "ホテル = hoteru — hotel."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "hoteru — hotel", "options": ["ホテル", "スマホ", "コーヒー", "ノート"], "answer": 0, "explanation": "hoteru — hotel = ホテル."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "スマホ", "options": ["sumaho — smartphone", "koohii — caffè", "nooto — quaderno / note", "pen — penna"], "answer": 0, "explanation": "スマホ = sumaho — smartphone."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "sumaho — smartphone", "options": ["スマホ", "コーヒー", "ノート", "ペン"], "answer": 0, "explanation": "sumaho — smartphone = スマホ."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "コーヒー", "options": ["koohii — caffè", "nooto — quaderno / note", "pen — penna", "toire — bagno"], "answer": 0, "explanation": "コーヒー = koohii — caffè."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "koohii — caffè", "options": ["コーヒー", "ノート", "ペン", "トイレ"], "answer": 0, "explanation": "koohii — caffè = コーヒー."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "ノート", "options": ["nooto — quaderno / note", "pen — penna", "toire — bagno", "kaado — carta"], "answer": 0, "explanation": "ノート = nooto — quaderno / note."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "nooto — quaderno / note", "options": ["ノート", "ペン", "トイレ", "カード"], "answer": 0, "explanation": "nooto — quaderno / note = ノート."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "ペン", "options": ["pen — penna", "toire — bagno", "kaado — carta", "terebi — televisione"], "answer": 0, "explanation": "ペン = pen — penna."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "pen — penna", "options": ["ペン", "トイレ", "カード", "テレビ"], "answer": 0, "explanation": "pen — penna = ペン."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "トイレ", "options": ["toire — bagno", "pan — pane", "basu — autobus", "hoteru — hotel"], "answer": 0, "explanation": "トイレ = toire — bagno."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "toire — bagno", "options": ["トイレ", "パン", "バス", "ホテル"], "answer": 0, "explanation": "toire — bagno = トイレ."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "カード", "options": ["kaado — carta", "basu — autobus", "hoteru — hotel", "sumaho — smartphone"], "answer": 0, "explanation": "カード = kaado — carta."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "kaado — carta", "options": ["カード", "バス", "ホテル", "スマホ"], "answer": 0, "explanation": "kaado — carta = カード."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "テレビ", "options": ["terebi — televisione", "hoteru — hotel", "sumaho — smartphone", "koohii — caffè"], "answer": 0, "explanation": "テレビ = terebi — televisione."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "terebi — televisione", "options": ["テレビ", "ホテル", "スマホ", "コーヒー"], "answer": 0, "explanation": "terebi — televisione = テレビ."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "タクシー", "options": ["takushii — taxi", "sumaho — smartphone", "koohii — caffè", "nooto — quaderno / note"], "answer": 0, "explanation": "タクシー = takushii — taxi."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "takushii — taxi", "options": ["タクシー", "スマホ", "コーヒー", "ノート"], "answer": 0, "explanation": "takushii — taxi = タクシー."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "レストラン", "options": ["resutoran — ristorante", "koohii — caffè", "nooto — quaderno / note", "pen — penna"], "answer": 0, "explanation": "レストラン = resutoran — ristorante."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "resutoran — ristorante", "options": ["レストラン", "コーヒー", "ノート", "ペン"], "answer": 0, "explanation": "resutoran — ristorante = レストラン."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "スーパー", "options": ["suupaa — supermercato", "nooto — quaderno / note", "pen — penna", "toire — bagno"], "answer": 0, "explanation": "スーパー = suupaa — supermercato."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "suupaa — supermercato", "options": ["スーパー", "ノート", "ペン", "トイレ"], "answer": 0, "explanation": "suupaa — supermercato = スーパー."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "コンビニ", "options": ["konbini — convenience store", "pen — penna", "toire — bagno", "kaado — carta"], "answer": 0, "explanation": "コンビニ = konbini — convenience store."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "konbini — convenience store", "options": ["コンビニ", "ペン", "トイレ", "カード"], "answer": 0, "explanation": "konbini — convenience store = コンビニ."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "メール", "options": ["meeru — email", "pan — pane", "basu — autobus", "hoteru — hotel"], "answer": 0, "explanation": "メール = meeru — email."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "meeru — email", "options": ["メール", "パン", "バス", "ホテル"], "answer": 0, "explanation": "meeru — email = メール."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "カメラ", "options": ["kamera — fotocamera", "basu — autobus", "hoteru — hotel", "sumaho — smartphone"], "answer": 0, "explanation": "カメラ = kamera — fotocamera."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "kamera — fotocamera", "options": ["カメラ", "バス", "ホテル", "スマホ"], "answer": 0, "explanation": "kamera — fotocamera = カメラ."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "エアコン", "options": ["eakon — aria condizionata", "hoteru — hotel", "sumaho — smartphone", "koohii — caffè"], "answer": 0, "explanation": "エアコン = eakon — aria condizionata."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "eakon — aria condizionata", "options": ["エアコン", "ホテル", "スマホ", "コーヒー"], "answer": 0, "explanation": "eakon — aria condizionata = エアコン."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "テーブル", "options": ["teeburu — tavolo", "sumaho — smartphone", "koohii — caffè", "nooto — quaderno / note"], "answer": 0, "explanation": "テーブル = teeburu — tavolo."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "teeburu — tavolo", "options": ["テーブル", "スマホ", "コーヒー", "ノート"], "answer": 0, "explanation": "teeburu — tavolo = テーブル."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "メニュー", "options": ["menyuu — menu", "koohii — caffè", "nooto — quaderno / note", "pen — penna"], "answer": 0, "explanation": "メニュー = menyuu — menu."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "menyuu — menu", "options": ["メニュー", "コーヒー", "ノート", "ペン"], "answer": 0, "explanation": "menyuu — menu = メニュー."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "チケット", "options": ["chiketto — biglietto", "nooto — quaderno / note", "pen — penna", "toire — bagno"], "answer": 0, "explanation": "チケット = chiketto — biglietto."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "chiketto — biglietto", "options": ["チケット", "ノート", "ペン", "トイレ"], "answer": 0, "explanation": "chiketto — biglietto = チケット."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "バッグ", "options": ["baggu — borsa", "pen — penna", "toire — bagno", "kaado — carta"], "answer": 0, "explanation": "バッグ = baggu — borsa."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "baggu — borsa", "options": ["バッグ", "ペン", "トイレ", "カード"], "answer": 0, "explanation": "baggu — borsa = バッグ."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "シャツ", "options": ["shatsu — camicia / maglietta", "pan — pane", "basu — autobus", "hoteru — hotel"], "answer": 0, "explanation": "シャツ = shatsu — camicia / maglietta."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "shatsu — camicia / maglietta", "options": ["シャツ", "パン", "バス", "ホテル"], "answer": 0, "explanation": "shatsu — camicia / maglietta = シャツ."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "ズボン", "options": ["zubon — pantaloni", "basu — autobus", "hoteru — hotel", "sumaho — smartphone"], "answer": 0, "explanation": "ズボン = zubon — pantaloni."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "zubon — pantaloni", "options": ["ズボン", "バス", "ホテル", "スマホ"], "answer": 0, "explanation": "zubon — pantaloni = ズボン."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "コート", "options": ["kooto — cappotto", "hoteru — hotel", "sumaho — smartphone", "koohii — caffè"], "answer": 0, "explanation": "コート = kooto — cappotto."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "kooto — cappotto", "options": ["コート", "ホテル", "スマホ", "コーヒー"], "answer": 0, "explanation": "kooto — cappotto = コート."}, {"prompt": "Leggi questa mini parola in katakana.", "focus": "ニュース", "options": ["nyuusu — notizie", "sumaho — smartphone", "koohii — caffè", "nooto — quaderno / note"], "answer": 0, "explanation": "ニュース = nyuusu — notizie."}, {"prompt": "Quale parola corrisponde a questa lettura/significato?", "focus": "nyuusu — notizie", "options": ["ニュース", "スマホ", "コーヒー", "ノート"], "answer": 0, "explanation": "nyuusu — notizie = ニュース."}];
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {...item, shuffledOptions: options, correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)};
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>`).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus kana-quiz-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>`;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

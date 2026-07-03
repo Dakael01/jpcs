@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vocabulary — Meteo · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/06_vocabulary/vocabulary_practice_weather_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Vocabulary — Meteo · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="vocabulary_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+    <form id="quizForm"></form>
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#5f6872">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+<script>
+const QUESTION_POOL = [{"prompt": "Traduci in italiano.", "focus": "天気", "options": ["tempo / meteo", "io", "tu", "amico / amica"], "answer": 0, "explanation": "天気（てんき）= tempo / meteo."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "tempo / meteo", "options": ["天気", "私", "あなた", "友達"], "answer": 0, "explanation": "tempo / meteo = 天気（てんき）."}, {"prompt": "Qual è la lettura corretta?", "focus": "天気", "options": ["てんき", "わたし", "あなた", "ともだち"], "answer": 0, "explanation": "天気 si legge てんき."}, {"prompt": "Qual è il romaji corretto?", "focus": "天気", "options": ["tenki", "watashi", "anata", "tomodachi"], "answer": 0, "explanation": "天気 = tenki."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "天気", "options": ["Meteo", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "天気 è nella scheda: Meteo."}, {"prompt": "Traduci in italiano.", "focus": "晴れ", "options": ["sereno", "tu", "amico / amica", "persona"], "answer": 0, "explanation": "晴れ（はれ）= sereno."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "sereno", "options": ["晴れ", "あなた", "友達", "人"], "answer": 0, "explanation": "sereno = 晴れ（はれ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "晴れ", "options": ["はれ", "あなた", "ともだち", "ひと"], "answer": 0, "explanation": "晴れ si legge はれ."}, {"prompt": "Qual è il romaji corretto?", "focus": "晴れ", "options": ["hare", "anata", "tomodachi", "hito"], "answer": 0, "explanation": "晴れ = hare."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "晴れ", "options": ["Meteo", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "晴れ è nella scheda: Meteo."}, {"prompt": "Traduci in italiano.", "focus": "雨", "options": ["pioggia", "amico / amica", "persona", "bambino"], "answer": 0, "explanation": "雨（あめ）= pioggia."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "pioggia", "options": ["雨", "友達", "人", "子供"], "answer": 0, "explanation": "pioggia = 雨（あめ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "雨", "options": ["あめ", "ともだち", "ひと", "こども"], "answer": 0, "explanation": "雨 si legge あめ."}, {"prompt": "Qual è il romaji corretto?", "focus": "雨", "options": ["ame", "tomodachi", "hito", "kodomo"], "answer": 0, "explanation": "雨 = ame."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "雨", "options": ["Meteo", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "雨 è nella scheda: Meteo."}, {"prompt": "Traduci in italiano.", "focus": "雪", "options": ["neve", "persona", "bambino", "insegnante"], "answer": 0, "explanation": "雪（ゆき）= neve."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "neve", "options": ["雪", "人", "子供", "先生"], "answer": 0, "explanation": "neve = 雪（ゆき）."}, {"prompt": "Qual è la lettura corretta?", "focus": "雪", "options": ["ゆき", "ひと", "こども", "せんせい"], "answer": 0, "explanation": "雪 si legge ゆき."}, {"prompt": "Qual è il romaji corretto?", "focus": "雪", "options": ["yuki", "hito", "kodomo", "sensei"], "answer": 0, "explanation": "雪 = yuki."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "雪", "options": ["Meteo", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "雪 è nella scheda: Meteo."}, {"prompt": "Traduci in italiano.", "focus": "風", "options": ["vento", "bambino", "insegnante", "studente"], "answer": 0, "explanation": "風（かぜ）= vento."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "vento", "options": ["風", "子供", "先生", "学生"], "answer": 0, "explanation": "vento = 風（かぜ）."}, {"prompt": "Qual è la lettura corretta?", "focus": "風", "options": ["かぜ", "こども", "せんせい", "がくせい"], "answer": 0, "explanation": "風 si legge かぜ."}, {"prompt": "Qual è il romaji corretto?", "focus": "風", "options": ["kaze", "kodomo", "sensei", "gakusei"], "answer": 0, "explanation": "風 = kaze."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "風", "options": ["Meteo", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "風 è nella scheda: Meteo."}, {"prompt": "Traduci in italiano.", "focus": "曇り", "options": ["nuvoloso", "insegnante", "studente", "mia madre"], "answer": 0, "explanation": "曇り（くもり）= nuvoloso."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "nuvoloso", "options": ["曇り", "先生", "学生", "母"], "answer": 0, "explanation": "nuvoloso = 曇り（くもり）."}, {"prompt": "Qual è la lettura corretta?", "focus": "曇り", "options": ["くもり", "せんせい", "がくせい", "はは"], "answer": 0, "explanation": "曇り si legge くもり."}, {"prompt": "Qual è il romaji corretto?", "focus": "曇り", "options": ["kumori", "sensei", "gakusei", "haha"], "answer": 0, "explanation": "曇り = kumori."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "曇り", "options": ["Meteo", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "曇り è nella scheda: Meteo."}, {"prompt": "Traduci in italiano.", "focus": "暑い", "options": ["caldo", "studente", "mia madre", "mio padre"], "answer": 0, "explanation": "暑い（あつい）= caldo."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "caldo", "options": ["暑い", "学生", "母", "父"], "answer": 0, "explanation": "caldo = 暑い（あつい）."}, {"prompt": "Qual è la lettura corretta?", "focus": "暑い", "options": ["あつい", "がくせい", "はは", "ちち"], "answer": 0, "explanation": "暑い si legge あつい."}, {"prompt": "Qual è il romaji corretto?", "focus": "暑い", "options": ["atsui", "gakusei", "haha", "chichi"], "answer": 0, "explanation": "暑い = atsui."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "暑い", "options": ["Meteo", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "暑い è nella scheda: Meteo."}, {"prompt": "Traduci in italiano.", "focus": "寒い", "options": ["freddo", "mia madre", "mio padre", "famiglia"], "answer": 0, "explanation": "寒い（さむい）= freddo."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "freddo", "options": ["寒い", "母", "父", "家族"], "answer": 0, "explanation": "freddo = 寒い（さむい）."}, {"prompt": "Qual è la lettura corretta?", "focus": "寒い", "options": ["さむい", "はは", "ちち", "かぞく"], "answer": 0, "explanation": "寒い si legge さむい."}, {"prompt": "Qual è il romaji corretto?", "focus": "寒い", "options": ["samui", "haha", "chichi", "kazoku"], "answer": 0, "explanation": "寒い = samui."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "寒い", "options": ["Meteo", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "寒い è nella scheda: Meteo."}, {"prompt": "Traduci in italiano.", "focus": "涼しい", "options": ["fresco", "mio padre", "famiglia", "casa"], "answer": 0, "explanation": "涼しい（すずしい）= fresco."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "fresco", "options": ["涼しい", "父", "家族", "家"], "answer": 0, "explanation": "fresco = 涼しい（すずしい）."}, {"prompt": "Qual è la lettura corretta?", "focus": "涼しい", "options": ["すずしい", "ちち", "かぞく", "いえ"], "answer": 0, "explanation": "涼しい si legge すずしい."}, {"prompt": "Qual è il romaji corretto?", "focus": "涼しい", "options": ["suzushii", "chichi", "kazoku", "ie"], "answer": 0, "explanation": "涼しい = suzushii."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "涼しい", "options": ["Meteo", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "涼しい è nella scheda: Meteo."}, {"prompt": "Traduci in italiano.", "focus": "台風", "options": ["tifone", "famiglia", "casa", "stanza"], "answer": 0, "explanation": "台風（たいふう）= tifone."}, {"prompt": "Scegli la parola giapponese corretta.", "focus": "tifone", "options": ["台風", "家族", "家", "部屋"], "answer": 0, "explanation": "tifone = 台風（たいふう）."}, {"prompt": "Qual è la lettura corretta?", "focus": "台風", "options": ["たいふう", "かぞく", "いえ", "へや"], "answer": 0, "explanation": "台風 si legge たいふう."}, {"prompt": "Qual è il romaji corretto?", "focus": "台風", "options": ["taifuu", "kazoku", "ie", "heya"], "answer": 0, "explanation": "台風 = taifuu."}, {"prompt": "A quale categoria appartiene questa parola?", "focus": "台風", "options": ["Meteo", "Persone e famiglia", "Casa e oggetti", "Cibo e bevande"], "answer": 0, "explanation": "台風 è nella scheda: Meteo."}];
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {...item, shuffledOptions: options, correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)};
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>`).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>`;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

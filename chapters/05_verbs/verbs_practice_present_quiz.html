@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Volume 03 — Verbs · Presente · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/05_verbs/verbs_practice_present_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="practice-page-body verbs-practice-body">
+  <main class="practice-page">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Volume 03 — Verbs · Presente · Quiz</h1>
+        <p>50 domande totali · 10 pescate random a ogni test</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="verbs_practice.html">← Practice</a>
+        <a href="verbs.html">Indice Verbs</a>
+      </nav>
+    </header>
+
+    <section class="quiz-control-card quiz-intro-card">
+      <p>Scegli una risposta per ogni domanda. In fondo alla pagina trovi <strong>Verifica</strong>. Con <strong>Rifai test</strong> vengono pescate altre 10 domande.</p>
+      <div id="quizResult" class="quiz-result" aria-live="polite"></div>
+    </section>
+
+    <section id="quizContainer" class="quiz-container"></section>
+
+    <section class="quiz-control-card quiz-bottom-actions">
+      <div class="quiz-buttons">
+        <button id="checkQuiz">Verifica</button>
+        <button id="resetQuiz" class="secondary">Rifai test</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const QUESTION_BANK = [{"prompt": "Qual è il presente/non-passato positivo cortese di 食べる（たべる）?", "options": ["食べます（たべます）", "食べて（たべて）", "食べました（たべました）", "食べる（たべる）"], "answer": 0, "explanation": "食べる（たべる） → 食べます（たべます）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 見る（みる）?", "options": ["見ません（みません）", "見て（みて）", "見ました（みました）", "見る（みる）"], "answer": 0, "explanation": "見る（みる） → 見ません（みません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 起きる（おきる）?", "options": ["起きます（おきます）", "起きて（おきて）", "起きました（おきました）", "起きる（おきる）"], "answer": 0, "explanation": "起きる（おきる） → 起きます（おきます）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 寝る（ねる）?", "options": ["寝ません（ねません）", "寝て（ねて）", "寝ました（ねました）", "寝る（ねる）"], "answer": 0, "explanation": "寝る（ねる） → 寝ません（ねません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 開ける（あける）?", "options": ["開けます（あけます）", "開けて（あけて）", "開けました（あけました）", "開ける（あける）"], "answer": 0, "explanation": "開ける（あける） → 開けます（あけます）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 閉める（しめる）?", "options": ["閉めません（しめません）", "閉めて（しめて）", "閉めました（しめました）", "閉める（しめる）"], "answer": 0, "explanation": "閉める（しめる） → 閉めません（しめません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 教える（おしえる）?", "options": ["教えます（おしえます）", "教えて（おしえて）", "教えました（おしえました）", "教える（おしえる）"], "answer": 0, "explanation": "教える（おしえる） → 教えます（おしえます）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 忘れる（わすれる）?", "options": ["忘れません（わすれません）", "忘れて（わすれて）", "忘れました（わすれました）", "忘れる（わすれる）"], "answer": 0, "explanation": "忘れる（わすれる） → 忘れません（わすれません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 借りる（かりる）?", "options": ["借ります（かります）", "借りて（かりて）", "借りました（かりました）", "借りる（かりる）"], "answer": 0, "explanation": "借りる（かりる） → 借ります（かります）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 浴びる（あびる）?", "options": ["浴びません（あびません）", "浴びて（あびて）", "浴びました（あびました）", "浴びる（あびる）"], "answer": 0, "explanation": "浴びる（あびる） → 浴びません（あびません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 出る（でる）?", "options": ["出ます（でます）", "出て（でて）", "出ました（でました）", "出る（でる）"], "answer": 0, "explanation": "出る（でる） → 出ます（でます）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 入れる（いれる）?", "options": ["入れません（いれません）", "入れて（いれて）", "入れました（いれました）", "入れる（いれる）"], "answer": 0, "explanation": "入れる（いれる） → 入れません（いれません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 着る（きる）?", "options": ["着ます（きます）", "着て（きて）", "着ました（きました）", "着る（きる）"], "answer": 0, "explanation": "着る（きる） → 着ます（きます）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di いる?", "options": ["いません", "いて", "いました", "いる"], "answer": 0, "explanation": "いる → いません."}, {"prompt": "Qual è il presente/non-passato positivo cortese di できる?", "options": ["できます", "できて", "できました", "できる"], "answer": 0, "explanation": "できる → できます."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 降りる（おりる）?", "options": ["降りません（おりません）", "降りて（おりて）", "降りました（おりました）", "降りる（おりる）"], "answer": 0, "explanation": "降りる（おりる） → 降りません（おりません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 飲む（のむ）?", "options": ["飲みます（のみます）", "飲んで（のんで）", "飲みました（のみました）", "飲む（のむ）"], "answer": 0, "explanation": "飲む（のむ） → 飲みます（のみます）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 読む（よむ）?", "options": ["読みません（よみません）", "読んで（よんで）", "読みました（よみました）", "読む（よむ）"], "answer": 0, "explanation": "読む（よむ） → 読みません（よみません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 休む（やすむ）?", "options": ["休みます（やすみます）", "休んで（やすんで）", "休みました（やすみました）", "休む（やすむ）"], "answer": 0, "explanation": "休む（やすむ） → 休みます（やすみます）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 死ぬ（しぬ）?", "options": ["死にません（しにません）", "死んで（しんで）", "死にました（しにました）", "死ぬ（しぬ）"], "answer": 0, "explanation": "死ぬ（しぬ） → 死にません（しにません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 遊ぶ（あそぶ）?", "options": ["遊びます（あそびます）", "遊んで（あそんで）", "遊びました（あそびました）", "遊ぶ（あそぶ）"], "answer": 0, "explanation": "遊ぶ（あそぶ） → 遊びます（あそびます）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 呼ぶ（よぶ）?", "options": ["呼びません（よびません）", "呼んで（よんで）", "呼びました（よびました）", "呼ぶ（よぶ）"], "answer": 0, "explanation": "呼ぶ（よぶ） → 呼びません（よびません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 泳ぐ（およぐ）?", "options": ["泳ぎます（およぎます）", "泳いで（およいで）", "泳ぎました（およぎました）", "泳ぐ（およぐ）"], "answer": 0, "explanation": "泳ぐ（およぐ） → 泳ぎます（およぎます）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 書く（かく）?", "options": ["書きません（かきません）", "書いて（かいて）", "書きました（かきました）", "書く（かく）"], "answer": 0, "explanation": "書く（かく） → 書きません（かきません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 聞く（きく）?", "options": ["聞きます（ききます）", "聞いて（きいて）", "聞きました（ききました）", "聞く（きく）"], "answer": 0, "explanation": "聞く（きく） → 聞きます（ききます）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 働く（はたらく）?", "options": ["働きません（はたらきません）", "働いて（はたらいて）", "働きました（はたらきました）", "働く（はたらく）"], "answer": 0, "explanation": "働く（はたらく） → 働きません（はたらきません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 行く（いく）?", "options": ["行きます（いきます）", "行って（いって）", "行きました（いきました）", "行く（いく）"], "answer": 0, "explanation": "行く（いく） → 行きます（いきます）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 話す（はなす）?", "options": ["話しません（はなしません）", "話して（はなして）", "話しました（はなしました）", "話す（はなす）"], "answer": 0, "explanation": "話す（はなす） → 話しません（はなしません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 買う（かう）?", "options": ["買います（かいます）", "買って（かって）", "買いました（かいました）", "買う（かう）"], "answer": 0, "explanation": "買う（かう） → 買います（かいます）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 会う（あう）?", "options": ["会いません（あいません）", "会って（あって）", "会いました（あいました）", "会う（あう）"], "answer": 0, "explanation": "会う（あう） → 会いません（あいません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 待つ（まつ）?", "options": ["待ちます（まちます）", "待って（まって）", "待ちました（まちました）", "待つ（まつ）"], "answer": 0, "explanation": "待つ（まつ） → 待ちます（まちます）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 持つ（もつ）?", "options": ["持ちません（もちません）", "持って（もって）", "持ちました（もちました）", "持つ（もつ）"], "answer": 0, "explanation": "持つ（もつ） → 持ちません（もちません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 帰る（かえる）?", "options": ["帰ります（かえります）", "帰って（かえって）", "帰りました（かえりました）", "帰る（かえる）"], "answer": 0, "explanation": "帰る（かえる） → 帰ります（かえります）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 入る（はいる）?", "options": ["入りません（はいりません）", "入って（はいって）", "入りました（はいりました）", "入る（はいる）"], "answer": 0, "explanation": "入る（はいる） → 入りません（はいりません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 作る（つくる）?", "options": ["作ります（つくります）", "作って（つくって）", "作りました（つくりました）", "作る（つくる）"], "answer": 0, "explanation": "作る（つくる） → 作ります（つくります）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 乗る（のる）?", "options": ["乗りません（のりません）", "乗って（のって）", "乗りました（のりました）", "乗る（のる）"], "answer": 0, "explanation": "乗る（のる） → 乗りません（のりません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 売る（うる）?", "options": ["売ります（うります）", "売って（うって）", "売りました（うりました）", "売る（うる）"], "answer": 0, "explanation": "売る（うる） → 売ります（うります）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 切る（きる）?", "options": ["切りません（きりません）", "切って（きって）", "切りました（きりました）", "切る（きる）"], "answer": 0, "explanation": "切る（きる） → 切りません（きりません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 分かる（わかる）?", "options": ["分かります（わかります）", "分かって（わかって）", "分かりました（わかりました）", "分かる（わかる）"], "answer": 0, "explanation": "分かる（わかる） → 分かります（わかります）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 座る（すわる）?", "options": ["座りません（すわりません）", "座って（すわって）", "座りました（すわりました）", "座る（すわる）"], "answer": 0, "explanation": "座る（すわる） → 座りません（すわりません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 立つ（たつ）?", "options": ["立ちます（たちます）", "立って（たって）", "立ちました（たちました）", "立つ（たつ）"], "answer": 0, "explanation": "立つ（たつ） → 立ちます（たちます）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 使う（つかう）?", "options": ["使いません（つかいません）", "使って（つかって）", "使いました（つかいました）", "使う（つかう）"], "answer": 0, "explanation": "使う（つかう） → 使いません（つかいません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 洗う（あらう）?", "options": ["洗います（あらいます）", "洗って（あらって）", "洗いました（あらいました）", "洗う（あらう）"], "answer": 0, "explanation": "洗う（あらう） → 洗います（あらいます）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 取る（とる）?", "options": ["取りません（とりません）", "取って（とって）", "取りました（とりました）", "取る（とる）"], "answer": 0, "explanation": "取る（とる） → 取りません（とりません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 住む（すむ）?", "options": ["住みます（すみます）", "住んで（すんで）", "住みました（すみました）", "住む（すむ）"], "answer": 0, "explanation": "住む（すむ） → 住みます（すみます）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di する?", "options": ["しません", "して", "しました", "する"], "answer": 0, "explanation": "する → しません."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 勉強する（べんきょうする）?", "options": ["勉強します（べんきょうします）", "勉強して（べんきょうして）", "勉強しました（べんきょうしました）", "勉強する（べんきょうする）"], "answer": 0, "explanation": "勉強する（べんきょうする） → 勉強します（べんきょうします）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 来る（くる）?", "options": ["来ません（きません）", "来て（きて）", "来ました（きました）", "来る（くる）"], "answer": 0, "explanation": "来る（くる） → 来ません（きません）."}, {"prompt": "Qual è il presente/non-passato positivo cortese di 掃除する（そうじする）?", "options": ["掃除します（そうじします）", "掃除して（そうじして）", "掃除しました（そうじしました）", "掃除する（そうじする）"], "answer": 0, "explanation": "掃除する（そうじする） → 掃除します（そうじします）."}, {"prompt": "Qual è il presente/non-passato negativo cortese di 料理する（りょうりする）?", "options": ["料理しません（りょうりしません）", "料理して（りょうりして）", "料理しました（りょうりしました）", "料理する（りょうりする）"], "answer": 0, "explanation": "料理する（りょうりする） → 料理しません（りょうりしません）."}];
+    const TEST_SIZE = 10;
+    let currentQuestions = [];
+
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+    function startQuiz() {
+      currentQuestions = shuffle(uniqueQuestions(QUESTION_BANK)).slice(0, TEST_SIZE).map(q => {
+        const opts = q.options.map((text, index) => ({ text, originalIndex: index }));
+        const shuffledOptions = shuffle(opts);
+        return {
+          ...q,
+          shuffledOptions,
+          correctShuffledIndex: shuffledOptions.findIndex(o => o.originalIndex === q.answer)
+        };
+      });
+      document.getElementById('quizResult').innerHTML = '';
+      renderQuiz();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderQuiz() {
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = currentQuestions.map((q, qi) => `
+        <article class="quiz-question" data-question="${qi}">
+          <h2>${qi + 1}. ${q.prompt}</h2>
+          <div class="quiz-options">
+            ${q.shuffledOptions.map((opt, oi) => `
+              <label>
+                <input type="radio" name="q${qi}" value="${oi}">
+                <span>${opt.text}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div class="quiz-feedback"></div>
+        </article>
+      `).join('');
+    }
+
+    function checkQuiz() {
+      let correct = 0;
+      currentQuestions.forEach((q, qi) => {
+        const article = document.querySelector(`.quiz-question[data-question="${qi}"]`);
+        const selected = article.querySelector(`input[name="q${qi}"]:checked`);
+        const feedback = article.querySelector('.quiz-feedback');
+        article.classList.remove('correct','wrong','missing');
+
+        if (!selected) {
+          article.classList.add('missing');
+          feedback.innerHTML = `<strong>Non risposta.</strong> Soluzione: ${q.shuffledOptions[q.correctShuffledIndex].text}<br><span>${q.explanation}</span>`;
+          return;
+        }
+
+        const isCorrect = Number(selected.value) === q.correctShuffledIndex;
+        if (isCorrect) {
+          correct++;
+          article.classList.add('correct');
+          feedback.innerHTML = `<strong>Corretto.</strong><br><span>${q.explanation}</span>`;
+        } else {
+          article.classList.add('wrong');
+          feedback.innerHTML = `<strong>Errato.</strong> Soluzione: ${q.shuffledOptions[q.correctShuffledIndex].text}<br><span>${q.explanation}</span>`;
+        }
+      });
+
+      const result = document.getElementById('quizResult');
+      result.innerHTML = `<strong>Punteggio: ${correct} / ${TEST_SIZE}</strong><span>${correct >= 8 ? 'Ottimo lavoro.' : correct >= 6 ? 'Buono, ma rivedi gli errori.' : 'Conviene ripassare le regole e rifare il test.'}</span>`;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('checkQuiz').addEventListener('click', checkQuiz);
+    document.getElementById('resetQuiz').addEventListener('click', startQuiz);
+    startQuiz();
+  </script>
+</body>
+</html>

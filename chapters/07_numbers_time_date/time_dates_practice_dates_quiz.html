@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Time &amp; Dates — Date del mese · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/07_numbers_time_date/time_dates_practice_dates_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Time &amp; Dates — Date del mese · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="time_dates_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+
+    <form id="quizForm"></form>
+
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#935b29">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+
+<script>
+const QUESTION_POOL = [{"prompt": "Qual è la lettura di 一日?", "focus": "一日", "options": ["ついたち", "ふつか", "みっか", "よっか"], "answer": 0, "explanation": "一日 si legge ついたち."}, {"prompt": "Qual è la lettura di 二日?", "focus": "二日", "options": ["ふつか", "ついたち", "みっか", "よっか"], "answer": 0, "explanation": "二日 si legge ふつか."}, {"prompt": "Qual è la lettura di 三日?", "focus": "三日", "options": ["みっか", "ついたち", "ふつか", "よっか"], "answer": 0, "explanation": "三日 si legge みっか."}, {"prompt": "Qual è la lettura di 四日?", "focus": "四日", "options": ["よっか", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "四日 si legge よっか."}, {"prompt": "Qual è la lettura di 五日?", "focus": "五日", "options": ["いつか", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "五日 si legge いつか."}, {"prompt": "Qual è la lettura di 六日?", "focus": "六日", "options": ["むいか", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "六日 si legge むいか."}, {"prompt": "Qual è la lettura di 七日?", "focus": "七日", "options": ["なのか", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "七日 si legge なのか."}, {"prompt": "Qual è la lettura di 八日?", "focus": "八日", "options": ["ようか", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "八日 si legge ようか."}, {"prompt": "Qual è la lettura di 九日?", "focus": "九日", "options": ["ここのか", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "九日 si legge ここのか."}, {"prompt": "Qual è la lettura di 十日?", "focus": "十日", "options": ["とおか", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "十日 si legge とおか."}, {"prompt": "Qual è la lettura di 十四日?", "focus": "十四日", "options": ["じゅうよっか", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "十四日 si legge じゅうよっか."}, {"prompt": "Qual è la lettura di 二十日?", "focus": "二十日", "options": ["はつか", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "二十日 si legge はつか."}, {"prompt": "Qual è la lettura di 二十四日?", "focus": "二十四日", "options": ["にじゅうよっか", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "二十四日 si legge にじゅうよっか."}, {"prompt": "Qual è la lettura di 十一日?", "focus": "十一日", "options": ["じゅういちにち", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "十一日 si legge じゅういちにち."}, {"prompt": "Qual è la lettura di 十二日?", "focus": "十二日", "options": ["じゅうににち", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "十二日 si legge じゅうににち."}, {"prompt": "Qual è la lettura di 十三日?", "focus": "十三日", "options": ["じゅうさんにち", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "十三日 si legge じゅうさんにち."}, {"prompt": "Qual è la lettura di 十五日?", "focus": "十五日", "options": ["じゅうごにち", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "十五日 si legge じゅうごにち."}, {"prompt": "Qual è la lettura di 十六日?", "focus": "十六日", "options": ["じゅうろくにち", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "十六日 si legge じゅうろくにち."}, {"prompt": "Qual è la lettura di 十七日?", "focus": "十七日", "options": ["じゅうしちにち", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "十七日 si legge じゅうしちにち."}, {"prompt": "Qual è la lettura di 十八日?", "focus": "十八日", "options": ["じゅうはちにち", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "十八日 si legge じゅうはちにち."}, {"prompt": "Qual è la lettura di 十九日?", "focus": "十九日", "options": ["じゅうくにち", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "十九日 si legge じゅうくにち."}, {"prompt": "Qual è la lettura di 二十一日?", "focus": "二十一日", "options": ["にじゅういちにち", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "二十一日 si legge にじゅういちにち."}, {"prompt": "Qual è la lettura di 二十二日?", "focus": "二十二日", "options": ["にじゅうににち", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "二十二日 si legge にじゅうににち."}, {"prompt": "Qual è la lettura di 二十三日?", "focus": "二十三日", "options": ["にじゅうさんにち", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "二十三日 si legge にじゅうさんにち."}, {"prompt": "Qual è la lettura di 二十五日?", "focus": "二十五日", "options": ["にじゅうごにち", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "二十五日 si legge にじゅうごにち."}, {"prompt": "Qual è la lettura di 二十六日?", "focus": "二十六日", "options": ["にじゅうろくにち", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "二十六日 si legge にじゅうろくにち."}, {"prompt": "Qual è la lettura di 二十七日?", "focus": "二十七日", "options": ["にじゅうしちにち", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "二十七日 si legge にじゅうしちにち."}, {"prompt": "Qual è la lettura di 二十八日?", "focus": "二十八日", "options": ["にじゅうはちにち", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "二十八日 si legge にじゅうはちにち."}, {"prompt": "Qual è la lettura di 二十九日?", "focus": "二十九日", "options": ["にじゅうくにち", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "二十九日 si legge にじゅうくにち."}, {"prompt": "Qual è la lettura di 三十日?", "focus": "三十日", "options": ["さんじゅうにち", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "三十日 si legge さんじゅうにち."}, {"prompt": "Qual è la lettura di 三十一日?", "focus": "三十一日", "options": ["さんじゅういちにち", "ついたち", "ふつか", "みっか"], "answer": 0, "explanation": "三十一日 si legge さんじゅういちにち."}, {"prompt": "Quale giorno del mese si legge ついたち?", "focus": "ついたち", "options": ["一日", "二日", "三日", "四日"], "answer": 0, "explanation": "ついたち = 一日."}, {"prompt": "Quale giorno del mese si legge ふつか?", "focus": "ふつか", "options": ["二日", "一日", "三日", "四日"], "answer": 0, "explanation": "ふつか = 二日."}, {"prompt": "Quale giorno del mese si legge みっか?", "focus": "みっか", "options": ["三日", "一日", "二日", "四日"], "answer": 0, "explanation": "みっか = 三日."}, {"prompt": "Quale giorno del mese si legge よっか?", "focus": "よっか", "options": ["四日", "一日", "二日", "三日"], "answer": 0, "explanation": "よっか = 四日."}, {"prompt": "Quale giorno del mese si legge いつか?", "focus": "いつか", "options": ["五日", "一日", "二日", "三日"], "answer": 0, "explanation": "いつか = 五日."}, {"prompt": "Quale giorno del mese si legge むいか?", "focus": "むいか", "options": ["六日", "一日", "二日", "三日"], "answer": 0, "explanation": "むいか = 六日."}, {"prompt": "Quale giorno del mese si legge なのか?", "focus": "なのか", "options": ["七日", "一日", "二日", "三日"], "answer": 0, "explanation": "なのか = 七日."}, {"prompt": "Quale giorno del mese si legge ようか?", "focus": "ようか", "options": ["八日", "一日", "二日", "三日"], "answer": 0, "explanation": "ようか = 八日."}, {"prompt": "Quale giorno del mese si legge ここのか?", "focus": "ここのか", "options": ["九日", "一日", "二日", "三日"], "answer": 0, "explanation": "ここのか = 九日."}, {"prompt": "Quale giorno del mese si legge とおか?", "focus": "とおか", "options": ["十日", "一日", "二日", "三日"], "answer": 0, "explanation": "とおか = 十日."}, {"prompt": "Quale giorno del mese si legge じゅうよっか?", "focus": "じゅうよっか", "options": ["十四日", "一日", "二日", "三日"], "answer": 0, "explanation": "じゅうよっか = 十四日."}, {"prompt": "Quale giorno del mese si legge はつか?", "focus": "はつか", "options": ["二十日", "一日", "二日", "三日"], "answer": 0, "explanation": "はつか = 二十日."}, {"prompt": "Quale giorno del mese si legge にじゅうよっか?", "focus": "にじゅうよっか", "options": ["二十四日", "一日", "二日", "三日"], "answer": 0, "explanation": "にじゅうよっか = 二十四日."}, {"prompt": "一日: è una lettura speciale da memorizzare?", "focus": "一日", "options": ["Sì", "No", "Solo nei mesi", "Solo con 曜日"], "answer": 0, "explanation": "一日 = ついたち."}, {"prompt": "二日: è una lettura speciale da memorizzare?", "focus": "二日", "options": ["Sì", "No", "Solo nei mesi", "Solo con 曜日"], "answer": 0, "explanation": "二日 = ふつか."}, {"prompt": "三日: è una lettura speciale da memorizzare?", "focus": "三日", "options": ["Sì", "No", "Solo nei mesi", "Solo con 曜日"], "answer": 0, "explanation": "三日 = みっか."}, {"prompt": "四日: è una lettura speciale da memorizzare?", "focus": "四日", "options": ["Sì", "No", "Solo nei mesi", "Solo con 曜日"], "answer": 0, "explanation": "四日 = よっか."}, {"prompt": "五日: è una lettura speciale da memorizzare?", "focus": "五日", "options": ["Sì", "No", "Solo nei mesi", "Solo con 曜日"], "answer": 0, "explanation": "五日 = いつか."}, {"prompt": "六日: è una lettura speciale da memorizzare?", "focus": "六日", "options": ["Sì", "No", "Solo nei mesi", "Solo con 曜日"], "answer": 0, "explanation": "六日 = むいか."}];
+
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {
+      ...item,
+      shuffledOptions: options,
+      correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)
+    };
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>
+    `).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>
+    `;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Volume 02 — Particles · Quiz a punti</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/03_particles/particles_practice_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="practice-page-body">
+  <main class="practice-page">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Volume 02 — Particles · Quiz a punti</h1>
+        <p>50 domande totali · 10 pescate random a ogni test</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="particles_practice.html">← Practice</a>
+        <a href="particles.html">Indice capitolo</a>
+      </nav>
+    </header>
+
+    <section class="quiz-control-card quiz-intro-card">
+      <p>Scegli una risposta per ogni domanda. In fondo alla pagina trovi il pulsante <strong>Verifica</strong>. Con <strong>Rifai test</strong> vengono pescate altre 10 domande.</p>
+      <div id="quizResult" class="quiz-result" aria-live="polite"></div>
+    </section>
+
+    <section id="quizContainer" class="quiz-container"></section>
+
+    <section class="quiz-control-card quiz-bottom-actions">
+      <div class="quiz-buttons">
+        <button id="checkQuiz">Verifica</button>
+        <button id="resetQuiz" class="secondary">Rifai test</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const QUESTION_BANK = [{"prompt": "私（わたし）__ 学生（がくせい）です。", "options": ["は", "が", "を", "に"], "answer": 0, "explanation": "は marca il tema: “io, per quanto riguarda me...”."}, {"prompt": "犬（いぬ）__ います。", "options": ["を", "が", "で", "へ"], "answer": 1, "explanation": "が marca il soggetto/informazione nuova: c’è un cane."}, {"prompt": "水（みず）__ 飲みます（のみます）。", "options": ["に", "を", "は", "で"], "answer": 1, "explanation": "を marca l’oggetto diretto: bevo acqua."}, {"prompt": "八時（はちじ）__ 起きます（おきます）。", "options": ["で", "を", "に", "へ"], "answer": 2, "explanation": "に si usa con orari precisi."}, {"prompt": "図書館（としょかん）__ 勉強します（べんきょうします）。", "options": ["で", "に", "を", "は"], "answer": 0, "explanation": "で indica il luogo dove avviene l’azione."}, {"prompt": "学校（がっこう）__ 行きます（いきます）。", "options": ["を", "に", "で", "と"], "answer": 1, "explanation": "に indica destinazione con 行きます."}, {"prompt": "東京（とうきょう）__ 行きます（いきます）。", "options": ["へ", "を", "で", "が"], "answer": 0, "explanation": "へ indica direzione e si legge “e”."}, {"prompt": "私（わたし）__ 本（ほん）です。", "options": ["が", "を", "の", "で"], "answer": 2, "explanation": "の indica possesso/specificazione: il mio libro."}, {"prompt": "友達（ともだち）__ 話します（はなします）。", "options": ["と", "を", "へ", "が"], "answer": 0, "explanation": "と può significare “con”."}, {"prompt": "私（わたし）__ 行きます（いきます）。", "options": ["も", "を", "に", "で"], "answer": 0, "explanation": "も significa “anche”: vado anch’io."}, {"prompt": "本（ほん）__ ノートを買いました（かいました）。", "options": ["と", "や", "が", "に"], "answer": 1, "explanation": "や indica lista non completa: libri, quaderni, ecc."}, {"prompt": "九時（くじ）__ 勉強します（べんきょうします）。", "options": ["から", "まで", "より", "を"], "answer": 0, "explanation": "から indica il punto di partenza: dalle nove."}, {"prompt": "五時（ごじ）__ 働きます（はたらきます）。", "options": ["から", "まで", "に", "が"], "answer": 1, "explanation": "まで indica il limite/fino a: fino alle cinque."}, {"prompt": "東京（とうきょう）は大阪（おおさか）__ 大きい（おおきい）です。", "options": ["より", "まで", "から", "を"], "answer": 0, "explanation": "より indica il termine di paragone: più di Osaka."}, {"prompt": "今日（きょう）__ 忙しい（いそがしい）です。", "options": ["は", "を", "で", "へ"], "answer": 0, "explanation": "は marca il tema della frase: oggi."}, {"prompt": "誰（だれ）__ 来ます（きます）か。", "options": ["は", "が", "を", "の"], "answer": 1, "explanation": "Con parole interrogative come 誰, spesso si usa が."}, {"prompt": "写真（しゃしん）__ 撮ります（とります）。", "options": ["を", "に", "が", "へ"], "answer": 0, "explanation": "撮ります prende un oggetto diretto: 写真を撮ります."}, {"prompt": "部屋（へや）__ 猫（ねこ）__ います。", "options": ["で / を", "に / が", "を / は", "へ / で"], "answer": 1, "explanation": "に indica luogo di esistenza; が marca ciò che esiste."}, {"prompt": "家（いえ）__ 映画（えいが）__ 見ます（みます）。", "options": ["で / を", "に / が", "を / に", "へ / は"], "answer": 0, "explanation": "で = luogo dell’azione; を = oggetto diretto."}, {"prompt": "右（みぎ）__ 曲がって（まがって）ください。", "options": ["へ", "を", "で", "も"], "answer": 0, "explanation": "へ indica direzione: verso destra."}, {"prompt": "日本語（にほんご）__ 先生（せんせい）です。", "options": ["の", "を", "で", "より"], "answer": 0, "explanation": "の collega due nomi: insegnante di giapponese."}, {"prompt": "パン__水（みず）を買います（かいます）。", "options": ["と", "や", "も", "へ"], "answer": 0, "explanation": "と indica una lista completa: pane e acqua."}, {"prompt": "コーヒー__ 飲みます（のみます）。", "options": ["も", "を", "に", "から"], "answer": 0, "explanation": "も significa “anche”: bevo anche caffè."}, {"prompt": "犬（いぬ）__ 猫（ねこ）が好き（すき）です。", "options": ["と", "や", "を", "まで"], "answer": 1, "explanation": "や = lista non completa: cani, gatti, ecc."}, {"prompt": "駅（えき）__ 歩きます（あるきます）。", "options": ["から", "まで", "より", "で"], "answer": 0, "explanation": "から indica punto di partenza: dalla stazione."}, {"prompt": "学校（がっこう）__ 行きます（いきます）。 “fino a scuola”", "options": ["まで", "から", "より", "を"], "answer": 0, "explanation": "まで indica punto di arrivo/limite: fino a scuola."}, {"prompt": "電車（でんしゃ）はバス__ 速い（はやい）です。", "options": ["より", "から", "まで", "と"], "answer": 0, "explanation": "より si usa nei confronti: più veloce dell’autobus."}, {"prompt": "は, quando è particella, si legge...", "options": ["ha", "wa", "ga", "e"], "answer": 1, "explanation": "La particella は si scrive は ma si legge wa."}, {"prompt": "へ, quando è particella, si legge...", "options": ["he", "e", "wa", "o"], "answer": 1, "explanation": "La particella へ si scrive へ ma si legge e."}, {"prompt": "を di solito si legge...", "options": ["wo / o", "wa", "ga", "ni"], "answer": 0, "explanation": "Nella pronuncia moderna si sente spesso come “o”."}, {"prompt": "Quale particella marca il tema?", "options": ["は", "が", "を", "で"], "answer": 0, "explanation": "は marca il tema."}, {"prompt": "Quale particella marca l’oggetto diretto?", "options": ["を", "に", "へ", "の"], "answer": 0, "explanation": "を marca l’oggetto diretto."}, {"prompt": "Quale particella indica spesso il luogo dove si fa un’azione?", "options": ["で", "に", "が", "や"], "answer": 0, "explanation": "で = luogo dell’azione."}, {"prompt": "Quale particella indica possesso/specificazione?", "options": ["の", "と", "も", "から"], "answer": 0, "explanation": "の collega due nomi e può indicare possesso."}, {"prompt": "Quale particella significa “anche”?", "options": ["も", "や", "と", "より"], "answer": 0, "explanation": "も = anche."}, {"prompt": "Quale particella indica una lista non completa?", "options": ["や", "と", "を", "に"], "answer": 0, "explanation": "や = lista non completa, come “ecc.”."}, {"prompt": "Quale particella significa “da / a partire da”?", "options": ["から", "まで", "より", "へ"], "answer": 0, "explanation": "から = da / a partire da."}, {"prompt": "Quale particella significa “fino a”?", "options": ["まで", "から", "より", "で"], "answer": 0, "explanation": "まで = fino a."}, {"prompt": "Quale particella si usa per il paragone “rispetto a”?", "options": ["より", "や", "の", "が"], "answer": 0, "explanation": "より = rispetto a / più di."}, {"prompt": "本（ほん）__ 読みます（よみます）。", "options": ["を", "が", "に", "へ"], "answer": 0, "explanation": "Leggo un libro: 本を読みます."}, {"prompt": "明日（あした）__ 行きます（いきます）。", "options": ["は", "に", "を", "で"], "answer": 0, "explanation": "明日 può essere tema con は. Normalmente non serve に con 明日."}, {"prompt": "図書館（としょかん）__ 本（ほん）を読みます（よみます）。", "options": ["で", "に", "へ", "が"], "answer": 0, "explanation": "L’azione di leggere avviene in biblioteca: 図書館で."}, {"prompt": "机（つくえ）の上（うえ）__ 本（ほん）があります。", "options": ["に", "で", "を", "へ"], "answer": 0, "explanation": "Luogo di esistenza: 上にあります."}, {"prompt": "友達（ともだち）__ 学校（がっこう）へ行きます（いきます）。", "options": ["と", "を", "で", "や"], "answer": 0, "explanation": "Con un amico: 友達と."}, {"prompt": "九時（くじ）__ 五時（ごじ）__ 働きます（はたらきます）。", "options": ["から / まで", "まで / から", "より / まで", "で / に"], "answer": 0, "explanation": "Dalle nove alle cinque: 九時から五時まで."}, {"prompt": "私（わたし）__ コーヒー__ 好き（すき）です。", "options": ["は / が", "を / は", "で / を", "に / へ"], "answer": 0, "explanation": "Mi piace il caffè: 私はコーヒーが好きです."}, {"prompt": "猫（ねこ）__ 犬（いぬ）__ 好き（すき）です。 “Mi piacciono gatti, cani, ecc.”", "options": ["や / が", "と / を", "も / に", "の / は"], "answer": 0, "explanation": "や per lista non completa; が con 好き."}, {"prompt": "この本（ほん）__ 私（わたし）__ です。", "options": ["は / の", "を / が", "で / と", "へ / まで"], "answer": 0, "explanation": "Questo libro è mio: この本は私のです."}, {"prompt": "バス__電車（でんしゃ）__ 便利（べんり）です。 “Il treno è più comodo dell’autobus.”", "options": ["より / は", "まで / は", "から / を", "と / が"], "answer": 0, "explanation": "Confronto: バスより電車は便利です."}, {"prompt": "駅（えき）__ 学校（がっこう）__ 歩きます（あるきます）。 “Cammino dalla stazione fino a scuola.”", "options": ["から / まで", "まで / から", "より / に", "で / を"], "answer": 0, "explanation": "Da... fino a... = から...まで."}];
+    const TEST_SIZE = 10;
+    let currentQuestions = [];
+
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+    function startQuiz() {
+      currentQuestions = shuffle(uniqueQuestions(QUESTION_BANK)).slice(0, TEST_SIZE).map(q => {
+        const opts = q.options.map((text, index) => ({ text, originalIndex: index }));
+        const shuffledOptions = shuffle(opts);
+        return {
+          ...q,
+          shuffledOptions,
+          correctShuffledIndex: shuffledOptions.findIndex(o => o.originalIndex === q.answer)
+        };
+      });
+      document.getElementById('quizResult').innerHTML = '';
+      renderQuiz();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderQuiz() {
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = currentQuestions.map((q, qi) => `
+        <article class="quiz-question" data-question="${qi}">
+          <h2>${qi + 1}. ${q.prompt}</h2>
+          <div class="quiz-options">
+            ${q.shuffledOptions.map((opt, oi) => `
+              <label>
+                <input type="radio" name="q${qi}" value="${oi}">
+                <span>${opt.text}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div class="quiz-feedback"></div>
+        </article>
+      `).join('');
+    }
+
+    function checkQuiz() {
+      let correct = 0;
+      currentQuestions.forEach((q, qi) => {
+        const article = document.querySelector(`.quiz-question[data-question="${qi}"]`);
+        const selected = article.querySelector(`input[name="q${qi}"]:checked`);
+        const feedback = article.querySelector('.quiz-feedback');
+        article.classList.remove('correct','wrong','missing');
+
+        if (!selected) {
+          article.classList.add('missing');
+          feedback.innerHTML = `<strong>Non risposta.</strong> Soluzione: ${q.shuffledOptions[q.correctShuffledIndex].text}<br><span>${q.explanation}</span>`;
+          return;
+        }
+
+        const isCorrect = Number(selected.value) === q.correctShuffledIndex;
+        if (isCorrect) {
+          correct++;
+          article.classList.add('correct');
+          feedback.innerHTML = `<strong>Corretto.</strong><br><span>${q.explanation}</span>`;
+        } else {
+          article.classList.add('wrong');
+          feedback.innerHTML = `<strong>Errato.</strong> Soluzione: ${q.shuffledOptions[q.correctShuffledIndex].text}<br><span>${q.explanation}</span>`;
+        }
+      });
+
+      const result = document.getElementById('quizResult');
+      result.innerHTML = `<strong>Punteggio: ${correct} / ${TEST_SIZE}</strong><span>${correct >= 8 ? 'Ottimo lavoro.' : correct >= 6 ? 'Buono, ma rivedi gli errori.' : 'Conviene ripassare le regole e rifare il test.'}</span>`;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('checkQuiz').addEventListener('click', checkQuiz);
+    document.getElementById('resetQuiz').addEventListener('click', startQuiz);
+    startQuiz();
+  </script>
+</body>
+</html>

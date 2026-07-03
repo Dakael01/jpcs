@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Conversation — Hotel · Quiz</title>
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <link rel="stylesheet" href="../../assets/ui_shell.css" />
+  <script>window.SHIMA_BASE="../../";window.SHIMA_PAGE="chapters/08_conversation/conversation_practice_hotel_quiz.html";</script>
+  <script defer src="../../assets/ui_shell.js"></script>
+</head>
+<body class="quick-print-body practice-body">
+  <main class="quick-print-sheet practice-sheet">
+    <header class="practice-header">
+      <div>
+        <div class="series">Daniele's Japanese Cheat Sheets</div>
+        <h1>Conversation — Hotel · Quiz</h1>
+        <p>50 domande totali · 10 pescate random</p>
+      </div>
+      <nav class="practice-actions">
+        <a href="conversation_practice.html">← Practice</a>
+        <button type="button" id="reloadQuizBtn">Nuove 10 domande</button>
+      </nav>
+    </header>
+    <section class="print-section">
+      <h2>Istruzioni</h2>
+      <p>Scegli la risposta corretta per ogni domanda, poi premi <strong>Verifica</strong> in fondo alla pagina.</p>
+    </section>
+    <form id="quizForm"></form>
+    <div class="practice-bottom-bar">
+      <button type="button" id="checkBtn" class="big-check-btn" style="background:#8b4d6b">Verifica</button>
+      <div id="quizResult" class="quiz-result-box" aria-live="polite"></div>
+    </div>
+  </main>
+<script>
+const QUESTION_POOL = [{"prompt": "Traduci la frase.", "focus": "予約があります。", "options": ["Ho una prenotazione.", "Piacere di conoscerti.", "Io sono Daniele.", "Sono italiano."], "answer": 0, "explanation": "予約があります。 = Ho una prenotazione."}, {"prompt": "Scegli la frase giapponese corretta.", "focus": "Ho una prenotazione.", "options": ["予約があります。", "はじめまして。", "私はダニエレです。", "イタリア人です。"], "answer": 0, "explanation": "Ho una prenotazione. = 予約があります。"}, {"prompt": "Qual è la lettura corretta?", "focus": "予約があります。", "options": ["よやくが あります。", "はじめまして。", "わたしは ダニエレです。", "イタリアじんです。"], "answer": 0, "explanation": "Lettura: よやくが あります。"}, {"prompt": "A quale scenario appartiene questa frase?", "focus": "予約があります。", "options": ["Hotel", "Presentarsi", "Chiedere informazioni", "Negozio e pagare"], "answer": 0, "explanation": "Scenario: Hotel"}, {"prompt": "Traduci la frase.", "focus": "チェックインをお願いします。", "options": ["Vorrei fare il check-in.", "Io sono Daniele.", "Sono italiano.", "Sto studiando giapponese."], "answer": 0, "explanation": "チェックインをお願いします。 = Vorrei fare il check-in."}, {"prompt": "Scegli la frase giapponese corretta.", "focus": "Vorrei fare il check-in.", "options": ["チェックインをお願いします。", "私はダニエレです。", "イタリア人です。", "日本語を勉強しています。"], "answer": 0, "explanation": "Vorrei fare il check-in. = チェックインをお願いします。"}, {"prompt": "Qual è la lettura corretta?", "focus": "チェックインをお願いします。", "options": ["チェックインを おねがいします。", "わたしは ダニエレです。", "イタリアじんです。", "にほんごを べんきょうしています。"], "answer": 0, "explanation": "Lettura: チェックインを おねがいします。"}, {"prompt": "A quale scenario appartiene questa frase?", "focus": "チェックインをお願いします。", "options": ["Hotel", "Presentarsi", "Chiedere informazioni", "Negozio e pagare"], "answer": 0, "explanation": "Scenario: Hotel"}, {"prompt": "Traduci la frase.", "focus": "名前はダニエレです。", "options": ["Il nome è Daniele.", "Sono italiano.", "Sto studiando giapponese.", "So parlare un po’ giapponese."], "answer": 0, "explanation": "名前はダニエレです。 = Il nome è Daniele."}, {"prompt": "Scegli la frase giapponese corretta.", "focus": "Il nome è Daniele.", "options": ["名前はダニエレです。", "イタリア人です。", "日本語を勉強しています。", "少し日本語が話せます。"], "answer": 0, "explanation": "Il nome è Daniele. = 名前はダニエレです。"}, {"prompt": "Qual è la lettura corretta?", "focus": "名前はダニエレです。", "options": ["なまえは ダニエレです。", "イタリアじんです。", "にほんごを べんきょうしています。", "すこし にほんごが はなせます。"], "answer": 0, "explanation": "Lettura: なまえは ダニエレです。"}, {"prompt": "A quale scenario appartiene questa frase?", "focus": "名前はダニエレです。", "options": ["Hotel", "Presentarsi", "Chiedere informazioni", "Negozio e pagare"], "answer": 0, "explanation": "Scenario: Hotel"}, {"prompt": "Traduci la frase.", "focus": "パスポートです。", "options": ["Ecco il passaporto.", "Sto studiando giapponese.", "So parlare un po’ giapponese.", "Piacere / conto su di te."], "answer": 0, "explanation": "パスポートです。 = Ecco il passaporto."}, {"prompt": "Scegli la frase giapponese corretta.", "focus": "Ecco il passaporto.", "options": ["パスポートです。", "日本語を勉強しています。", "少し日本語が話せます。", "よろしくお願いします。"], "answer": 0, "explanation": "Ecco il passaporto. = パスポートです。"}, {"prompt": "Qual è la lettura corretta?", "focus": "パスポートです。", "options": ["パスポートです。", "にほんごを べんきょうしています。", "すこし にほんごが はなせます。", "よろしく おねがいします。"], "answer": 0, "explanation": "Lettura: パスポートです。"}, {"prompt": "A quale scenario appartiene questa frase?", "focus": "パスポートです。", "options": ["Hotel", "Presentarsi", "Chiedere informazioni", "Negozio e pagare"], "answer": 0, "explanation": "Scenario: Hotel"}, {"prompt": "Traduci la frase.", "focus": "部屋はどこですか。", "options": ["Dov’è la stanza?", "So parlare un po’ giapponese.", "Piacere / conto su di te.", "Come ti chiami?"], "answer": 0, "explanation": "部屋はどこですか。 = Dov’è la stanza?"}, {"prompt": "Scegli la frase giapponese corretta.", "focus": "Dov’è la stanza?", "options": ["部屋はどこですか。", "少し日本語が話せます。", "よろしくお願いします。", "お名前は何ですか。"], "answer": 0, "explanation": "Dov’è la stanza? = 部屋はどこですか。"}, {"prompt": "Qual è la lettura corretta?", "focus": "部屋はどこですか。", "options": ["へやは どこですか。", "すこし にほんごが はなせます。", "よろしく おねがいします。", "おなまえは なんですか。"], "answer": 0, "explanation": "Lettura: へやは どこですか。"}, {"prompt": "A quale scenario appartiene questa frase?", "focus": "部屋はどこですか。", "options": ["Hotel", "Presentarsi", "Chiedere informazioni", "Negozio e pagare"], "answer": 0, "explanation": "Scenario: Hotel"}, {"prompt": "Traduci la frase.", "focus": "鍵をください。", "options": ["La chiave, per favore.", "Piacere / conto su di te.", "Come ti chiami?", "Da dove vieni?"], "answer": 0, "explanation": "鍵をください。 = La chiave, per favore."}, {"prompt": "Scegli la frase giapponese corretta.", "focus": "La chiave, per favore.", "options": ["鍵をください。", "よろしくお願いします。", "お名前は何ですか。", "どこから来ましたか。"], "answer": 0, "explanation": "La chiave, per favore. = 鍵をください。"}, {"prompt": "Qual è la lettura corretta?", "focus": "鍵をください。", "options": ["かぎを ください。", "よろしく おねがいします。", "おなまえは なんですか。", "どこから きましたか。"], "answer": 0, "explanation": "Lettura: かぎを ください。"}, {"prompt": "A quale scenario appartiene questa frase?", "focus": "鍵をください。", "options": ["Hotel", "Presentarsi", "Chiedere informazioni", "Negozio e pagare"], "answer": 0, "explanation": "Scenario: Hotel"}, {"prompt": "Traduci la frase.", "focus": "Wi-Fiはありますか。", "options": ["C’è il Wi-Fi?", "Come ti chiami?", "Da dove vieni?", "Vengo dall’Italia."], "answer": 0, "explanation": "Wi-Fiはありますか。 = C’è il Wi-Fi?"}, {"prompt": "Scegli la frase giapponese corretta.", "focus": "C’è il Wi-Fi?", "options": ["Wi-Fiはありますか。", "お名前は何ですか。", "どこから来ましたか。", "イタリアから来ました。"], "answer": 0, "explanation": "C’è il Wi-Fi? = Wi-Fiはありますか。"}, {"prompt": "Qual è la lettura corretta?", "focus": "Wi-Fiはありますか。", "options": ["ワイファイは ありますか。", "おなまえは なんですか。", "どこから きましたか。", "イタリアから きました。"], "answer": 0, "explanation": "Lettura: ワイファイは ありますか。"}, {"prompt": "A quale scenario appartiene questa frase?", "focus": "Wi-Fiはありますか。", "options": ["Hotel", "Presentarsi", "Chiedere informazioni", "Negozio e pagare"], "answer": 0, "explanation": "Scenario: Hotel"}, {"prompt": "Traduci la frase.", "focus": "朝ご飯は何時ですか。", "options": ["A che ora è la colazione?", "Da dove vieni?", "Vengo dall’Italia.", "Piacere / molto piacere."], "answer": 0, "explanation": "朝ご飯は何時ですか。 = A che ora è la colazione?"}, {"prompt": "Scegli la frase giapponese corretta.", "focus": "A che ora è la colazione?", "options": ["朝ご飯は何時ですか。", "どこから来ましたか。", "イタリアから来ました。", "どうぞよろしく。"], "answer": 0, "explanation": "A che ora è la colazione? = 朝ご飯は何時ですか。"}, {"prompt": "Qual è la lettura corretta?", "focus": "朝ご飯は何時ですか。", "options": ["あさごはんは なんじですか。", "どこから きましたか。", "イタリアから きました。", "どうぞ よろしく。"], "answer": 0, "explanation": "Lettura: あさごはんは なんじですか。"}, {"prompt": "A quale scenario appartiene questa frase?", "focus": "朝ご飯は何時ですか。", "options": ["Hotel", "Presentarsi", "Chiedere informazioni", "Negozio e pagare"], "answer": 0, "explanation": "Scenario: Hotel"}, {"prompt": "Traduci la frase.", "focus": "エアコンが動きません。", "options": ["L’aria condizionata non funziona.", "Vengo dall’Italia.", "Piacere / molto piacere.", "Mi scusi / scusa."], "answer": 0, "explanation": "エアコンが動きません。 = L’aria condizionata non funziona."}, {"prompt": "Scegli la frase giapponese corretta.", "focus": "L’aria condizionata non funziona.", "options": ["エアコンが動きません。", "イタリアから来ました。", "どうぞよろしく。", "すみません。"], "answer": 0, "explanation": "L’aria condizionata non funziona. = エアコンが動きません。"}, {"prompt": "Qual è la lettura corretta?", "focus": "エアコンが動きません。", "options": ["エアコンが うごきません。", "イタリアから きました。", "どうぞ よろしく。", "すみません。"], "answer": 0, "explanation": "Lettura: エアコンが うごきません。"}, {"prompt": "A quale scenario appartiene questa frase?", "focus": "エアコンが動きません。", "options": ["Hotel", "Presentarsi", "Chiedere informazioni", "Negozio e pagare"], "answer": 0, "explanation": "Scenario: Hotel"}, {"prompt": "Traduci la frase.", "focus": "部屋を変えられますか。", "options": ["È possibile cambiare stanza?", "Piacere / molto piacere.", "Mi scusi / scusa.", "Che cos’è questo?"], "answer": 0, "explanation": "部屋を変えられますか。 = È possibile cambiare stanza?"}, {"prompt": "Scegli la frase giapponese corretta.", "focus": "È possibile cambiare stanza?", "options": ["部屋を変えられますか。", "どうぞよろしく。", "すみません。", "これは何ですか。"], "answer": 0, "explanation": "È possibile cambiare stanza? = 部屋を変えられますか。"}, {"prompt": "Qual è la lettura corretta?", "focus": "部屋を変えられますか。", "options": ["へやを かえられますか。", "どうぞ よろしく。", "すみません。", "これは なんですか。"], "answer": 0, "explanation": "Lettura: へやを かえられますか。"}, {"prompt": "A quale scenario appartiene questa frase?", "focus": "部屋を変えられますか。", "options": ["Hotel", "Presentarsi", "Chiedere informazioni", "Negozio e pagare"], "answer": 0, "explanation": "Scenario: Hotel"}, {"prompt": "Traduci la frase.", "focus": "予約があります。", "options": ["Ho una prenotazione.", "Piacere di conoscerti.", "Io sono Daniele.", "Sono italiano."], "answer": 0, "explanation": "予約があります。 = Ho una prenotazione."}, {"prompt": "Scegli la frase giapponese corretta.", "focus": "Ho una prenotazione.", "options": ["予約があります。", "はじめまして。", "私はダニエレです。", "イタリア人です。"], "answer": 0, "explanation": "Ho una prenotazione. = 予約があります。"}, {"prompt": "Qual è la lettura corretta?", "focus": "予約があります。", "options": ["よやくが あります。", "はじめまして。", "わたしは ダニエレです。", "イタリアじんです。"], "answer": 0, "explanation": "Lettura: よやくが あります。"}, {"prompt": "A quale scenario appartiene questa frase?", "focus": "予約があります。", "options": ["Hotel", "Presentarsi", "Chiedere informazioni", "Negozio e pagare"], "answer": 0, "explanation": "Scenario: Hotel"}, {"prompt": "Traduci la frase.", "focus": "チェックインをお願いします。", "options": ["Vorrei fare il check-in.", "Io sono Daniele.", "Sono italiano.", "Sto studiando giapponese."], "answer": 0, "explanation": "チェックインをお願いします。 = Vorrei fare il check-in."}, {"prompt": "Scegli la frase giapponese corretta.", "focus": "Vorrei fare il check-in.", "options": ["チェックインをお願いします。", "私はダニエレです。", "イタリア人です。", "日本語を勉強しています。"], "answer": 0, "explanation": "Vorrei fare il check-in. = チェックインをお願いします。"}, {"prompt": "Qual è la lettura corretta?", "focus": "チェックインをお願いします。", "options": ["チェックインを おねがいします。", "わたしは ダニエレです。", "イタリアじんです。", "にほんごを べんきょうしています。"], "answer": 0, "explanation": "Lettura: チェックインを おねがいします。"}, {"prompt": "A quale scenario appartiene questa frase?", "focus": "チェックインをお願いします。", "options": ["Hotel", "Presentarsi", "Chiedere informazioni", "Negozio e pagare"], "answer": 0, "explanation": "Scenario: Hotel"}, {"prompt": "Traduci la frase.", "focus": "名前はダニエレです。", "options": ["Il nome è Daniele.", "Sono italiano.", "Sto studiando giapponese.", "So parlare un po’ giapponese."], "answer": 0, "explanation": "名前はダニエレです。 = Il nome è Daniele."}, {"prompt": "Scegli la frase giapponese corretta.", "focus": "Il nome è Daniele.", "options": ["名前はダニエレです。", "イタリア人です。", "日本語を勉強しています。", "少し日本語が話せます。"], "answer": 0, "explanation": "Il nome è Daniele. = 名前はダニエレです。"}];
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shimaQuestionKey(item) {
+  return JSON.stringify({
+    prompt: item && item.prompt || '',
+    focus: item && item.focus || '',
+    options: item && item.options || [],
+    answer: item && item.answer,
+    explanation: item && item.explanation || ''
+  });
+}
+function uniqueQuestions(pool) {
+  const seen = new Set();
+  return (pool || []).filter(item => {
+    const key = shimaQuestionKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+let currentQuestions = [];
+function renderQuiz() {
+  currentQuestions = shuffle(uniqueQuestions(QUESTION_POOL)).slice(0, 10).map(item => {
+    const options = shuffle(item.options.map((text, idx) => ({ text, originalIndex: idx })));
+    return {...item, shuffledOptions: options, correctShuffledIndex: options.findIndex(o => o.originalIndex === item.answer)};
+  });
+  const form = document.getElementById('quizForm');
+  form.innerHTML = currentQuestions.map((item, idx) => {
+    const name = 'q' + idx;
+    const options = item.shuffledOptions.map((choice, cidx) => `
+      <label class="quiz-option">
+        <input type="radio" name="${name}" value="${cidx}">
+        <span>${choice.text}</span>
+      </label>`).join('');
+    return `
+      <section class="print-section quiz-question-card">
+        <h2>Domanda ${idx + 1}</h2>
+        <p class="quiz-question-main">${item.prompt}</p>
+        <div class="quiz-question-focus conversation-quiz-focus">${item.focus}</div>
+        <div class="quiz-options">${options}</div>
+        <div class="quiz-inline-feedback" id="fb${idx}"></div>
+      </section>`;
+  }).join('');
+  document.getElementById('quizResult').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function checkQuiz() {
+  let correct = 0;
+  currentQuestions.forEach((item, idx) => {
+    const picked = document.querySelector(`input[name="q${idx}"]:checked`);
+    const fb = document.getElementById('fb' + idx);
+    if (picked && Number(picked.value) === item.correctShuffledIndex) {
+      correct++;
+      fb.innerHTML = `<strong class="ok">Corretto.</strong> ${item.explanation}`;
+    } else {
+      fb.innerHTML = `<strong class="ko">Soluzione:</strong> ${item.shuffledOptions[item.correctShuffledIndex].text}<br>${item.explanation}`;
+    }
+  });
+  document.getElementById('quizResult').innerHTML = `<strong>Risultato:</strong> ${correct} / 10 corrette.`;
+}
+document.getElementById('reloadQuizBtn').addEventListener('click', renderQuiz);
+document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+renderQuiz();
+</script>
+</body>
+</html>
